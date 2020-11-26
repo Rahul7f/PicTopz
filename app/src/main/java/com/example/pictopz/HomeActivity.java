@@ -27,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+
         RecyclerView recyclerView=findViewById(R.id.home_story_recycleview);
         recyclerView.setAdapter(new StoryAdapter());
 
