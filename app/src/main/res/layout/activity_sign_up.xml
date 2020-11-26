@@ -83,11 +83,12 @@
                 />
 
             <ImageView
+
                 android:padding="2sp"
                 android:layout_marginTop="40sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/forward_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/gotohome"
                 android:src="@drawable/back_icon"
                 android:rotation="180"
                 android:scaleType="fitCenter"
