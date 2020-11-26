@@ -53,12 +53,19 @@
     android:layout_width="match_parent"
     android:layout_height="0sp"
     app:spanCount="2"
+    android:layout_margin="5sp"
     android:orientation="vertical"
     android:id="@+id/contest_recycle_view"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
     app:layout_constraintTop_toBottomOf="@id/contest_constraint_layout"
     />
-
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    android:layout_height="0sp"
+    android:id="@+id/contest_rank_recycle"
+    app:layout_constraintTop_toBottomOf="@id/contest_recycle_view"
+    />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

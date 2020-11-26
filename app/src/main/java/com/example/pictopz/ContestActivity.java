@@ -8,6 +8,7 @@ import android.text.Html;
 import android.widget.TextView;
 
 import com.example.pictopz.adapters.ContestAdapter;
+import com.example.pictopz.adapters.RankAdapter;
 
 public class ContestActivity extends AppCompatActivity {
 
@@ -22,5 +23,9 @@ public class ContestActivity extends AppCompatActivity {
         RecyclerView recyclerView=findViewById(R.id.contest_recycle_view);
         ContestAdapter adapter=new ContestAdapter();
         recyclerView.setAdapter(adapter);
+
+        RecyclerView recyclerView2=findViewById(R.id.contest_rank_recycle);
+        RankAdapter adapter2=new RankAdapter();
+        recyclerView2.setAdapter(adapter2);
     }
 }

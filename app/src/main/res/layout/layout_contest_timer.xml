@@ -8,8 +8,9 @@
         android:layout_height="wrap_content">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="120sp"
-        android:src="@drawable/drawer_icon"
+        android:layout_height="130sp"
+        android:src="@drawable/sample_image"
+        android:paddingHorizontal="10sp"
         android:layout_margin="5sp"
         android:scaleType="centerCrop"
         android:id="@+id/image_contest_layout"
@@ -20,14 +21,14 @@
             android:text="07:12:04:02"
             android:textStyle="bold|italic"
             android:textSize="25sp"
-            android:textColor="#000"
+            android:textColor="#ffffff"
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="center"
             />
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="55sp"
         android:background="#ff4a01"
         >
         <TextView

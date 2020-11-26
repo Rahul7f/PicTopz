@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
+        android:id="@+id/layout_home_username"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/orange"
+
+        android:text="UPLOADER"
+        android:textColor="@android:color/white"
+        />
+    
+
+
+    <ImageView
+        app:layout_constraintStart_toEndOf="@id/layout_home_username"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
+        app:layout_constraintEnd_toStartOf="@id/layout_home_favourite"
+
+        android:src="@drawable/comment"
+        android:padding="6sp"
+        android:background="@drawable/circle2d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_home_comment"/>
+
+    <ImageView
+        app:layout_constraintStart_toEndOf="@id/layout_home_comment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
+        app:layout_constraintEnd_toStartOf="@id/layout_home_more"
+
+        android:src="@drawable/heart"
+        android:padding="6sp"
+        android:background="@drawable/circle2d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_home_favourite"/>
+    <ImageView
+        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/arrow_forward"
+        android:padding="6sp"
+        android:background="@drawable/circle2d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_home_more" />
+
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="300sp"
+
+      android:scaleType="centerCrop"
+      android:layout_marginVertical="7sp"
+
+      android:id="@+id/layout_home_post_image"
+
+      app:layout_constraintTop_toBottomOf="@id/layout_home_comment"
+      android:src="@drawable/sample_image"
+      />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_home_post_image"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
