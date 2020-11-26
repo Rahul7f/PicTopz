@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email_textview" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -73,7 +73,7 @@
         android:textSize="21dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/signin" />
 
     <TextView
         android:id="@+id/textView2"
