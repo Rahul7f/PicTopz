@@ -19,7 +19,7 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 finish();
             }
-        }, secondsDelayed * 1000);
+        }, secondsDelayed * 3000);
 
     }
 }
