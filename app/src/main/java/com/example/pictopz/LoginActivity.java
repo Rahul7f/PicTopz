@@ -25,14 +25,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        button2=findViewById(R.id.textView);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,ShowContest.class));
-                finish();
-            }
-        });
 
     }
 }

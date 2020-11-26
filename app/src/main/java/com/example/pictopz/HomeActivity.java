@@ -12,13 +12,14 @@ import com.example.pictopz.adapters.PostsAdapter;
 import com.example.pictopz.adapters.StoryAdapter;
 
 public class HomeActivity extends AppCompatActivity {
-    ImageView imageView;
+    ImageView imageView,imageView5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         imageView = findViewById(R.id.profile);
+        imageView5=findViewById(R.id.imageView5);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +28,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        imageView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,ContestActivity.class));
+            }
+        });
 
 
         RecyclerView recyclerView=findViewById(R.id.home_story_recycleview);

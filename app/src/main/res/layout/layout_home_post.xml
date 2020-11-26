@@ -10,10 +10,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
         android:id="@+id/layout_home_username"
-
+        android:paddingHorizontal="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="@drawable/orangecircle"
 
         android:text="UPLOADER"
         android:textColor="@android:color/white"

@@ -23,13 +23,6 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
-        TextView textView=findViewById(R.id.signup_create_acc);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SignUp.this,ContestActivity.class));
-                finish();
-            }
-        });
+
     }
 }
