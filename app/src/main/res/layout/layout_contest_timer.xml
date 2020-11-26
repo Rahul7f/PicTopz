@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120sp"
+        android:src="@drawable/drawer_icon"
+        android:layout_margin="5sp"
+        android:scaleType="centerCrop"
+        android:id="@+id/image_contest_layout"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="07:12:04:02"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center"
+            />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:background="#ff4a01"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NATURE"
+            android:id="@+id/contest_layout_category"
+            android:paddingHorizontal="10sp"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:background="@drawable/oval"
+            />
+    </FrameLayout>
+
+
+</LinearLayout>

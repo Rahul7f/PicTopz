@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Profile"></activity>
-        <activity android:name=".ContentActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ContestActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUp" />
 

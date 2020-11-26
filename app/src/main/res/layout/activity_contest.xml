@@ -4,46 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContentActivity">
+    tools:context=".ContestActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/contest_constraint_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#ff4a01"
         >
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/content_drawer"
+            android:layout_margin="12sp"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/contest_drawer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/circle"
-            android:src="@drawable/drawer_icon"
+            android:src="@drawable/menu_icon"
             />
         <TextView
+            android:id="@+id/contest_contest_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="UPCOMING CONTEST"
-            app:layout_constraintStart_toEndOf="@id/content_drawer"
+            app:layout_constraintStart_toEndOf="@id/contest_drawer"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/content_profile"
+            app:layout_constraintEnd_toStartOf="@id/contest_profile"
             android:textColor="#ffffff"
             />
         <ImageView
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:id="@+id/content_profile"
+            android:layout_margin="10sp"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:id="@+id/contest_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/circle"
             android:src="@drawable/ic_logo"
-            android:scaleType="centerCrop"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="0sp"
+    app:spanCount="2"
+    android:orientation="vertical"
+    android:id="@+id/contest_recycle_view"
+    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+    app:layout_constraintTop_toBottomOf="@id/contest_constraint_layout"
+    />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

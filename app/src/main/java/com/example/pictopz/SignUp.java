@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SignUp extends AppCompatActivity {
     ImageView  imageView;
@@ -18,7 +19,16 @@ public class SignUp extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUp.this,MainActivity.class));
+                startActivity(new Intent(SignUp.this, HomeActivity.class));
+            }
+        });
+
+        TextView textView=findViewById(R.id.signup_create_acc);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignUp.this,ContestActivity.class));
+                finish();
             }
         });
     }
