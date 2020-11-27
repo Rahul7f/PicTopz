@@ -212,7 +212,6 @@ public class SignUp extends AppCompatActivity {
                             updateUI();
 
 
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignUp.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -225,7 +224,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Intent intent = new Intent(SignUp.this, HomeActivity.class);
+        Intent intent = new Intent(SignUp.this, DrawerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

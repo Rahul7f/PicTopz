@@ -1,9 +1,7 @@
 package com.example.pictopz;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +10,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.pictopz.adapters.ProfileGrideAdapter;
+import com.example.pictopz.adapters.ProfileGridAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -60,7 +57,7 @@ public class Profile extends AppCompatActivity {
 
         getUserData();
 
-        ProfileGrideAdapter customAdapter = new ProfileGrideAdapter(getApplicationContext(), logos);
+        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(), logos);
         simpleGrid.setAdapter(customAdapter);
 
         logout.setOnClickListener(new View.OnClickListener() {

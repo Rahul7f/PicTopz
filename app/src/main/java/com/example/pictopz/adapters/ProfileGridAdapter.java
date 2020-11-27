@@ -9,13 +9,13 @@ import android.widget.ImageView;
 import com.example.pictopz.R;
 
 
-public class ProfileGrideAdapter extends BaseAdapter {
+public class ProfileGridAdapter extends BaseAdapter {
 
     Context context;
     int logos[];
     LayoutInflater inflter;
 
-    public ProfileGrideAdapter(Context applicationContext, int[] logos) {
+    public ProfileGridAdapter(Context applicationContext, int[] logos) {
         this.context = applicationContext;
         this.logos = logos;
         inflter = (LayoutInflater.from(applicationContext));

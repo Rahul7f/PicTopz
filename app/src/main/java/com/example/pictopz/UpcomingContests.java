@@ -3,27 +3,25 @@ package com.example.pictopz;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.pictopz.adapters.ContestAdapter;
+import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
 
-public class ContestActivity extends AppCompatActivity {
+public class UpcomingContests extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contest);
+        setContentView(R.layout.activity_upcoming_contest);
 
         TextView textView=findViewById(R.id.contest_contest_text);
         textView.setText(Html.fromHtml("UPCOMING <b>CONTEST</b>"));
 
         RecyclerView recyclerView=findViewById(R.id.contest_recycle_view);
-        ContestAdapter adapter=new ContestAdapter(this);
+        UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(this);
         recyclerView.setAdapter(adapter);
 
 

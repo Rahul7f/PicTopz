@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         imageView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this,ContestActivity.class));
+                startActivity(new Intent(HomeActivity.this, UpcomingContests.class));
             }
         });
 

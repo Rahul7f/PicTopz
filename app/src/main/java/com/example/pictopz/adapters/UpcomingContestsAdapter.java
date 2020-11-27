@@ -1,6 +1,5 @@
 package com.example.pictopz.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,12 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pictopz.R;
-import com.example.pictopz.ShowContest;
+import com.example.pictopz.ShowOneContest;
 
-public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.MyViewHolder> {
+public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContestsAdapter.MyViewHolder> {
 
 Context context;
-    public ContestAdapter(Context context) {
+    public UpcomingContestsAdapter(Context context) {
         this.context=context;
     }
 
@@ -30,7 +29,7 @@ Context context;
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, ShowContest.class));
+                context.startActivity(new Intent(context, ShowOneContest.class));
             }
         });
         MyViewHolder vh=new MyViewHolder(v);
