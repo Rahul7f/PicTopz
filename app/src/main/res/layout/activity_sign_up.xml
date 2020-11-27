@@ -32,6 +32,7 @@
                 android:gravity="center"
                 android:layout_marginTop="25dp"/>
             <EditText
+                android:id="@+id/signup_username_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -45,6 +46,7 @@
                 />
 
             <EditText
+                android:id="@+id/signup_email_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -55,9 +57,26 @@
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/user_icon"
                 android:padding="10dp"
+                android:inputType="textEmailAddress"
                 />
 
             <EditText
+                android:id="@+id/signup_phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:hint="Phone"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/phone_icon"
+                android:padding="10dp"
+                android:inputType="phone"
+                />
+
+            <EditText
+                android:id="@+id/signup_password_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -68,9 +87,11 @@
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/password_icon"
                 android:padding="10dp"
+                android:inputType="textPassword"
                 />
 
             <EditText
+                android:id="@+id/signup_REpassword__et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -84,11 +105,11 @@
                 />
 
             <ImageView
+                android:id="@+id/signup_Btn"
                 android:padding="2sp"
                 android:layout_marginTop="40sp"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:id="@+id/gotohome"
                 android:src="@drawable/back_icon"
                 android:rotation="180"
                 android:layout_marginBottom="25dp"

@@ -27,7 +27,7 @@
                 android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/email_textview"
+                android:id="@+id/login_email_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -39,7 +39,7 @@
                 android:layout_marginRight="50dp"/>
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/login_password_et"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="25dp"/>
 
             <Button
-                android:id="@+id/signin"
+                android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_backgroung"
@@ -72,6 +72,19 @@
                 android:textColor="#ffff"
                 android:textSize="18dp"
                 android:layout_marginTop="15dp" />
+
+            <TextView
+                android:id="@+id/no_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="Create Account"
+                android:textColor="#3F51B5"
+                android:textSize="18dp"
+                android:layout_marginTop="15dp" />
+
+
 
             <TextView
                 android:id="@+id/textView2"
@@ -100,7 +113,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/google_signin"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/google_icon"
@@ -108,7 +121,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/facebook_signin"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginRight="25dp"

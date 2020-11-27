@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "760687683667",
+    "firebase_url": "https://pictopz-fd4d4.firebaseio.com",
+    "project_id": "pictopz-fd4d4",
+    "storage_bucket": "pictopz-fd4d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760687683667:android:aecf4328f2103bfe89fea6",
+        "android_client_info": {
+          "package_name": "com.example.pictopz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760687683667-hi7jse4v4dihqj77g3h2f2kj0u8a8bse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pictopz",
+            "certificate_hash": "fd560ec9d0d48408a65624604be423d2e397f48b"
+          }
+        },
+        {
+          "client_id": "760687683667-2mp0k4ur6fqakn01abhl9c6h8dico55l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIM_s7QgzDd9yk6NN4kpbjG7QJhszh9ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760687683667-2mp0k4ur6fqakn01abhl9c6h8dico55l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
