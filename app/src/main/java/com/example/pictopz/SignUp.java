@@ -224,7 +224,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Intent intent = new Intent(SignUp.this, DrawerActivity.class);
+        Intent intent = new Intent(SignUp.this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

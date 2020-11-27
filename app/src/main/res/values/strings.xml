@@ -6,5 +6,16 @@
 Sea ad sumo animal comprehensam, ut idque essent vim, mediocrem democritum at pri. Vis illud dolore definitionem no, error propriae te sea, mea utinam mentitum in. Eu per alia ceteros intellegat, sed id melius labores consetetur, congue aeterno intellegam sit et. Nam reque sanctus disputationi ne, zril libris appellantur an usu. Suas veniam eum ad. Erat commune pro ei.
 
 Omittam adolescens et eum, pro ad malis mediocritatem, ut postea option nec. Te cum sint nulla dissentiunt. Eum enim erant ad. Iusto zril adolescens pro ex, equidem ornatus detraxit an eam. No ius lorem mandamus, vel an aeque nominavi scaevola.</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">PicTopz</string>
+    <string name="nav_header_subtitle">SHOOT UPLOAD WIN</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>
