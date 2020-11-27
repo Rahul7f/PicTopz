@@ -18,18 +18,54 @@
            android:layout_height="match_parent"
            android:orientation="vertical">
 
-           <LinearLayout
+           <FrameLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:background="#ffff"
-               >
+               android:background="#fff"
+               android:paddingBottom="10dp"
+               android:paddingTop="10dp">
                <ImageView
                    android:layout_width="match_parent"
                    android:layout_height="200dp"
-                   android:layout_marginTop="15dp"
+                   android:src="@drawable/sample_image"
                    android:scaleType="centerCrop"
-                   android:src="@drawable/sample_image"/>
-           </LinearLayout>
+                   android:id="@+id/image_contest_layout"
+
+                   />
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="07:12:04:02"
+                   android:textStyle="bold|italic"
+                   android:textSize="50sp"
+                   android:textColor="#ffffff"
+                   android:layout_gravity="center_horizontal|bottom"
+                   android:gravity="center"
+                   android:shadowColor="@color/orange"
+                   android:shadowDx="2.5"
+                   android:shadowDy="2.3"
+                   android:shadowRadius="2.6"
+                   android:textAllCaps="true"
+                   android:layout_marginBottom="30dp"
+                   />
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="     DAYS    HOURS   MIN.   SEC."
+                   android:textColor="#fff"
+                   android:textSize="20dp"
+                   android:layout_marginRight="15dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="80dp"
+                   android:shadowColor="@color/orange"
+                   android:shadowDx="2.5"
+                   android:shadowDy="2.3"
+                   android:shadowRadius="2.6"
+                   android:textAllCaps="true"/>
+
+           </FrameLayout>
 
 
            <LinearLayout

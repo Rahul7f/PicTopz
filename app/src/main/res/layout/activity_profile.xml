@@ -20,7 +20,7 @@
             android:layout_weight="1">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_margin="25dp"
                 android:src="@drawable/avatar"
                 />
@@ -36,18 +36,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="Name Handler"
                 android:textColor="@color/orange"
                 android:drawableLeft="@drawable/user_icon"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/edit_icon"
                 android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:drawableTint="@color/orange"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="Mobile Number"
                 android:textColor="@color/orange"
                 android:drawableLeft="@drawable/user_icon"
@@ -55,16 +56,18 @@
                 android:drawableRight="@drawable/edit_icon"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:drawableTint="@color/orange"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="Email Address"
                 android:textColor="@color/orange"
                 android:drawableLeft="@drawable/user_icon"
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/edit_icon"
+                android:drawableTint="@color/orange"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"/>
@@ -79,38 +82,47 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/crown"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:background="@color/orange"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/contacts_icon"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:layout_marginRight="20dp"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/message_icon"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:layout_marginRight="20dp"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/gride_on_icon"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
+
             android:layout_marginRight="20dp"/>
 
     </LinearLayout>
+    <GridView
+        android:id="@+id/simpleGridView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:layout_marginTop="5dp"/>
 
 
 
