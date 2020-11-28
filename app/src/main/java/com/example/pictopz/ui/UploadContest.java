@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,12 +26,24 @@ import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.pictopz.R;
+import com.example.pictopz.firebase.FirebaseUploadData;
+import com.example.pictopz.firebase.FirebaseUploadImage;
+import com.example.pictopz.models.ContestObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -38,12 +54,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class UploadContest extends AppCompatActivity  {
 
     AppCompatTextView timepickerTV,datepickerTV;
     AppCompatImageView imageView;
+    AppCompatButton upload;
+    FirebaseUploadImage imgUpload;
+    AppCompatSpinner spinner;
+    Uri filePath;
     int year,month,day,hour,min,sec;
     long diff;
     long oldLong;
@@ -57,6 +78,9 @@ public class UploadContest extends AppCompatActivity  {
         timepickerTV=findViewById(R.id.time_picker_for_upload);
         datepickerTV=findViewById(R.id.date_picker_for_upload);
         imageView=findViewById(R.id.contes_image_to_upload);
+        upload=findViewById(R.id.upload_contest_button);
+        spinner=findViewById(R.id.upload_category_spinner);
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +125,16 @@ public class UploadContest extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 timePickerDialog.show();
+            }
+        });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(filePath!=null)
+                uploadImage(filePath);
+                else
+                    Toast.makeText(UploadContest.this, "Please select image", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -175,6 +209,7 @@ public class UploadContest extends AppCompatActivity  {
             if (resultCode==RESULT_OK)
             {
                 try {
+                    filePath=result.getUri();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),result.getUri());
                     Toast.makeText(this, "image uri:- "+bitmap, Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(bitmap);
@@ -211,6 +246,32 @@ public class UploadContest extends AppCompatActivity  {
         }
         MyCount counter = new MyCount(diff, 1000);
         counter.start();
+    }
+    // UploadImage method
+    public void uploadImage(Uri filePath){
+        imgUpload=new FirebaseUploadImage(UploadContest.this,filePath,"contest_images") {
+            @Override
+            public void getUrl(String url) {
+                Log.e("UPLOAD IMAGE","UPLOAD COMPLETE");
+                uploadData(url);
+            }
+        };
+        Log.e("UPLOAD IMAGE","UPLOAD STARTED");
+        imgUpload.uploadImage();
+    }
+
+    public void uploadData(String Imageurl){
+        String url="/contests/";
+
+        ContestObject contestObject=new ContestObject(Imageurl,spinner.getSelectedItem().toString(),NewLong);
+        FirebaseUploadData uploadData=new FirebaseUploadData(UploadContest.this,url,contestObject) {
+            @Override
+            public void onSuccessfulUpload() {
+                Toast.makeText(UploadContest.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+
+            };
+        };
+        uploadData.uploadData();
     }
 
 }
