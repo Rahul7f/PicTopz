@@ -138,7 +138,7 @@ public class SignUp extends AppCompatActivity {
 
 
                 }
-                //startActivity(new Intent(SignUp.this, HomeActivity.class));
+                //startActivity(new Intent(SignUp.this, DrawerActivity.class));
             }
         });
 
@@ -224,7 +224,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Intent intent = new Intent(SignUp.this, HomeActivity.class);
+        Intent intent = new Intent(SignUp.this, DrawerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

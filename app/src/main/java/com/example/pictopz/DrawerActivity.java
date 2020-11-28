@@ -1,9 +1,12 @@
 package com.example.pictopz;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,7 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class DrawerActivity extends AppCompatActivity {
 
-
+    ImageView imageView5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,18 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
 
 
-        DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
+        final DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
 
 
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        imageView5=findViewById(R.id.imageView5);
+        imageView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawer.openDrawer(Gravity.LEFT);
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

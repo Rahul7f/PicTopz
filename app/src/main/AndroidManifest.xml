@@ -17,7 +17,6 @@
         <activity android:name=".ShowOneContest" />
         <activity android:name=".Profile" />
         <activity android:name=".UpcomingContests" />
-        <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUp" />
         <activity android:name=".SplashScreen">

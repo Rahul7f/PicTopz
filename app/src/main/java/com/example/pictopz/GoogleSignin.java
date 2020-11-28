@@ -115,7 +115,7 @@ public class GoogleSignin extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Intent intent = new Intent(GoogleSignin.this, HomeActivity.class);
+        Intent intent = new Intent(GoogleSignin.this, DrawerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

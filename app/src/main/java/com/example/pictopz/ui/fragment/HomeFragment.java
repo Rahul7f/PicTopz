@@ -1,28 +1,47 @@
 package com.example.pictopz.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pictopz.Profile;
 import com.example.pictopz.R;
+import com.example.pictopz.adapters.PostsAdapter;
+import com.example.pictopz.adapters.StoryAdapter;
 
 public class HomeFragment extends Fragment {
 
-
+    ImageView imageView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        textView.setText("Hellno");
+
+        imageView = root.findViewById(R.id.profile);
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), Profile.class));
+            }
+        });
+
+
+
+
+        RecyclerView recyclerView=root.findViewById(R.id.home_story_recycleview);
+        recyclerView.setAdapter(new StoryAdapter());
+
+        RecyclerView recyclerView1=root.findViewById(R.id.home_layout_post_recycleview);
+        recyclerView1.setAdapter(new PostsAdapter());
 
         return root;
     }
