@@ -1,32 +1,37 @@
 package com.example.pictopz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
 
-public class UpcomingContests extends AppCompatActivity {
+public class UpcomingContests extends Fragment {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upcoming_contest);
 
-        TextView textView=findViewById(R.id.contest_contest_text);
-        textView.setText(Html.fromHtml("UPCOMING <b>CONTEST</b>"));
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                         ViewGroup container, Bundle savedInstanceState) {
 
-        RecyclerView recyclerView=findViewById(R.id.contest_recycle_view);
-        UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(this);
+        View root = inflater.inflate(R.layout.activity_upcoming_contest, container, false);
+
+
+        RecyclerView recyclerView=root.findViewById(R.id.contest_recycle_view);
+        UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
 
-        RecyclerView recyclerView2=findViewById(R.id.contest_rank_recycle);
+        RecyclerView recyclerView2=root.findViewById(R.id.contest_rank_recycle);
         RankAdapter adapter2=new RankAdapter();
         recyclerView2.setAdapter(adapter2);
+        return root;
     }
 }

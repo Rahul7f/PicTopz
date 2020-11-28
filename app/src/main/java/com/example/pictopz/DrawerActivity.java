@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,7 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class DrawerActivity extends AppCompatActivity {
+public class DrawerActivity extends AppCompatActivity    {
 
     ImageView imageView5,imageView;
 
@@ -35,10 +36,9 @@ public class DrawerActivity extends AppCompatActivity {
 
         final DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
 
-
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         imageView5=findViewById(R.id.imageView5);
+
         imageView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,9 +56,11 @@ public class DrawerActivity extends AppCompatActivity {
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
                 switch (item.getItemId()){
                     case R.id.nav_home:
                         Toast.makeText(DrawerActivity.this, "Home", Toast.LENGTH_SHORT).show();
@@ -66,12 +68,28 @@ public class DrawerActivity extends AppCompatActivity {
                     case R.id.create_contest:
                         Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
                         break;
+
+                    case R.id.upcoming_contest_menu:
+                        fragment = new UpcomingContests();
+                        break;
                 }
-                return true;
+
+                return loadFragment(fragment) ;
             }
         });
     }
 
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
         
 
 }

@@ -40,8 +40,8 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        //hooks
 
+        //hook
         user = FirebaseAuth.getInstance().getCurrentUser();
         gridChange = findViewById(R.id.grid_to_l);
         mAuth = FirebaseAuth.getInstance();
@@ -52,7 +52,7 @@ public class Profile extends AppCompatActivity {
         email_tv = findViewById(R.id.email_tv);
         phone_tv = findViewById(R.id.mobile_tv);
         profile_image = findViewById(R.id.profile_image_view);
-        ref = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getUid());
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid());
         //hooks end
 
         getUserData();
@@ -112,10 +112,10 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(user.getPhotoUrl()).into(profile_image);
-        name_tv.setText(user.getDisplayName());
-        email_tv.setText(user.getEmail());
-        phone_tv.setText(user.getPhoneNumber());
+//        Glide.with(this).load(user.getPhotoUrl()).into(profile_image);
+//        name_tv.setText(user.getDisplayName());
+//        email_tv.setText(user.getEmail());
+//        phone_tv.setText(user.getPhoneNumber());
     }
 
 
