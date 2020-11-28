@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.adapters.ProfileGridAdapter;
@@ -118,17 +119,59 @@ public class Profile extends AppCompatActivity {
                 if (snapshot.exists())
                 {
 
+                    // for name
+                  if (snapshot.child("username").exists())
+                  {
+                     name_tv.setText(snapshot.child("username").getValue().toString());
+                  }
+                  else
+                  {
+                      Toast.makeText(Profile.this, "please update your name", Toast.LENGTH_SHORT).show();
+                  }
+
+                    // for email
+                  if (snapshot.child("email").exists())
+                  {
+                      email_tv.setText(snapshot.child("email").getValue().toString());
+                  }
+                  else
+                  {
+                      Toast.makeText(Profile.this, "please update your name", Toast.LENGTH_SHORT).show();
+                  }
+
+
+                    // for phone
+                  if (snapshot.child("phone").exists())
+                  {
+                      phone_tv.setText(snapshot.child("phone").getValue().toString());
+                  }
+                  else
+                  {
+                      Toast.makeText(Profile.this, "please update your phone number", Toast.LENGTH_SHORT).show();
+                  }
+
+
+                    // for profile
+                  if (snapshot.child("userProfile").exists())
+                  {
+                      Glide.with(Profile.this).load(snapshot.child("userProfile").getValue()).into(profile_image);
+                  }
+                  else
+                  {
+                      Toast.makeText(Profile.this, "please update your profile image", Toast.LENGTH_SHORT).show();
+                  }
+
+
                 }
                 else {
-
+                    Toast.makeText(Profile.this, "please update your profile", Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Profile.this, "something went wrong", Toast.LENGTH_SHORT).show();
 
             }
         });

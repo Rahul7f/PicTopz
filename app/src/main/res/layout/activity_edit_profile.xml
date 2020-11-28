@@ -5,22 +5,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EditProfile">
+    tools:context=".EditProfile"
+    android:background="#FF9800">
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="#ffff"
+                android:text="EDIT PROFILE"
+                android:fontFamily="sans-serif"
+                android:background="#FF2701"/>
+
             <ImageView
                 android:id="@+id/uploadimage"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/avatar"
-                android:layout_margin="25dp"
+                android:layout_margin="15dp"
+                app:tint="#fff" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPDATE"
+                android:fontFamily="sans-serif"
+                android:textColor="#ffff"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:layout_marginTop="25dp"/>
+            <EditText
+                android:id="@+id/edit_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:hint="User Name"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/user_icon"
+                android:padding="10dp"
                 />
+
+            <EditText
+                android:id="@+id/edit_email_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:hint="Email"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/user_icon"
+                android:padding="10dp"
+                android:inputType="textEmailAddress"
+                />
+
+            <EditText
+                android:id="@+id/edit_phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:hint="Phone"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/phone_icon"
+                android:padding="10dp"
+                android:inputType="phone"
+                />
+
+            <ImageView
+                android:id="@+id/edit_btn"
+                android:padding="2sp"
+                android:layout_marginTop="40sp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/back_icon"
+                android:rotation="180"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/circle"
+                android:layout_gravity="center"
+                app:tint="#FF9800" />
+
         </LinearLayout>
     </ScrollView>
 
