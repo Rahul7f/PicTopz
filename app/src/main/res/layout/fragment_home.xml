@@ -9,7 +9,7 @@
     tools:context=".ui.fragment.HomeFragment">
 
 
-    <include layout="@layout/home_toolbar_layout"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -25,7 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class DrawerActivity extends AppCompatActivity {
 
-    ImageView imageView5;
+    ImageView imageView5,imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,16 @@ public class DrawerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mDrawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        imageView = findViewById(R.id.profile);
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DrawerActivity.this, Profile.class));
             }
         });
 
