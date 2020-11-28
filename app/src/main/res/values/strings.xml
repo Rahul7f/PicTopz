@@ -18,4 +18,11 @@ Omittam adolescens et eum, pro ad malis mediocritatem, ut postea option nec. Te 
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <string-array name="contests_list">
+        <item>NATURE</item>
+        <item>PORTRAIT</item>
+        <item>WILDLIFE</item>
+        <item>ABSTRACT</item>
+    </string-array>
+
 </resources>

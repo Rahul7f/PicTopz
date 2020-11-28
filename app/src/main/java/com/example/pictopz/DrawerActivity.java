@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pictopz.ui.UploadContest;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -70,6 +71,7 @@ public class DrawerActivity extends AppCompatActivity    {
                         break;
 
                     case R.id.create_contest:
+                        startActivity(new Intent(DrawerActivity.this,UploadContest.class));
                         Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
                         break;
 
