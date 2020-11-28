@@ -55,5 +55,8 @@ dependencies {
     // image crop
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
+    //firebase storage
+    implementation 'com.google.firebase:firebase-storage'
+
 
 }
