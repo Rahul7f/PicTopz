@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pictopz.ui.fragment.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -82,14 +83,21 @@ public class DrawerActivity extends AppCompatActivity    {
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
+                    .addToBackStack("HOME")
                     .commit();
+
             return true;
         }
         return false;
     }
-        
 
+    @Override
+    public void onBackPressed() {
+       // HomeFragment fragment=(HomeFragment)getSupportFragmentManager().findFragmentByTag("HOME");
+        super.onBackPressed();
+    }
 }
