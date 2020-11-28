@@ -41,7 +41,7 @@ public class UpcomingContests extends Fragment {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                arrayList.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
                     arrayList.add(snapshot1.getValue(ContestObject.class));
                 }
