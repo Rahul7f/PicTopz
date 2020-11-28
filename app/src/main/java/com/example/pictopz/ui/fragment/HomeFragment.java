@@ -26,9 +26,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
-
-
         RecyclerView recyclerView=root.findViewById(R.id.home_story_recycleview);
         recyclerView.setAdapter(new StoryAdapter());
 

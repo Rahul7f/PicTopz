@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ public class Profile extends AppCompatActivity {
     FirebaseUser user;
     TextView name_tv,email_tv,phone_tv;
     DatabaseReference ref;
+    Button edit_profile_btn;
 
     boolean i = true;
     int logos[] = {R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
@@ -52,6 +55,7 @@ public class Profile extends AppCompatActivity {
         email_tv = findViewById(R.id.email_tv);
         phone_tv = findViewById(R.id.mobile_tv);
         profile_image = findViewById(R.id.profile_image_view);
+        edit_profile_btn = findViewById(R.id.edit_profile_btn);
         ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid());
         //hooks end
 
@@ -66,6 +70,13 @@ public class Profile extends AppCompatActivity {
                 mAuth.signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        edit_profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
                 startActivity(intent);
             }
         });
@@ -101,6 +112,16 @@ public class Profile extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String name,email,phone;
+                Uri image_url;
+                if (snapshot.exists())
+                {
+
+                }
+                else {
+
+                }
 
 
 

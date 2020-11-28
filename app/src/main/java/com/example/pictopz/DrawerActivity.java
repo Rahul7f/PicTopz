@@ -62,10 +62,13 @@ public class DrawerActivity extends AppCompatActivity    {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
+
                 switch (item.getItemId()){
+
                     case R.id.nav_home:
                         Toast.makeText(DrawerActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
+
                     case R.id.create_contest:
                         Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
                         break;
@@ -89,7 +92,6 @@ public class DrawerActivity extends AppCompatActivity    {
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack("HOME")
                     .commit();
-
             return true;
         }
         return false;
