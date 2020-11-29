@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.pictopz.ui.PhoneAuthActivity;
+
 public class SplashScreen extends AppCompatActivity {
 
     @Override
@@ -16,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+                startActivity(new Intent(SplashScreen.this, PhoneAuthActivity.class));
                 finish();
             }
         }, secondsDelayed * 3000);

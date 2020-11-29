@@ -2,8 +2,6 @@ package com.example.pictopz;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pictopz.unused.GoogleSignin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -42,7 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         email_et = findViewById(R.id.login_email_et);
         password_et = findViewById(R.id.login_password_et);
         google_signup = findViewById(R.id.google_signin);
+        google_signup.setClickable(false);
         facebook_signup = findViewById(R.id.facebook_signin);
+        facebook_signup.setClickable(false);
         noaccount = findViewById(R.id.no_account);
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
          google_signup.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,GoogleSignin.class));
+                startActivity(new Intent(LoginActivity.this, GoogleSignin.class));
              }
          });
 

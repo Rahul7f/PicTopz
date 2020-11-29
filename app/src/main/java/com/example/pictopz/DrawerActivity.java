@@ -5,26 +5,17 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pictopz.ui.UploadContest;
-import com.example.pictopz.ui.fragment.HomeFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.pictopz.ui.fragment.UpcomingContests;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class DrawerActivity extends AppCompatActivity    {
 
@@ -79,6 +70,7 @@ public class DrawerActivity extends AppCompatActivity    {
                         fragment = new UpcomingContests();
                         break;
                 }
+                mDrawer.closeDrawer(Gravity.LEFT);
 
                 return loadFragment(fragment) ;
             }

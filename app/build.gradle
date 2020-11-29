@@ -42,7 +42,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     //firebase auth
     implementation 'com.google.firebase:firebase-auth'
-    //play service
+    implementation 'androidx.browser:browser:1.2.0'    //play service
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     //firebase real time database
     implementation 'com.google.firebase:firebase-database'

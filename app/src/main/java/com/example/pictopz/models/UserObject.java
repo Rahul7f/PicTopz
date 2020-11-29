@@ -1,4 +1,4 @@
-package com.example.pictopz;
+package com.example.pictopz.models;
 
 public class UserObject {
     public String username;

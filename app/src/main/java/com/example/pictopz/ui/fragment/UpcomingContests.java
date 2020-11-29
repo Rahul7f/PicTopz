@@ -1,4 +1,4 @@
-package com.example.pictopz;
+package com.example.pictopz.ui.fragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.pictopz.R;
 import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
 import com.example.pictopz.models.ContestObject;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 public class UpcomingContests extends Fragment {
 
-    ArrayList<ContestObject> arrayList=new ArrayList<>();
+    public static ArrayList<ContestObject> arrayList=new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +34,8 @@ public class UpcomingContests extends Fragment {
         View root = inflater.inflate(R.layout.activity_upcoming_contest, container, false);
 
         final RecyclerView recyclerView=root.findViewById(R.id.contest_recycle_view);
-        final UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(getContext(),arrayList);
+        final UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(getContext(),arrayList,getActivity());
         recyclerView.setAdapter(adapter);
-
 
         DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference("/contests/");
         dbRef.addValueEventListener(new ValueEventListener() {

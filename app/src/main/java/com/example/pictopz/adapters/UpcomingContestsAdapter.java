@@ -1,9 +1,7 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
-import com.example.pictopz.ShowOneContest;
+import com.example.pictopz.ui.fragment.ShowOneContest;
 import com.example.pictopz.models.ContestObject;
-import com.example.pictopz.ui.UploadContest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,14 +28,17 @@ import java.util.concurrent.TimeUnit;
 
 public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContestsAdapter.MyViewHolder> {
 
-Context context;
+    Context context;
+    FragmentActivity activity;
     GregorianCalendar calendar= new GregorianCalendar();
     String oldTime = calendar.get(GregorianCalendar.DAY_OF_MONTH)+"."+calendar.get(GregorianCalendar.MONTH)+"."+calendar.get(GregorianCalendar.YEAR)+", "+calendar.get(GregorianCalendar.HOUR)+":"+calendar.get(GregorianCalendar.MINUTE);
 
-ArrayList<ContestObject> arrayList;
-    public UpcomingContestsAdapter(Context context, ArrayList<ContestObject> arrayList) {
+    ArrayList<ContestObject> arrayList;
+
+    public UpcomingContestsAdapter(Context context, ArrayList<ContestObject> arrayList, FragmentActivity activity) {
         this.context=context;
         this.arrayList=arrayList;
+        this.activity=activity;
     }
 
     @NonNull
@@ -48,8 +51,21 @@ ArrayList<ContestObject> arrayList;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.category.setText(arrayList.get(position).category);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowOneContest showOneContest=new ShowOneContest(arrayList.get(position));
+                FragmentManager manager=activity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction= manager.beginTransaction();
+                fragmentTransaction
+                        .replace(R.id.fragment_container,showOneContest)
+                        .addToBackStack("UPCOMING CONTEST")
+                        .commit();
+            }
+        });
+
         Glide
                 .with(context)
                 .load(arrayList.get(position).imageUrl)
