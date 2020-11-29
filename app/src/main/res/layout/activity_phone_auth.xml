@@ -3,7 +3,6 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/side_nav_bar"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,27 +13,29 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:scaleType="center"
-            android:layout_width="300sp"
-            android:layout_height="400dp"
-            android:src="@drawable/ic_logo2" />
+           android:scaleType="centerCrop"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_logo"
+            android:layout_margin="25dp"/>
 
         <TextView
             android:id="@+id/status"
             android:text="Signed Out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             />
 
         <TextView
             android:id="@+id/detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Firebase User ID: 123456789abc" />
+            tools:text="Firebase User ID: 123456789abc"
+            android:visibility="gone"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
-
-
 
 
         <LinearLayout
@@ -53,18 +54,30 @@
                 <EditText
                     android:id="@+id/fieldPhoneNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone"
+                    android:layout_height="50dp"
+                    android:hint="Enter Phone"
                     android:layout_weight="1.0"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/phone_icon"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/rectange"
+                    android:padding="5dp"/>
 
                 <EditText
                     android:id="@+id/fieldVerificationCode"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Code"
+                    android:layout_height="50dp"
+                    android:hint=" Enter OTP"
+                    android:background="@drawable/rectange"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_weight="1.0"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:drawablePadding="10dp"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:padding="5dp"/>
 
             </LinearLayout>
 
@@ -72,28 +85,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3.0">
+                android:weightSum="3.0"
+                android:layout_marginTop="25dp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonStartVerification"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Send OTP"/>
+                    android:text="Send OTP"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/orange" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonVerifyPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Verfiy"/>
+                    android:text="Verfiy"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/orange"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonResend"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Resend"/>
+                    android:text="Resend"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/orange"/>
             </LinearLayout>
 
         </LinearLayout>
