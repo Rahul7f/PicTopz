@@ -264,7 +264,7 @@ public class UploadContest extends AppCompatActivity  {
         String url="/contests/";
 
         ContestObject contestObject=new ContestObject(Imageurl,spinner.getSelectedItem().toString(),NewLong);
-        FirebaseUploadData uploadData=new FirebaseUploadData(UploadContest.this,url,contestObject) {
+        FirebaseUploadData uploadData=new FirebaseUploadData(UploadContest.this,url+"/"+UUID.randomUUID().toString(),contestObject) {
             @Override
             public void onSuccessfulUpload() {
                 Toast.makeText(UploadContest.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();

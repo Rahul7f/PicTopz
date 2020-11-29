@@ -23,7 +23,7 @@ public abstract class FirebaseUploadData<E> {
     E object;
     public FirebaseUploadData(Context context,String url,E object){
 
-        database=FirebaseDatabase.getInstance().getReference("/"+url+"/"+ UUID.randomUUID().toString());
+        database=FirebaseDatabase.getInstance().getReference("/"+url+"/");
         this.context=context;
         this.url=url;
         this.object=object;
