@@ -1,4 +1,5 @@
 package com.example.pictopz.ui;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -321,6 +322,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mBinding.status.setText("Signed Out");
         } else {
             // Signed in
+            Intent intent=new Intent(PhoneAuthActivity.this,NewUserActivity.class);
+            intent.putExtra("NUMBER",mAuth.getCurrentUser().getPhoneNumber());
+            startActivity(intent);
+            finish();
+
             mBinding.phoneAuthFields.setVisibility(View.GONE);
             mBinding.signedInButtons.setVisibility(View.VISIBLE);
 
