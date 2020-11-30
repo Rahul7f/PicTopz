@@ -22,6 +22,7 @@ import com.example.pictopz.models.ContestObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +32,7 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
     Context context;
     FragmentActivity activity;
     GregorianCalendar calendar= new GregorianCalendar();
-    String oldTime = calendar.get(GregorianCalendar.DAY_OF_MONTH)+"."+calendar.get(GregorianCalendar.MONTH)+"."+calendar.get(GregorianCalendar.YEAR)+", "+calendar.get(GregorianCalendar.HOUR)+":"+calendar.get(GregorianCalendar.MINUTE);
+    String oldTime = calendar.get(GregorianCalendar.DAY_OF_MONTH)+"."+calendar.get(GregorianCalendar.MONTH)+"."+calendar.get(GregorianCalendar.YEAR)+", "+calendar.get(GregorianCalendar.HOUR)+":"+calendar.get(GregorianCalendar.MINUTE)+":"+calendar.get(Calendar.SECOND);
 
     ArrayList<ContestObject> arrayList;
 
@@ -125,7 +126,7 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
 
 
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
 
         Date oldDate, newDate;
 

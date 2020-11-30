@@ -2,12 +2,15 @@ package com.example.pictopz.ui.fragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ import com.example.pictopz.models.ContestObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class ShowOneContest extends Fragment {
 
     GregorianCalendar calendar= new GregorianCalendar();
-    String oldTime = calendar.get(GregorianCalendar.DAY_OF_MONTH)+"."+calendar.get(GregorianCalendar.MONTH)+"."+calendar.get(GregorianCalendar.YEAR)+", "+calendar.get(GregorianCalendar.HOUR)+":"+calendar.get(GregorianCalendar.MINUTE);
+    String oldTime = calendar.get(GregorianCalendar.DAY_OF_MONTH)+"."+calendar.get(GregorianCalendar.MONTH)+"."+calendar.get(GregorianCalendar.YEAR)+", "+calendar.get(GregorianCalendar.HOUR)+":"+calendar.get(GregorianCalendar.MINUTE)+":"+calendar.get(Calendar.SECOND);
 
 
     ContestObject contestObject;
@@ -34,6 +38,7 @@ public class ShowOneContest extends Fragment {
 
     ImageView imageView;
     TextView textView;
+    Button upload;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +46,7 @@ public class ShowOneContest extends Fragment {
 
         imageView=root.findViewById(R.id.image_contest_layout);
         textView=root.findViewById(R.id.contest_timer_one_contest);
+        upload=root.findViewById(R.id.upload_image_for_contest);
 
         Glide.with(getContext())
                 .load(contestObject.imageUrl)
@@ -54,6 +60,20 @@ public class ShowOneContest extends Fragment {
             }
         };
         myCount.start();
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Participate participate=new Participate();
+                FragmentManager manager=getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction= manager.beginTransaction();
+                fragmentTransaction
+                        .replace(R.id.fragment_container,participate)
+                        .addToBackStack("ONE CONTEST")
+                        .commit();
+            }
+        });
+
 
         return root;
         }
@@ -86,7 +106,7 @@ public class ShowOneContest extends Fragment {
 
 
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
 
         Date oldDate, newDate;
 
