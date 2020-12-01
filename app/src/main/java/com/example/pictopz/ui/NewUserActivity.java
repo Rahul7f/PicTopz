@@ -143,7 +143,7 @@ public class NewUserActivity extends AppCompatActivity {
 
     private void setChangeRequest(){
         changeRequest=new UserProfileChangeRequest.Builder()
-                .setDisplayName(name.getText().toString())
+                .setDisplayName(name.getText().toString()+"/"+username.getText().toString())
                 .build();
 
         Log.e("CHANGE REQUEST","REQUEST SENT");

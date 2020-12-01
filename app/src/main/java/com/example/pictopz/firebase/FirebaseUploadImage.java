@@ -34,7 +34,7 @@ public abstract class FirebaseUploadImage {
 
     }
 
-    public void uploadImage()
+    public void start()
     {
         if (filePath != null) {
 

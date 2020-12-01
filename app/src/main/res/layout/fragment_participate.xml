@@ -21,6 +21,7 @@
             <ImageView
                 android:layout_width="350sp"
                 android:layout_height="350sp"
+                android:id="@+id/upload_image_as_participant"
                 android:background="@drawable/side_nav_bar"
                 />
             <ImageView
@@ -33,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/upload_image_as_participant"
+        android:id="@+id/upload_image_button"
         android:text="Upload"
         />
 

@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ShowOneContest extends Fragment {
@@ -48,6 +49,8 @@ public class ShowOneContest extends Fragment {
         textView=root.findViewById(R.id.contest_timer_one_contest);
         upload=root.findViewById(R.id.upload_image_for_contest);
 
+        HashMap<String,String> ok;
+
         Glide.with(getContext())
                 .load(contestObject.imageUrl)
                 .centerCrop()
@@ -64,11 +67,11 @@ public class ShowOneContest extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Participate participate=new Participate();
+                Participate participate=new Participate(contestObject.contestID);
                 FragmentManager manager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction= manager.beginTransaction();
                 fragmentTransaction
-                        .replace(R.id.fragment_container,participate)
+                        .replace(R.id.fragment_container,participate,"PARTICIPATE")
                         .addToBackStack("ONE CONTEST")
                         .commit();
             }
