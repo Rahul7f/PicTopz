@@ -40,8 +40,10 @@ import static android.app.Activity.RESULT_OK;
 public class Participate extends Fragment {
 
     String contestID;
-    public Participate(String contesId){
+    int limitValue;
+    public Participate(String contesId,int limitValue){
         this.contestID=contesId;
+        this.limitValue=limitValue;
     }
     FirebaseAuth mAuth;
     FirebaseUploadImage imgUpload;
@@ -104,6 +106,19 @@ public class Participate extends Fragment {
             @Override
             public void onSuccessfulUpload() {
                 Toast.makeText(getContext(), "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                setLimit();
+            };
+        };
+        uploadData.uploadData();
+    }
+
+    private void setLimit(){
+        String url="limits/"+contestID+"/"+mAuth.getUid();
+
+        FirebaseUploadData uploadData=new FirebaseUploadData(getContext(),url,limitValue+1) {
+            @Override
+            public void onSuccessfulUpload() {
+                Toast.makeText(getContext(), "Limit Updated Successfully", Toast.LENGTH_SHORT).show();
 
             };
         };

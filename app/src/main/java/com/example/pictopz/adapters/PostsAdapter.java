@@ -1,5 +1,6 @@
 package com.example.pictopz.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
+import com.example.pictopz.models.ApprovedPostObject;
+
+import java.util.ArrayList;
 
 public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolder> {
 
+    ArrayList<ApprovedPostObject> approvedPostObjects=new ArrayList<>();
+    Context context;
+    public PostsAdapter(Context context,ArrayList<ApprovedPostObject> approvedPostObjects) {
+        this.context=context;
+        this.approvedPostObjects = approvedPostObjects;
+    }
 
     @NonNull
     @Override
@@ -24,12 +35,21 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull PostsAdapter.MyViewHolder holder, int position) {
-        //holder.ranking.setText();
+
+        holder.username.setText(approvedPostObjects.get(position).userName);
+        Glide
+                .with(context)
+                .load(approvedPostObjects.get(position).imgURL)
+                .centerCrop()
+                .into(holder.post_image);
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return approvedPostObjects.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

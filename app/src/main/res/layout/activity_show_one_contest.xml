@@ -132,6 +132,14 @@
 
            </LinearLayout>
 
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/uplaod_limit_per_comp"
+               android:text="0/5"
+               android:gravity="center"
+               />
+
            <Button
                android:id="@+id/upload_image_for_contest"
                android:layout_width="match_parent"
