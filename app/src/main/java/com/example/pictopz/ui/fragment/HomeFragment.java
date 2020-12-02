@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
 
     ImageView imageView;
     ArrayList<ApprovedPostObject> approvedPostObjects=new ArrayList<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment {
                 approvedPostObjects.add(snapshot1.getValue(ApprovedPostObject.class));
                 postAdapter.notifyDataSetChanged();
 
-
+              // Log.e("likeno", approvedPostObjects.get(2).likeNo);
             }
 
             @Override

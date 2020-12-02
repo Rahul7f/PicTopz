@@ -97,10 +97,12 @@ public class Participate extends Fragment {
 
     private void uploadData(String Imageurl){
         String url="/images/unApproved/";
+        int likesNo =0;
+        int commentsNo=0;
         String key= UUID.randomUUID().toString();
         url+=key;
 
-        UnApprovedDataObject unApprovedDataObject=new UnApprovedDataObject(Imageurl,key,getUsername(mAuth.getCurrentUser().getDisplayName()),mAuth.getUid(),contestID);
+        UnApprovedDataObject unApprovedDataObject=new UnApprovedDataObject(Imageurl,key,getUsername(mAuth.getCurrentUser().getDisplayName()),mAuth.getUid(),contestID,likesNo,commentsNo);
 
         FirebaseUploadData uploadData=new FirebaseUploadData(getContext(),url,unApprovedDataObject) {
             @Override

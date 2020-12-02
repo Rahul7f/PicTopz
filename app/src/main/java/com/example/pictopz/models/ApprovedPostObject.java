@@ -6,8 +6,18 @@ public class ApprovedPostObject {
     public String userName;
     public String userUID;
     public String contestID;
-    public long nOfLikes;
-    public long nOfComments;
+    public int likesNo;
+    public int commentsNo;
+
+    public ApprovedPostObject(String imgURL, String dataID, String userName, String userUID, String contestID, int likesNo, int commentsNo) {
+        this.imgURL = imgURL;
+        this.dataID = dataID;
+        this.userName = userName;
+        this.userUID = userUID;
+        this.contestID = contestID;
+        this.likesNo = likesNo;
+        this.commentsNo = commentsNo;
+    }
 
     ApprovedPostObject(){
 

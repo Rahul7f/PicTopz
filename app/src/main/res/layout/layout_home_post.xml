@@ -1,83 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="10sp"
-    >
+    android:orientation="vertical">
 
 
-    <TextView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
-        android:id="@+id/layout_home_username"
-        android:paddingHorizontal="10sp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/orangecircle"
+        android:orientation="horizontal">
 
-        android:text="UPLOADER"
-        android:textColor="@android:color/white"
-        />
-    
+        <TextView
+            android:id="@+id/layout_home_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/orangecircle"
+            android:paddingHorizontal="10sp"
+            android:text="UPLOADER"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            tools:layout_editor_absoluteY="12dp"
+            android:layout_margin="5dp"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp">
+            <ImageView
+                android:id="@+id/layout_home_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle2d"
+                android:padding="6sp"
+                android:src="@drawable/comment"
+                tools:layout_editor_absoluteX="161dp" />
+            <TextView
+                android:id="@+id/commentNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp">
+            <ImageView
+                android:id="@+id/layout_home_like"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/circle2d"
+                android:padding="6sp"
+                android:src="@drawable/heart"
+                app:tint="#EDAF9B" />
+            <TextView
+                android:id="@+id/likeNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#000"/>
+
+        </LinearLayout>
+
+
+
+
+        <ImageView
+            android:id="@+id/layout_home_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle2d"
+            android:padding="6sp"
+            android:layout_gravity="center"
+            android:src="@drawable/arrow_forward"
+            android:layout_marginLeft="50dp" />
+
+
+    </LinearLayout>
 
     <ImageView
-        app:layout_constraintStart_toEndOf="@id/layout_home_username"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
-        app:layout_constraintEnd_toStartOf="@id/layout_home_favourite"
+        android:id="@+id/layout_home_post_image"
+        android:layout_width="match_parent"
 
-        android:src="@drawable/comment"
-        android:padding="6sp"
-        android:background="@drawable/circle2d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_home_comment"/>
+        android:layout_height="300sp"
+        android:layout_marginVertical="7sp"
 
-    <ImageView
-        app:layout_constraintStart_toEndOf="@id/layout_home_comment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
-        app:layout_constraintEnd_toStartOf="@id/layout_home_more"
+        android:scaleType="centerCrop"
 
-        android:src="@drawable/heart"
-        android:padding="6sp"
-        android:background="@drawable/circle2d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_home_favourite"/>
-    <ImageView
-        app:layout_constraintBottom_toTopOf="@id/layout_home_post_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/arrow_forward"
-        android:padding="6sp"
-        android:background="@drawable/circle2d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_home_more" />
-
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="300sp"
-
-      android:scaleType="centerCrop"
-      android:layout_marginVertical="7sp"
-
-      android:id="@+id/layout_home_post_image"
-
-      app:layout_constraintTop_toBottomOf="@id/layout_home_comment"
-      android:src="@drawable/sample_image"
-      />
+        android:src="@drawable/sample_image"
+        tools:layout_editor_absoluteY="43dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_home_post_image"
         android:background="@color/orange"
-        />
+        tools:layout_editor_absoluteY="343dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
