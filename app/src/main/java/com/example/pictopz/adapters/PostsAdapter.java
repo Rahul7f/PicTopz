@@ -71,11 +71,9 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
                 if(snapshot.exists()){
                     sharedPrefs.setPrefBool(approvedPostObjects.get(position).dataID,true);
                     holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart,null));
-                    holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo+1));
                 }else {
                     sharedPrefs.setPrefBool(approvedPostObjects.get(position).dataID,false);
                     holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart2,null));
-                    holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo));
                 }
             }
 
@@ -89,7 +87,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             @Override
             public void onClick(View view) {
 
-                setBitmap(approvedPostObjects.get(position).dataID,approvedPostObjects.get(position).likesNo,holder);
+                setBitmap(approvedPostObjects.get(position).dataID,holder,position);
 
             }
         });
@@ -117,41 +115,39 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
         }
     }
 
-    private void setBitmap(String key,int noOfLikes,MyViewHolder holder){
-        if(sharedPrefs.getPrefBool(key)){
-            //liked
+    private void setBitmap(String key,MyViewHolder holder,int pos){
+        if(!sharedPrefs.getPrefBool(key)){
+            //picture not liked
+            //so liking it here
             likeOrUnlikeFunction(context,key,true);
-            sharedPrefs.setPrefBool(key,false);
-            holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart,null));
-            holder.likeNo.setText(String.valueOf(noOfLikes+1));
-        }else{
-            //not liked
-            likeOrUnlikeFunction(context,key,false);
             sharedPrefs.setPrefBool(key,true);
+            holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart,null));
+            holder.likeNo.setText(String.valueOf(approvedPostObjects.get(pos).likesNo+=1));
+        }else{
+            //picture is already liked
+            //so unliking it here
+            likeOrUnlikeFunction(context,key,false);
+            sharedPrefs.setPrefBool(key,false);
             holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart2,null));
-            holder.likeNo.setText(String.valueOf(noOfLikes));
+            holder.likeNo.setText(String.valueOf(approvedPostObjects.get(pos).likesNo-=1));
         }
-    }
-
-    private void setHeartBitmap(){
-
     }
 
     private void likeOrUnlikeFunction(Context context,String postID,boolean like){
 
-        String data="";
         FirebaseUser user=mAuth.getCurrentUser();
         if(like){
-            data=getUsername(user.getDisplayName());
+            FirebaseUploadData<String> uploadData=new FirebaseUploadData<String>(context,"/likes/"+postID+"/"+user.getUid(),getUsername(user.getDisplayName())) {
+                @Override
+                public void onSuccessfulUpload() {
+                    Log.e("Like","Response Like");
+                }
+            };
+            uploadData.uploadData();
+        }else{
+            FirebaseDatabase.getInstance().getReference("/likes/"+postID+"/"+user.getUid()).removeValue();
+            Log.e("Like","Response Unlike");
         }
-
-        FirebaseUploadData<String> uploadData=new FirebaseUploadData<String>(context,"/likes/"+postID+"/"+user.getUid(),data) {
-            @Override
-            public void onSuccessfulUpload() {
-                Log.e("Like","response sent");
-            }
-        };
-        uploadData.uploadData();
     }
 
     private String getUsername(String str){
