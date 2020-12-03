@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.adapters.ProfileGridAdapter;
+import com.example.pictopz.models.UserProfileObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -25,15 +26,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class Profile extends AppCompatActivity {
 
     GridView simpleGrid;
     ImageView gridChange,logout,profile_image;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    TextView name_tv,email_tv,phone_tv;
+    TextView name_tv,email_tv,phone_tv,followersCount,followingCount;
     DatabaseReference ref;
     Button edit_profile_btn;
+    ArrayList<UserProfileObject> userProfileObjects;
 
     boolean i = true;
     int logos[] = {R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
@@ -55,6 +59,8 @@ public class Profile extends AppCompatActivity {
         name_tv = findViewById(R.id.name_tv);
         email_tv = findViewById(R.id.email_tv);
         phone_tv = findViewById(R.id.mobile_tv);
+        followersCount = findViewById(R.id.followersCount);
+        followingCount = findViewById(R.id.followingCount);
         profile_image = findViewById(R.id.profile_image_view);
         edit_profile_btn = findViewById(R.id.edit_profile_btn);
         ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid());
@@ -118,6 +124,11 @@ public class Profile extends AppCompatActivity {
                 Uri image_url;
                 if (snapshot.exists())
                 {
+//                    UserProfileObject UserProfileObject = new UserProfileObject();
+//                    for (DataSnapshot dataSnapshot: snapshot.getChildren())
+//                    {
+//                        userProfileObjects  = dataSnapshot.getValue(userProfileObjects.class);
+//                    }
 
                     // for name
                   if (snapshot.child("username").exists())
@@ -165,6 +176,25 @@ public class Profile extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(Profile.this, "please update your profile", Toast.LENGTH_SHORT).show();
+                }
+
+                if (snapshot.child("follower").exists())
+                {
+                   ref.child("follower").addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError error) {
+
+                       }
+                   });
+                }
+                else
+                {
+                    Toast.makeText(Profile.this, "please update your phone number", Toast.LENGTH_SHORT).show();
                 }
 
             }
