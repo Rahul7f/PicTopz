@@ -1,6 +1,7 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.CustomSharedPrefs;
+import com.example.pictopz.Profile;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.models.ApprovedPostObject;
@@ -92,6 +94,19 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             }
         });
 
+        holder.gotoProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =  new Intent(context, Profile.class);
+                intent.putExtra("userID",approvedPostObjects.get(position).userUID);
+                intent.putExtra("userName",approvedPostObjects.get(position).userName);
+                context.startActivity(intent);
+
+
+            }
+        });
+
     }
 
     @Override
@@ -101,7 +116,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView username,likeNo,commentNo;
-        ImageView post_image,like_btn,comment_bnt;
+        ImageView post_image,like_btn,comment_bnt,gotoProfile;
         public MyViewHolder(View itemview){
             super(itemview);
             post_image=(ImageView)itemview.findViewById(R.id.layout_home_post_image);
@@ -111,6 +126,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             username=(TextView)itemview.findViewById(R.id.layout_home_username);
             likeNo=(TextView)itemview.findViewById(R.id.likeNo);
             commentNo=(TextView)itemview.findViewById(R.id.commentNo);
+            gotoProfile=(ImageView) itemview.findViewById(R.id.layout_home_more);
 
         }
     }

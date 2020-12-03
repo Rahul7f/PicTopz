@@ -24,18 +24,24 @@ public class FollowersActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FollowersAdapter followersAdapter;
     FirebaseAuth mAuth;
+    String path;
+    String userUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
+        path = getIntent().getStringExtra("path");
+        userUID = getIntent().getStringExtra("userID");
+        Toast.makeText(this, path, Toast.LENGTH_SHORT).show();
+
         mAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.followersList_recycleView);
-        followersAdapter = new FollowersAdapter(arrayList,getApplicationContext(),mAuth.getCurrentUser().getUid());
+        followersAdapter = new FollowersAdapter(arrayList,getApplicationContext(),userUID,path);
         recyclerView.setAdapter(followersAdapter);
 
 
-        DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference("/followers/"+mAuth.getCurrentUser().getUid());
+        DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference(path+userUID);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -51,7 +57,7 @@ public class FollowersActivity extends AppCompatActivity {
                     }
 
                     followersAdapter.notifyDataSetChanged();
-                    Toast.makeText(FollowersActivity.this, "followers", Toast.LENGTH_SHORT).show();
+
                 }
                 else
                 {

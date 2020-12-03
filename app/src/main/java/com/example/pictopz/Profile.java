@@ -11,12 +11,16 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.adapters.ProfileGridAdapter;
 import com.example.pictopz.models.UserProfileObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -34,10 +38,13 @@ public class Profile extends AppCompatActivity {
     ImageView gridChange,logout,profile_image;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    TextView name_tv,email_tv,phone_tv,followersCount,followingCount;
+    TextView name_tv,email_tv,phone_tv,followersCount_textView,followingCount_textView;
+    LinearLayout followersCount,followingCount;
     DatabaseReference ref;
     Button edit_profile_btn;
     ArrayList<UserProfileObject> userProfileObjects;
+    String userUID,userName;
+    String status;
 
     boolean i = true;
     int logos[] = {R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
@@ -50,6 +57,8 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         //hook
+        userUID = getIntent().getStringExtra("userID");
+        userName = getIntent().getStringExtra("userName");
         user = FirebaseAuth.getInstance().getCurrentUser();
         gridChange = findViewById(R.id.grid_to_l);
         mAuth = FirebaseAuth.getInstance();
@@ -61,12 +70,16 @@ public class Profile extends AppCompatActivity {
         phone_tv = findViewById(R.id.mobile_tv);
         followersCount = findViewById(R.id.followersCount);
         followingCount = findViewById(R.id.followingCount);
+        followersCount_textView = findViewById(R.id.followersCount_textView);
+        followingCount_textView = findViewById(R.id.followingCount_textView);
         profile_image = findViewById(R.id.profile_image_view);
         edit_profile_btn = findViewById(R.id.edit_profile_btn);
-        ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid());
+        ref = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
         //hooks end
 
         getUserData();
+
+        checkFollower();
 
         ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(), logos);
         simpleGrid.setAdapter(customAdapter);
@@ -84,14 +97,38 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                intent.putExtra("path","/followers/");
+                intent.putExtra("userID",userUID);
                 startActivity(intent);
             }
         });
+
+        followingCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                intent.putExtra("path","/following/");
+                intent.putExtra("userID",userUID);
+                startActivity(intent);
+            }
+        });
+
         edit_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(intent);
+                switch (status)
+                {
+                    case "edit":
+                        editProfile();
+                        break;
+                    case "Followed":
+                        unFollow();
+                        break;
+                    case "Unfollow":
+                        follow();
+                        break;
+                }
+
             }
         });
 
@@ -139,13 +176,11 @@ public class Profile extends AppCompatActivity {
                 if (userProfileObject.phone!=null)
                     phone_tv.setText(userProfileObject.phone);
 
-                followersCount.setText(String.valueOf(userProfileObject.followers));
-                followingCount.setText(String.valueOf(userProfileObject.following));
+                followersCount_textView.setText(String.valueOf(userProfileObject.followers));
+                followingCount_textView.setText(String.valueOf(userProfileObject.following));
 
                 if (userProfileObject.profileURL!=null)
                     Glide.with(getApplicationContext()).load(userProfileObject.profileURL).into(profile_image);
-                Toast.makeText(Profile.this, "update profile photo", Toast.LENGTH_SHORT).show();
-
                 }
 
             @Override
@@ -161,7 +196,72 @@ public class Profile extends AppCompatActivity {
 //        phone_tv.setText(user.getPhoneNumber());
     }
 
+  void editProfile()
+  {
+      Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+      startActivity(intent);
+  }
 
+    void checkFollower()
+    {
+        if (userUID.equals(mAuth.getUid()))
+        {
+            edit_profile_btn.setText("Edit Profile");
+            status = "edit";
+        }
+        else
+        {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists())
+                    {
+                        edit_profile_btn.setText("UnFollow");
+                        status = "Followed";
+                    }
+                    else {
+                        edit_profile_btn.setText("Follow");
+                        status = "Unfollow";
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+
+
+    }
+
+    void  follow()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+        reference.setValue(userName);
+        String myusername = getUsername(mAuth.getCurrentUser().getDisplayName());
+
+        DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+        referenceto.setValue(myusername);
+
+    }
+
+    void unFollow()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+        reference.removeValue();
+
+        DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+        referenceto.removeValue();
+
+    }
+
+    private String getUsername(String str){
+        return str.split("/")[1];
+    }
 
 
 }

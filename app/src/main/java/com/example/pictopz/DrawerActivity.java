@@ -14,6 +14,7 @@ import com.example.pictopz.ui.fragment.UpcomingContests;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
@@ -29,6 +30,7 @@ public class DrawerActivity extends AppCompatActivity    {
 
     ImageView imageView5,imageView;
     FirebaseFunctions mFunctions;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class DrawerActivity extends AppCompatActivity    {
         setContentView(R.layout.activity_drawer);
 
         mFunctions=FirebaseFunctions.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         final DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
 
@@ -55,7 +58,9 @@ public class DrawerActivity extends AppCompatActivity    {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DrawerActivity.this, Profile.class));
+                Intent intent = new Intent(DrawerActivity.this, Profile.class);
+                intent.putExtra("userID",mAuth.getCurrentUser().getUid());
+                startActivity(intent);
             }
         });
 

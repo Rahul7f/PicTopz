@@ -70,12 +70,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
                 <LinearLayout
+                    android:id="@+id/followersCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
                     <TextView
-                        android:id="@+id/followersCount"
+                        android:id="@+id/followersCount_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25dp"
@@ -95,12 +96,13 @@
 
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/followingCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
                     <TextView
-                        android:id="@+id/followingCount"
+                        android:id="@+id/followingCount_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25dp"

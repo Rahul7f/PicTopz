@@ -23,11 +23,14 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.MyVi
     ArrayList<FollowersObject> arrayList;
     Context context;
     String currentUser;
+    String path;
 
-    public FollowersAdapter(ArrayList<FollowersObject> arrayList, Context context,String currentUser) {
+
+    public FollowersAdapter(ArrayList<FollowersObject> arrayList, Context context,String currentUser,String path) {
         this.arrayList = arrayList;
         this.context = context;
         this.currentUser = currentUser;
+        this.path = path;
     }
 
     @NonNull
@@ -45,9 +48,10 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.MyVi
         holder.removeFollower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/followers/"+currentUser+"/"+arrayList.get(position).followerUID);
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+currentUser+"/"+arrayList.get(position).followerUID);
                 databaseReference.removeValue();
                 notifyDataSetChanged();
+                notifyItemRemoved(position);
             }
         });
     }
