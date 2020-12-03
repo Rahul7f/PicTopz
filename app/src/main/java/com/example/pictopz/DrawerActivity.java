@@ -2,6 +2,7 @@ package com.example.pictopz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,22 +11,31 @@ import android.widget.Toast;
 
 import com.example.pictopz.ui.UploadContest;
 import com.example.pictopz.ui.fragment.UpcomingContests;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DrawerActivity extends AppCompatActivity    {
 
     ImageView imageView5,imageView;
+    FirebaseFunctions mFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+        mFunctions=FirebaseFunctions.getInstance();
 
         final DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
 
@@ -69,6 +79,10 @@ public class DrawerActivity extends AppCompatActivity    {
                     case R.id.upcoming_contest_menu:
                         fragment = new UpcomingContests();
                         break;
+
+                    case R.id.http_test_function:
+                        Log.i("HTTP CALL","ok "+addMessage("Hello beach"));
+                        break;
                 }
                 mDrawer.closeDrawer(Gravity.LEFT);
 
@@ -77,6 +91,26 @@ public class DrawerActivity extends AppCompatActivity    {
         });
     }
 
+    private Task<String> addMessage(String text) {
+        // Create the arguments to the callable function.
+        Map<String, Object> data = new HashMap<>();
+        data.put("text", text);
+        data.put("push", true);
+
+        return mFunctions
+                .getHttpsCallable("addMessage")
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        // This continuation runs on either success or failure, but if the task
+                        // has failed then getResult() will throw an Exception which will be
+                        // propagated down.
+                        String result = (String) task.getResult().getData();
+                        return result;
+                    }
+                });
+    }
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {

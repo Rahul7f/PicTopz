@@ -13,5 +13,8 @@
 
         <item android:id="@+id/upcoming_contest_menu"
             android:title="UpComing Contest"/>
+
+        <item android:id="@+id/http_test_function"
+            android:title="Https Test Function"/>
     </group>
 </menu>

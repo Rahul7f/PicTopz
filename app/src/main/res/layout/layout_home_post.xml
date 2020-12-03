@@ -60,8 +60,9 @@
                 android:layout_height="38dp"
                 android:background="@drawable/circle2d"
                 android:padding="6sp"
-                android:src="@drawable/heart"
-                app:tint="#EDAF9B" />
+                android:src="@drawable/heart2"
+
+                />
             <TextView
                 android:id="@+id/likeNo"
                 android:layout_width="wrap_content"

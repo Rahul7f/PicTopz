@@ -1,6 +1,7 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +11,36 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pictopz.CustomSharedPrefs;
 import com.example.pictopz.R;
+import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolder> {
     ArrayList<ApprovedPostObject> approvedPostObjects=new ArrayList<>();
+    CustomSharedPrefs sharedPrefs;
+    FirebaseAuth mAuth;
     Context context;
     public PostsAdapter(Context context,ArrayList<ApprovedPostObject> approvedPostObjects) {
         this.context=context;
         this.approvedPostObjects = approvedPostObjects;
+        sharedPrefs=new CustomSharedPrefs(context);
+        mAuth=FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -41,6 +54,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
     @Override
     public void onBindViewHolder(@NonNull PostsAdapter.MyViewHolder holder, int position) {
 
+
         holder.username.setText(approvedPostObjects.get(position).userName);
         holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo));
         holder.commentNo.setText(String.valueOf(approvedPostObjects.get(position).commentsNo));
@@ -49,6 +63,36 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
                 .load(approvedPostObjects.get(position).imgURL)
                 .centerCrop()
                 .into(holder.post_image);
+
+        FirebaseDatabase.getInstance().getReference("/likes/"+approvedPostObjects.get(position).dataID+"/"+mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.exists()){
+                    sharedPrefs.setPrefBool(approvedPostObjects.get(position).dataID,true);
+                    holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart,null));
+                    holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo+1));
+                }else {
+                    sharedPrefs.setPrefBool(approvedPostObjects.get(position).dataID,false);
+                    holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart2,null));
+                    holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        holder.like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                setBitmap(approvedPostObjects.get(position).dataID,approvedPostObjects.get(position).likesNo,holder);
+
+            }
+        });
 
     }
 
@@ -64,6 +108,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             super(itemview);
             post_image=(ImageView)itemview.findViewById(R.id.layout_home_post_image);
             like_btn=(ImageView)itemview.findViewById(R.id.layout_home_like);
+            like_btn.setClickable(true);
             comment_bnt=(ImageView)itemview.findViewById(R.id.layout_home_comment);
             username=(TextView)itemview.findViewById(R.id.layout_home_username);
             likeNo=(TextView)itemview.findViewById(R.id.likeNo);
@@ -71,4 +116,47 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
 
         }
     }
+
+    private void setBitmap(String key,int noOfLikes,MyViewHolder holder){
+        if(sharedPrefs.getPrefBool(key)){
+            //liked
+            likeOrUnlikeFunction(context,key,true);
+            sharedPrefs.setPrefBool(key,false);
+            holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart,null));
+            holder.likeNo.setText(String.valueOf(noOfLikes+1));
+        }else{
+            //not liked
+            likeOrUnlikeFunction(context,key,false);
+            sharedPrefs.setPrefBool(key,true);
+            holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart2,null));
+            holder.likeNo.setText(String.valueOf(noOfLikes));
+        }
+    }
+
+    private void setHeartBitmap(){
+
+    }
+
+    private void likeOrUnlikeFunction(Context context,String postID,boolean like){
+
+        String data="";
+        FirebaseUser user=mAuth.getCurrentUser();
+        if(like){
+            data=getUsername(user.getDisplayName());
+        }
+
+        FirebaseUploadData<String> uploadData=new FirebaseUploadData<String>(context,"/likes/"+postID+"/"+user.getUid(),data) {
+            @Override
+            public void onSuccessfulUpload() {
+                Log.e("Like","response sent");
+            }
+        };
+        uploadData.uploadData();
+    }
+
+    private String getUsername(String str){
+        return str.split("/")[1];
+    }
+
+
 }
