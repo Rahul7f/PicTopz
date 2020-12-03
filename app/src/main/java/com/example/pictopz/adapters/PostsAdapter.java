@@ -1,7 +1,8 @@
 package com.example.pictopz.adapters;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.CustomSharedPrefs;
-import com.example.pictopz.Profile;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.models.ApprovedPostObject;
+import com.example.pictopz.ui.fragment.CommentSectionFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,7 +82,6 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
                     holder.like_btn.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.heart2,null));
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -88,25 +91,25 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
         holder.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 setBitmap(approvedPostObjects.get(position).dataID,holder,position);
-
             }
         });
 
-        holder.gotoProfile.setOnClickListener(new View.OnClickListener() {
+
+        holder.comment_bnt.setClickable(true);
+        holder.comment_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment fragment=new CommentSectionFragment(approvedPostObjects.get(position).dataID);
 
-                Intent intent =  new Intent(context, Profile.class);
-                intent.putExtra("userID",approvedPostObjects.get(position).userUID);
-                intent.putExtra("userName",approvedPostObjects.get(position).userName);
-                context.startActivity(intent);
-
-
+                FragmentActivity activity=(FragmentActivity) context;
+                FragmentManager fragmentManager=activity.getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container,fragment)
+                        .addToBackStack("HOME")
+                        .commit();
             }
         });
-
     }
 
     @Override
@@ -116,7 +119,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView username,likeNo,commentNo;
-        ImageView post_image,like_btn,comment_bnt,gotoProfile;
+        ImageView post_image,like_btn,comment_bnt;
         public MyViewHolder(View itemview){
             super(itemview);
             post_image=(ImageView)itemview.findViewById(R.id.layout_home_post_image);
@@ -126,7 +129,6 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             username=(TextView)itemview.findViewById(R.id.layout_home_username);
             likeNo=(TextView)itemview.findViewById(R.id.likeNo);
             commentNo=(TextView)itemview.findViewById(R.id.commentNo);
-            gotoProfile=(ImageView) itemview.findViewById(R.id.layout_home_more);
 
         }
     }

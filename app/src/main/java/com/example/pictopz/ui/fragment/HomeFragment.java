@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
         dbRef.limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                approvedPostObjects.clear();
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                 approvedPostObjects.add(snapshot1.getValue(ApprovedPostObject.class));
                 postAdapter.notifyDataSetChanged();
