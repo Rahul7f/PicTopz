@@ -80,6 +80,13 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        followersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                startActivity(intent);
+            }
+        });
         edit_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,82 +129,24 @@ public class Profile extends AppCompatActivity {
 
                 String name,email,phone;
                 Uri image_url;
-                if (snapshot.exists())
-                {
-//                    UserProfileObject UserProfileObject = new UserProfileObject();
-//                    for (DataSnapshot dataSnapshot: snapshot.getChildren())
-//                    {
-//                        userProfileObjects  = dataSnapshot.getValue(userProfileObjects.class);
-//                    }
+                UserProfileObject userProfileObject = snapshot.getValue(UserProfileObject.class);
+                if (userProfileObject.username!=null)
+                    name_tv.setText(userProfileObject.username);
 
-                    // for name
-                  if (snapshot.child("username").exists())
-                  {
-                     name_tv.setText(snapshot.child("username").getValue().toString());
-                  }
-                  else
-                  {
-                      Toast.makeText(Profile.this, "please update your name", Toast.LENGTH_SHORT).show();
-                  }
+                if (userProfileObject.email!=null)
+                    email_tv.setText(userProfileObject.email);
 
-                    // for email
-                  if (snapshot.child("email").exists())
-                  {
-                      email_tv.setText(snapshot.child("email").getValue().toString());
-                  }
-                  else
-                  {
-                      Toast.makeText(Profile.this, "please update your name", Toast.LENGTH_SHORT).show();
-                  }
+                if (userProfileObject.phone!=null)
+                    phone_tv.setText(userProfileObject.phone);
 
+                followersCount.setText(String.valueOf(userProfileObject.followers));
+                followingCount.setText(String.valueOf(userProfileObject.following));
 
-                    // for phone
-                  if (snapshot.child("phone").exists())
-                  {
-                      phone_tv.setText(snapshot.child("phone").getValue().toString());
-                  }
-                  else
-                  {
-                      Toast.makeText(Profile.this, "please update your phone number", Toast.LENGTH_SHORT).show();
-                  }
-
-
-                    // for profile
-                  if (snapshot.child("userProfile").exists())
-                  {
-                      Glide.with(Profile.this).load(snapshot.child("userProfile").getValue()).into(profile_image);
-                  }
-                  else
-                  {
-                      Toast.makeText(Profile.this, "please update your profile image", Toast.LENGTH_SHORT).show();
-                  }
-
+                if (userProfileObject.profileURL!=null)
+                    Glide.with(getApplicationContext()).load(userProfileObject.profileURL).into(profile_image);
+                Toast.makeText(Profile.this, "update profile photo", Toast.LENGTH_SHORT).show();
 
                 }
-                else {
-                    Toast.makeText(Profile.this, "please update your profile", Toast.LENGTH_SHORT).show();
-                }
-
-                if (snapshot.child("follower").exists())
-                {
-                   ref.child("follower").addValueEventListener(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                       }
-
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError error) {
-
-                       }
-                   });
-                }
-                else
-                {
-                    Toast.makeText(Profile.this, "please update your phone number", Toast.LENGTH_SHORT).show();
-                }
-
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -5,6 +5,8 @@ public class UserProfileObject {
     public String email;
     public String phone;
     public String profileURL;
+    public int followers;
+    public int following;
 
 
     public UserProfileObject() {

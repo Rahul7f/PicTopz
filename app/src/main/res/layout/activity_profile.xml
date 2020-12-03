@@ -67,7 +67,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +78,7 @@
                         android:id="@+id/followersCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="30dp"
+                        android:textSize="25dp"
                         android:text="0"
                         android:gravity="center"
                         android:textStyle="bold"
@@ -86,7 +87,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
+                        android:textSize="16dp"
                         android:textAlignment="center"
                         android:text="Followers"
                         android:gravity="center_horizontal"
@@ -102,7 +103,7 @@
                         android:id="@+id/followingCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="30dp"
+                        android:textSize="25dp"
                         android:text="0"
                         android:gravity="center"
                         android:textStyle="bold"
@@ -111,7 +112,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
+                        android:textSize="16dp"
                         android:textAlignment="center"
                         android:text="Following"
                         android:textColor="#000"
@@ -124,7 +125,7 @@
             <Button
                 android:id="@+id/edit_profile_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textColor="#ffff"
                 android:backgroundTint="#FF9800"
                 android:text="Edit Profile"
