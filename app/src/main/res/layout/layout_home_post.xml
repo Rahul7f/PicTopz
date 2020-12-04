@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             tools:layout_editor_absoluteY="12dp"
-            android:layout_margin="5dp"/>
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -92,8 +92,7 @@
         android:id="@+id/layout_home_post_image"
         android:layout_width="match_parent"
         android:layout_height="300sp"
-        android:scaleType="fitXY"
-        android:layout_marginVertical="7sp"
+        android:scaleType="centerCrop"
         android:src="@drawable/sample_image"
         tools:layout_editor_absoluteY="43dp" />
 
