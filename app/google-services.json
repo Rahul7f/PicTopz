@@ -8,12 +8,49 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:760687683667:android:5e4b62c04c83042389fea6",
+        "android_client_info": {
+          "package_name": "com.example.adminpictopz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760687683667-2mp0k4ur6fqakn01abhl9c6h8dico55l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOkL5EPYMB8SM-N33-ldJazB7dF5OscYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760687683667-2mp0k4ur6fqakn01abhl9c6h8dico55l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:760687683667:android:aecf4328f2103bfe89fea6",
         "android_client_info": {
           "package_name": "com.example.pictopz"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "760687683667-6551e61deel2k1blb4p54sg3hi5eg335.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pictopz",
+            "certificate_hash": "b90fbe32bb9b771ff0b953a2575305c9477195bd"
+          }
+        },
         {
           "client_id": "760687683667-hi7jse4v4dihqj77g3h2f2kj0u8a8bse.apps.googleusercontent.com",
           "client_type": 1,
@@ -29,7 +66,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIM_s7QgzDd9yk6NN4kpbjG7QJhszh9ow"
+          "current_key": "AIzaSyCOkL5EPYMB8SM-N33-ldJazB7dF5OscYc"
         }
       ],
       "services": {

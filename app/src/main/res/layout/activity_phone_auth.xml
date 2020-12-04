@@ -32,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Firebase User ID: 123456789abc"
-            android:visibility="gone"
             android:layout_margin="10dp"/>
 
     </LinearLayout>
