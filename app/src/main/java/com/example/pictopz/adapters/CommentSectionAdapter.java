@@ -32,7 +32,7 @@ public class CommentSectionAdapter extends RecyclerView.Adapter<CommentSectionAd
 
     @Override
     public void onBindViewHolder(@NonNull CommentSectionAdapter.CommentViewHolder holder, int position) {
-        holder.comment_tv.setText(Html.fromHtml("<b>"+getUsername(comment.get(position),true)+"</b> : "+getUsername(comment.get(position),false)));
+        holder.comment_tv.setText(Html.fromHtml("<b>"+getUsername(comment.get(position),true)+"</b> : <br>"+getUsername(comment.get(position),false)));
     }
 
     @Override

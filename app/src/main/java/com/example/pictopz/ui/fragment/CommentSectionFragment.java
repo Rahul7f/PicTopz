@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import com.example.pictopz.R;
 import com.example.pictopz.adapters.CommentSectionAdapter;
 import com.example.pictopz.firebase.FirebaseUploadData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +42,7 @@ public class CommentSectionFragment extends Fragment {
         // Required empty public constructor
         this.postID=postID;
     }
+    String username;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,17 +64,15 @@ public class CommentSectionFragment extends Fragment {
             public void onClick(View view) {
                 if(!comment.getText().equals("")){
                     String data=comment.getText().toString();
-                    String username=user.getDisplayName().split("/")[0];
-                    HashMap<String,String> upload=new HashMap<>();
-                    upload.put(username,data);
-                    FirebaseUploadData<HashMap<String,String>> uploadData=new FirebaseUploadData<HashMap<String, String>>(getContext(),"/comments/"+postID+"/",upload) {
-                        @Override
-                        public void onSuccessfulUpload() {
-                            comment_data.add(username+"/"+data);
-                            comment.setText("");
-                        }
-                    };
-                    uploadData.uploadData();
+                   String username=user.getDisplayName().split("/")[0];
+                   DatabaseReference commentsRef = FirebaseDatabase.getInstance().getReference("/comments/"+postID+"/"+username);
+                   commentsRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                       @Override
+                       public void onComplete(@NonNull Task<Void> task) {
+                           comment_data.add(username+"/"+data);
+                           comment.setText("");
+                       }
+                   });
                 }
             }
         });
@@ -95,4 +95,6 @@ public class CommentSectionFragment extends Fragment {
         });
         return root;
     }
+
+
 }

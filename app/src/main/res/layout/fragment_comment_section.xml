@@ -14,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="Comments"
         android:id="@+id/title_comment"
-        android:textSize="25sp"
+        android:textSize="18sp"
+        android:textColor="@color/orange"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -32,18 +33,19 @@
     android:weightSum="1"
     >
     <EditText
-        android:layout_width="0sp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:hint="Comment"
         android:id="@+id/your_comment_here"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:layout_margin="5dp"
         />
     <Button
-        android:layout_width="0sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="POST"
         android:id="@+id/click_to_post_comment"
-        android:layout_weight="0.2"
         />
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
