@@ -1,7 +1,5 @@
 package com.example.pictopz.adapters;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -10,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -27,13 +23,10 @@ import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.ui.fragment.CommentSectionFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -178,7 +171,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
                     Log.e("Like","Response Like");
                 }
             };
-            uploadData.uploadData();
+            uploadData.start();
         }else{
             FirebaseDatabase.getInstance().getReference("/likes/"+postID+"/"+user.getUid()).removeValue();
             Log.e("Like","Response Unlike");

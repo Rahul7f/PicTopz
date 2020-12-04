@@ -8,7 +8,7 @@
     android:background="@color/orange">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/add_story_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"

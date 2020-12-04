@@ -8,9 +8,18 @@
         android:id="@+id/storyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:spaceBetweenImageAndIndicator="1dp"
+        app:spaceBetweenImageAndIndicator="2dp"
         app:storyImageRadius="15dp"
         app:storyItemIndicatorWidth="2dp"
         app:pendingIndicatorColor="@color/orange"
         />
+<!--<androidx.core.widget.ContentLoadingProgressBar-->
+<!--    style="?android:attr/progressBarStyleHorizontal"-->
+<!--    android:progress="50"-->
+<!--    android:max="100"-->
+<!--    android:progressTint="@color/orange"-->
+<!--    android:progressBackgroundTint="#000"-->
+<!--    android:progressBackgroundTintMode="src_over"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"/>-->
 </FrameLayout>

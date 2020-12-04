@@ -198,6 +198,6 @@ public class NewUserActivity extends AppCompatActivity {
             }
         };
 
-        uploadData.uploadData();
+        uploadData.start();
     }
 }

@@ -13,11 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.pictopz.Profile;
 import com.example.pictopz.R;
 import com.example.pictopz.adapters.PostsAdapter;
 import com.example.pictopz.adapters.StoryAdapter;
 import com.example.pictopz.models.ApprovedPostObject;
+import com.example.pictopz.models.StoryObject;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import xute.storyview.StoryModel;
 
 
 public class HomeFragment extends Fragment {
@@ -36,7 +41,8 @@ public class HomeFragment extends Fragment {
     PostsAdapter postAdapter;
     RecyclerView recyclerView1,recyclerView;
     StoryAdapter storyAdapter;
-
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    ArrayList<StoryModel> storyObjectArrayList=new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -69,8 +75,9 @@ public class HomeFragment extends Fragment {
 //                //simpleDateFormat.parse("20-10-2019 10:00:00"),
 //                );
 
+        fetchFollowList();
         recyclerView=root.findViewById(R.id.home_story_recycleview);
-        storyAdapter =new StoryAdapter();
+        storyAdapter =new StoryAdapter(storyObjectArrayList);
         recyclerView.setAdapter(storyAdapter);
         // post
         recyclerView1=root.findViewById(R.id.home_layout_post_recycleview);
@@ -123,4 +130,46 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    private void fetchFollowList(){
+        fetchStories(user.getUid());
+
+        FirebaseDatabase.getInstance().getReference("following/"+user.getUid()).limitToFirst(50).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                for(DataSnapshot users:snapshot.getChildren()){
+                    Log.e(users.getKey(),users.getValue(String.class));
+                    fetchStories(users.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void fetchStories(String otherUserUID){
+        FirebaseDatabase.getInstance().getReference("story/"+otherUserUID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                    for (DataSnapshot stories:snapshot.getChildren()){
+                        StoryObject object=stories.getValue(StoryObject.class);
+                        StoryModel model=new StoryModel(object.imageURL,object.uploaderUID,String.valueOf(object.uploadTime));
+                        storyObjectArrayList.add(model);
+                        Log.e("Story","no stories to check lol");
+                    }
+                storyAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

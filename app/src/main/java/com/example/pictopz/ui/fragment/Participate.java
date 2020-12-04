@@ -24,9 +24,7 @@ import android.widget.Toast;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.firebase.FirebaseUploadImage;
-import com.example.pictopz.models.ContestObject;
 import com.example.pictopz.models.UnApprovedDataObject;
-import com.example.pictopz.ui.UploadContest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -111,7 +109,7 @@ public class Participate extends Fragment {
                 setLimit();
             };
         };
-        uploadData.uploadData();
+        uploadData.start();
     }
 
     private void setLimit(){
@@ -124,7 +122,7 @@ public class Participate extends Fragment {
 
             };
         };
-        uploadData.uploadData();
+        uploadData.start();
     }
 
     private String getRealname(String str){

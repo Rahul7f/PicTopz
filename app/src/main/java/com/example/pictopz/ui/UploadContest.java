@@ -255,7 +255,7 @@ public class UploadContest extends AppCompatActivity  {
 
             };
         };
-        uploadData.uploadData();
+        uploadData.start();
     }
 
 }
