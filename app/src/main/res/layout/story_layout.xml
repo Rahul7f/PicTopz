@@ -10,5 +10,6 @@
         android:layout_height="wrap_content"
         app:spaceBetweenImageAndIndicator="1dp"
         app:storyImageRadius="10dp"
-        app:storyItemIndicatorWidth="1dp"/>
+        app:storyItemIndicatorWidth="1dp"
+        app:pendingIndicatorColor="@color/orange"/>
 </FrameLayout>
