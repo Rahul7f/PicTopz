@@ -51,12 +51,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadRecycleViewData();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-//                swipeRefreshLayout.setRefreshing(true);
+//
 //                loadRecycleViewData();
 
             }
