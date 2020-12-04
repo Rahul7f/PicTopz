@@ -70,7 +70,7 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
         Glide
                 .with(context)
                 .load(arrayList.get(position).imageUrl)
-                .centerCrop()
+//                .centerCrop()
                 .into(holder.imageView);
         MyCount counter=new MyCount(convertDate(arrayList.get(position).time),1000) {
             @Override

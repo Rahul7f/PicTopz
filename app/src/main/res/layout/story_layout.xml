@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_margin="5sp"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:id="@+id/story_layout_circle"
-            android:src="@drawable/circle2d"/>
-    <TextView
+<FrameLayout android:layout_margin="5sp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <xute.storyview.StoryView
+        android:id="@+id/storyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/story_layout_text"
-        android:text="STORY"
-        android:textSize="12sp"
-        android:textColor="@color/orange"
-        android:layout_gravity="center"
-        />
+        app:spaceBetweenImageAndIndicator="1dp"
+        app:storyImageRadius="10dp"
+        app:storyItemIndicatorWidth="1dp"/>
 </FrameLayout>

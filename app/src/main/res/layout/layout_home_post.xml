@@ -91,12 +91,9 @@
     <ImageView
         android:id="@+id/layout_home_post_image"
         android:layout_width="match_parent"
-
         android:layout_height="300sp"
+        android:scaleType="fitXY"
         android:layout_marginVertical="7sp"
-
-        android:scaleType="centerCrop"
-
         android:src="@drawable/sample_image"
         tools:layout_editor_absoluteY="43dp" />
 

@@ -67,7 +67,7 @@ public class ShowOneContest extends Fragment {
 
         Glide.with(getContext())
                 .load(contestObject.imageUrl)
-                .centerCrop()
+//                .centerCrop()
                 .into(imageView);
 
 

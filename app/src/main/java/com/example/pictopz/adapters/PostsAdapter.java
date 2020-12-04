@@ -69,7 +69,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
         Glide
                 .with(context)
                 .load(approvedPostObjects.get(position).imgURL)
-                .centerCrop()
+//                .centerCrop()
                 .into(holder.post_image);
 
         FirebaseDatabase.getInstance().getReference("/likes/"+approvedPostObjects.get(position).dataID+"/"+mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

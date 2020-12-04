@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
+
 public class HomeFragment extends Fragment {
 
     ImageView imageView;
@@ -36,11 +38,16 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+        // story
+//        MyStory currentStory = new MyStory(
+//                "dummy-link",
+//                //simpleDateFormat.parse("20-10-2019 10:00:00"),
+//                );
 
         RecyclerView recyclerView=root.findViewById(R.id.home_story_recycleview);
         StoryAdapter storyAdapter=new StoryAdapter();
         recyclerView.setAdapter(storyAdapter);
-
+        // post
         RecyclerView recyclerView1=root.findViewById(R.id.home_layout_post_recycleview);
         PostsAdapter postAdapter=new PostsAdapter(getContext(),approvedPostObjects);
         recyclerView1.setAdapter(postAdapter);
