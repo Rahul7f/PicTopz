@@ -5,16 +5,16 @@
 
 
     <group>
-        <item android:id="@+id/create_contest"
-            android:title="Create Contest"
-            />
+<!--        <item android:id="@+id/create_contest"-->
+<!--            android:title="Create Contest"-->
+<!--            />-->
         <item android:id="@+id/nav_home"
             android:title="Home"/>
 
         <item android:id="@+id/upcoming_contest_menu"
             android:title="UpComing Contest"/>
 
-        <item android:id="@+id/http_test_function"
-            android:title="Https Test Function"/>
+<!--        <item android:id="@+id/http_test_function"-->
+<!--            android:title="Https Test Function"/>-->
     </group>
 </menu>

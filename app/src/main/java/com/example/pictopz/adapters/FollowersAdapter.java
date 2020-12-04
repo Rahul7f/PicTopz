@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pictopz.R;
 import com.example.pictopz.models.FollowersObject;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,13 +25,16 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.MyVi
     Context context;
     String currentUser;
     String path;
+    String userUID;
+    FirebaseAuth mAuth;
 
 
-    public FollowersAdapter(ArrayList<FollowersObject> arrayList, Context context,String currentUser,String path) {
+    public FollowersAdapter(ArrayList<FollowersObject> arrayList, Context context,String currentUser,String path,String userUID) {
         this.arrayList = arrayList;
         this.context = context;
         this.currentUser = currentUser;
         this.path = path;
+        this.userUID = userUID;
     }
 
     @NonNull
@@ -45,15 +49,26 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyView holder, int position) {
         holder.followerName.setText(arrayList.get(position).followerUserName);
-        holder.removeFollower.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+currentUser+"/"+arrayList.get(position).followerUID);
-                databaseReference.removeValue();
-                notifyDataSetChanged();
-                notifyItemRemoved(position);
-            }
-        });
+        mAuth = FirebaseAuth.getInstance();
+        if (userUID.equals(mAuth.getUid()))
+        {
+            holder.removeFollower.setVisibility(View.VISIBLE);
+            holder.removeFollower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+currentUser+"/"+arrayList.get(position).followerUID);
+                    databaseReference.removeValue();
+                    notifyDataSetChanged();
+                    notifyItemRemoved(position);
+                }
+            });
+        }
+        else
+        {
+
+        }
+
+
     }
 
     @Override

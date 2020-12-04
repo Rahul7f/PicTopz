@@ -32,7 +32,8 @@
         android:background="#fff"
         android:text="remove"
         android:layout_weight="1"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"/>
 
 
 </LinearLayout>

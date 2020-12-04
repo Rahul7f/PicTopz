@@ -37,7 +37,7 @@ public class FollowersActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.followersList_recycleView);
-        followersAdapter = new FollowersAdapter(arrayList,getApplicationContext(),userUID,path);
+        followersAdapter = new FollowersAdapter(arrayList,getApplicationContext(),userUID,path,userUID);
         recyclerView.setAdapter(followersAdapter);
 
 

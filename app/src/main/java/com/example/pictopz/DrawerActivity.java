@@ -76,18 +76,18 @@ public class DrawerActivity extends AppCompatActivity    {
                         Toast.makeText(DrawerActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case R.id.create_contest:
-                        startActivity(new Intent(DrawerActivity.this,UploadContest.class));
-                        Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
-                        break;
+//                    case R.id.create_contest:
+//                        startActivity(new Intent(DrawerActivity.this,UploadContest.class));
+//                        Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
+//                        break;
 
                     case R.id.upcoming_contest_menu:
                         fragment = new UpcomingContests();
                         break;
 
-                    case R.id.http_test_function:
-                        Log.i("HTTP CALL","ok "+addMessage("Hello beach"));
-                        break;
+//                    case R.id.http_test_function:
+//                        Log.i("HTTP CALL","ok "+addMessage("Hello beach"));
+//                        break;
                 }
                 mDrawer.closeDrawer(Gravity.LEFT);
 
