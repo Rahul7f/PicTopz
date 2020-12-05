@@ -10,85 +10,84 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/phone_enter_image"
-        android:layout_weight="1"/>
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/phone_enter_image" />
+    <TextView
+        android:id="@+id/dsf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="#03A9F4"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="Verify Your Number"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/phonelogin"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/dsf"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="25dp">
+        <EditText
+            android:id="@+id/input_country_code"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="#03A9F4"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="Verify Your Number"
-            android:layout_margin="10dp"/>
-
-        <TextView
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_bg2"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:hint="+91"
+            android:padding="5dp"/>
+        <EditText
+            android:id="@+id/input_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="@string/phonelogin"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="25dp">
-            <EditText
-                android:id="@+id/input_country_code"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edittext_bg2"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp"
-                android:hint="+91"
-                android:padding="10dp"/>
-            <EditText
-                android:id="@+id/input_phone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="0.2"
-                android:background="@drawable/edittext_bg2"
-                android:hint="123456789"
-                android:padding="10dp"
-                android:drawableLeft="@drawable/phone_icon"
-                android:drawablePadding="10dp"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/send_codebtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_backgroung"
-            android:backgroundTint="#2196F3"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:text="send OTP"
-            android:textColor="#fff"/>
-
-        <TextView
-            android:id="@+id/text_process"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="#4CAF50"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="OTP send Successfully"
-            android:layout_margin="10dp"
-            android:visibility="gone"/>
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:background="@drawable/edittext_bg2"
+            android:hint="123456789"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/phone_icon"
+            android:drawablePadding="10dp"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/send_codebtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_backgroung"
+        android:backgroundTint="#2196F3"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="10dp"
+        android:text="send OTP"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:id="@+id/text_process"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="#4CAF50"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="OTP send Successfully"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_marginBottom="25dp"/>
+
+
+
+
 
 </LinearLayout>

@@ -107,14 +107,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        FirebaseUser user = auth.getCurrentUser();
-//        if (user !=null){
-//            sendToMain();
-//        }
-    }
+
     private void sendToMain(){
         Intent mainIntent = new Intent(PhoneLoginActivity.this , NewUserActivity.class);
         mainIntent.putExtra("NUMBER",phoneNumberEdit.getText());
