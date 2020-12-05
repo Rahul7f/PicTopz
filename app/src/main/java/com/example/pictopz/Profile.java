@@ -46,7 +46,8 @@ import java.util.UUID;
 public class Profile extends AppCompatActivity {
 
     GridView simpleGrid;
-    ImageView gridChange,logout,profile_image;
+    ImageView gridChange,profile_image;
+    TextView logout;
     FirebaseAuth mAuth;
     FirebaseUser user;
     TextView name_tv,email_tv,phone_tv,followersCount_textView,followingCount_textView;
@@ -109,7 +110,7 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 mAuth.signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

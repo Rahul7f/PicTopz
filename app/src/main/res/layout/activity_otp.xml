@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OtpActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/otp_sedd_image"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="#03A9F4"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Verification Code"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_marginRight="12sp"
+            android:layout_marginLeft="12sp"
+            android:text="@string/otpstring"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="25dp">
+
+            <EditText
+                android:id="@+id/verify_code_edit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.2"
+                android:hint="Enter OTP"
+                android:padding="10dp"
+                android:background="@drawable/edittext_bg2"
+                android:drawableLeft="@drawable/password_icon"
+                android:drawablePadding="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/verifycode_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_backgroung"
+            android:backgroundTint="#2196F3"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="verify"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
+
+</LinearLayout>

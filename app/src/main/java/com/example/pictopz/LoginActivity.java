@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pictopz.ui.PhoneAuthActivity;
 import com.example.pictopz.unused.GoogleSignin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
     Button login_btn;
@@ -27,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     String email,password;
     FirebaseUser firebaseUser;
-    ImageView google_signup,facebook_signup;
+    ImageView google_signup,facebook_signup,phoneLogin;
     TextView noaccount;
 
 
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         google_signup = findViewById(R.id.google_signin);
         google_signup.setClickable(false);
         facebook_signup = findViewById(R.id.facebook_signin);
+        phoneLogin = findViewById(R.id.phonelogin);
         facebook_signup.setClickable(false);
         noaccount = findViewById(R.id.no_account);
         mAuth = FirebaseAuth.getInstance();
@@ -69,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, GoogleSignin.class));
              }
          });
+
+        phoneLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, PhoneLoginActivity.class));
+            }
+        });
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override

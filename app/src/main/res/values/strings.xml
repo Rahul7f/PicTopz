@@ -17,6 +17,8 @@ Omittam adolescens et eum, pro ad malis mediocritatem, ut postea option nec. Te 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="phonelogin">Please enter Your Country Code mobile number to receive OTP</string>
+    <string name="otpstring">OTP has been send to Your Number Please Verify</string>
 
     <string-array name="contests_list">
         <item>NATURE</item>

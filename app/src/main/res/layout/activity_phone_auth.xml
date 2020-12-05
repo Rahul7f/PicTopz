@@ -87,7 +87,7 @@
                 android:weightSum="3.0"
                 android:layout_marginTop="25dp">
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/buttonStartVerification"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:layout_margin="5dp"
                     android:backgroundTint="@color/orange" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/buttonVerifyPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                     android:layout_margin="5dp"
                     android:backgroundTint="@color/orange"/>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/buttonResend"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             android:gravity="center"
             android:visibility="gone">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/signOutButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

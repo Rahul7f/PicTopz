@@ -5,46 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".ui.NewUserActivity">
-
-
-    <ImageView
-        android:layout_width="200sp"
-        android:layout_height="200sp"
-        android:id="@+id/new_user_profilepic"
-        android:src="@drawable/avatar"
-        />
-
-    <EditText
+    tools:context=".ui.NewUserActivity"
+    android:background="@color/orange">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/phone_number_edittext"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        android:inputType="text"
-        android:digits="qwertyuiopasdfghjklzxcvbnm "
-        android:id="@+id/new_user_name"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="text"
-        android:digits="0123456789._qwertyuiopasdfghjklzxcvbnm"
-        android:id="@+id/new_user_username"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        android:id="@+id/confirm_details"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:textColor="@color/orange"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:text="Profile Detail"/>
 
 
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:id="@+id/new_user_profilepic"
+                android:src="@drawable/upload_profile_def"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                app:tint="#fff"
+                android:padding="20sp"/>
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/phone_number_edittext"
+                android:background="@drawable/rounded_edittext"
+                android:layout_margin="20dp"
+                android:drawableLeft="@drawable/phone_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:hint="PhoneNo (optional)"
+
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Name*"
+                android:inputType="text"
+                android:digits="qwertyuiopasdfghjklzxcvbnm "
+                android:id="@+id/new_user_name"
+                android:background="@drawable/rounded_edittext"
+                android:layout_margin="20dp"
+                android:drawableLeft="@drawable/user_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Username*"
+                android:inputType="text"
+                android:digits="0123456789._qwertyuiopasdfghjklzxcvbnm"
+                android:id="@+id/new_user_username"
+                android:background="@drawable/rounded_edittext"
+                android:layout_margin="20sp"
+                android:drawableLeft="@drawable/username_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Email (optional)"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/rounded_edittext"
+                android:layout_margin="20sp"
+                android:drawableLeft="@drawable/email_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm"
+                android:textColor="#fff"
+                android:id="@+id/confirm_details"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/button_backgroung"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
