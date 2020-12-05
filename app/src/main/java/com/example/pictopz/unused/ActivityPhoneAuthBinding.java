@@ -1,4 +1,4 @@
-package com.example.pictopz.ui;
+package com.example.pictopz.unused;
 
 import android.view.LayoutInflater;
 import android.view.View;

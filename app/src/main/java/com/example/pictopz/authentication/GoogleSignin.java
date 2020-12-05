@@ -1,11 +1,11 @@
-package com.example.pictopz.unused;
+package com.example.pictopz.authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
-import com.example.pictopz.models.UserObject;
+import com.example.pictopz.models.UserProfileObject;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -95,37 +95,42 @@ public class GoogleSignin extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "successfully", Toast.LENGTH_SHORT).show();
                     String uid = mAuth.getUid();
 
-                    String name;
-                    String email;
-                    String phone;
-                    Uri imageURL;
-                    name = user.getDisplayName();
-                    email = user.getEmail();
-                    phone = user.getPhoneNumber();
+                    String name = user.getDisplayName();;
+                    String email = user.getEmail();
+                    String phone = user.getPhoneNumber();
+                    Uri imageURL = user.getPhotoUrl();
+
                     validate(name,email,phone);
-                    UserObject userObject  = new UserObject(name,email,phone);
+                    UserProfileObject userObject  = new UserProfileObject(name,email,phone);
+                    userObject.profileURL=imageURL.toString();
+
                     ref.child(uid).setValue(userObject);
-                    updateUI();
 
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
 //                            Snackbar.make(mBinding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                    updateUI();
                 }
             }
         });
 
     }
 
-    private void updateUI() {
-        Intent intent = new Intent(GoogleSignin.this, DrawerActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(mAuth.getCurrentUser()!=null){
+                    startActivity(new Intent(GoogleSignin.this,DrawerActivity.class));
+                    finish();
+                }
+            }
+        });
     }
 
-    void  validate(String name,String email,String phone)
+    void  validate(String name, String email, String phone)
     {
         if (name==null)
         {
@@ -142,4 +147,5 @@ public class GoogleSignin extends AppCompatActivity {
             name = "Phone no";
         }
     }
+
 }

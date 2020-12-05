@@ -1,4 +1,4 @@
-package com.example.pictopz.ui;
+package com.example.pictopz.unused;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -213,6 +213,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     // [START sign_in_with_phone]
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -322,7 +323,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mBinding.status.setText("Signed Out");
         } else {
             // Signed in
-            Intent intent=new Intent(PhoneAuthActivity.this,NewUserActivity.class);
+            Intent intent=new Intent(PhoneAuthActivity.this, NewUserActivity.class);
             intent.putExtra("NUMBER",mAuth.getCurrentUser().getPhoneNumber());
             startActivity(intent);
             finish();

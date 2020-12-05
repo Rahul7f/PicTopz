@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp"
+    tools:context=".authentication.SignUp"
     android:background="#ff4a01">
     <ScrollView
         android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/user_icon"
                 android:padding="10dp"
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890_"
                 />
 
             <EditText
@@ -53,27 +54,14 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:hint="Email(Optional)"
+                android:hint="Email"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/user_icon"
                 android:padding="10dp"
                 android:inputType="textEmailAddress"
+                android:digits="abcdefghijklmnopqrstuvwxyz@.1234567890_"
                 />
 
-            <EditText
-                android:id="@+id/signup_phone_et"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="45dp"
-                android:layout_marginRight="45dp"
-                android:hint="Phone"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/phone_icon"
-                android:padding="10dp"
-                android:inputType="phone"
-                />
 
             <EditText
                 android:id="@+id/signup_password_et"
@@ -98,7 +86,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
-                android:hint="Confrm password"
+                android:hint="Confirm Password"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/password_icon"
                 android:padding="10dp"

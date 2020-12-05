@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.pictopz.ui.PhoneAuthActivity;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.pictopz.authentication.LoginActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

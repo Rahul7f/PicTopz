@@ -1,4 +1,4 @@
-package com.example.pictopz.ui;
+package com.example.pictopz.unused;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,8 @@ import android.widget.Toast;
 import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
-import com.example.pictopz.models.UserObject;
+import com.example.pictopz.models.UserProfileObject;
+import com.example.pictopz.ui.ProgressDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -145,7 +146,7 @@ public class NewUserActivity extends AppCompatActivity {
         changeRequest=new UserProfileChangeRequest.Builder()
                 .setDisplayName(name.getText().toString()+"/"+username.getText().toString())
                 .build();
-
+        
         Log.e("CHANGE REQUEST","REQUEST SENT");
 
         user.updateProfile(changeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -185,9 +186,9 @@ public class NewUserActivity extends AppCompatActivity {
     }
 
     private void uploadData(){
-        UserObject object=new UserObject(username.getText().toString());
+        UserProfileObject object=new UserProfileObject(username.getText().toString());
 
-        FirebaseUploadData<UserObject> uploadData=new FirebaseUploadData<UserObject>(NewUserActivity.this,"users/"+mAuth.getUid(),object) {
+        FirebaseUploadData<UserProfileObject> uploadData=new FirebaseUploadData<UserProfileObject>(NewUserActivity.this,"users/"+mAuth.getUid(),object) {
 
             @Override
             public void onSuccessfulUpload() {

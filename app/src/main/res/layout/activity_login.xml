@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff4a01"
-    android:orientation="vertical"
-    tools:context=".LoginActivity">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -65,7 +64,7 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/forget_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -82,7 +81,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="Create Account"
-                android:textColor="#3F51B5"
+                android:textColor="#fff"
                 android:textSize="18dp"
                 android:layout_marginTop="15dp" />
 

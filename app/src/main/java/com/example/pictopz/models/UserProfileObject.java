@@ -8,6 +8,21 @@ public class UserProfileObject {
     public int followers;
     public int following;
 
+    public UserProfileObject(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
+    public UserProfileObject(String username, String email, String phone) {
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+    }
+
+
+    public UserProfileObject(String username) {
+        this.username = username;
+    }
 
     public UserProfileObject() {
     }
