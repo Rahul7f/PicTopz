@@ -275,6 +275,16 @@ public class Profile extends AppCompatActivity {
                 if (snapshot.exists())
                 {
                     myusername= snapshot.getValue().toString();
+                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+                    referenceto.setValue(myusername).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful())
+                            {
+                                Toast.makeText(Profile.this, "data uploaded to followers", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
                 else {
                     Toast.makeText(Profile.this, "data not found", Toast.LENGTH_SHORT).show();
@@ -289,16 +299,7 @@ public class Profile extends AppCompatActivity {
         });
         //String myusername = getUsername(mAuth.getCurrentUser().getDisplayName());
 
-        DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
-        referenceto.setValue(myusername).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                {
-                    Toast.makeText(Profile.this, "data uploaded to followers", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
 
     }
 
