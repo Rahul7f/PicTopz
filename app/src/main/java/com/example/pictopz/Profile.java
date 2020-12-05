@@ -28,6 +28,8 @@ import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.firebase.FirebaseUploadImage;
 import com.example.pictopz.models.StoryObject;
 import com.example.pictopz.models.UserProfileObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +60,7 @@ public class Profile extends AppCompatActivity {
     String userUID,userName;
     String status;
     ImageView add_story_icon;
+    String myusername;
 
     boolean i = true;
     int logos[] = {R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
@@ -263,10 +266,38 @@ public class Profile extends AppCompatActivity {
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
         reference.setValue(userName);
-        String myusername = getUsername(mAuth.getCurrentUser().getDisplayName());
+        //get name
+        DatabaseReference nameref = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid()).child("username");
+        nameref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    myusername= snapshot.getValue().toString();
+                }
+                else {
+                    Toast.makeText(Profile.this, "data not found", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //String myusername = getUsername(mAuth.getCurrentUser().getDisplayName());
 
         DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
-        referenceto.setValue(myusername);
+        referenceto.setValue(myusername).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(Profile.this, "data uploaded to followers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
