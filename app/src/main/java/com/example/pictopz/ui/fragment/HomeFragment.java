@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import xute.storyview.StoryModel;
 
@@ -159,8 +160,7 @@ public class HomeFragment extends Fragment {
                 if(snapshot.exists())
                     for (DataSnapshot stories:snapshot.getChildren()){
                         StoryObject object=stories.getValue(StoryObject.class);
-                        StoryModel model=new StoryModel(object.imageURL,object.uploaderUID,String.valueOf(object.uploadTime));
-                        storyObjectArrayList.add(model);
+                        deleteStoryIfTimeout(object,otherUserUID);
                         Log.e("Story","no stories to check lol");
                     }
                 storyAdapter.notifyDataSetChanged();
@@ -171,6 +171,21 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    private void deleteStoryIfTimeout(StoryObject object,String otherUserUID){
+        //Delete Story if timout
+        //Add to arraylist if valid
+
+        GregorianCalendar calendar=new GregorianCalendar();
+        long currentTime=calendar.getTimeInMillis();
+        if(object.uploadTime+28800000<currentTime){
+            FirebaseDatabase.getInstance().getReference("/story/"+otherUserUID+"/"+object.storyID).removeValue();
+        }else {
+            StoryModel model=new StoryModel(object.imageURL,object.uploaderUID,String.valueOf(object.uploadTime));
+            storyObjectArrayList.add(model);
+        }
+
     }
 
 }
