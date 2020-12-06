@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
 import com.example.pictopz.models.UserProfileObject;
+import com.example.pictopz.ui.UpdatePictureActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import android.os.Bundle;
@@ -95,13 +97,12 @@ public class GoogleSignin extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "successfully", Toast.LENGTH_SHORT).show();
                     String uid = mAuth.getUid();
 
-                    String name = user.getDisplayName();;
                     String email = user.getEmail();
                     String phone = user.getPhoneNumber();
                     Uri imageURL = user.getPhotoUrl();
 
-                    validate(name,email,phone);
-                    UserProfileObject userObject  = new UserProfileObject(name,email,phone);
+                    validate("name",email,phone);
+                    UserProfileObject userObject  = new UserProfileObject(null,email,phone);
                     userObject.profileURL=imageURL.toString();
 
                     ref.child(uid).setValue(userObject);
@@ -116,18 +117,26 @@ public class GoogleSignin extends AppCompatActivity {
 
     }
 
+    FirebaseAuth.AuthStateListener listener;
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        mAuth.addAuthStateListener(listener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(mAuth.getCurrentUser()!=null){
-                    startActivity(new Intent(GoogleSignin.this,DrawerActivity.class));
+                    Log.e("Log","exegc");
+                    startActivity(new Intent(GoogleSignin.this, UpdatePictureActivity.class));
                     finish();
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(listener);
     }
 
     void  validate(String name, String email, String phone)

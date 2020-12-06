@@ -31,7 +31,7 @@
             />
     </FrameLayout>
 
-    <TextView
+    <EditText
         android:text="Username"
         android:layout_marginTop="20sp"
         android:paddingHorizontal="20dp"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="Username"
-        android:digits="abcdefghijklmnopqrstuvwxyz_123456789"/>
+        android:digits="abcdefghijklmnopqrstuvwxyz_1234567890"/>
 
     <Button
         android:layout_marginTop="20dp"
