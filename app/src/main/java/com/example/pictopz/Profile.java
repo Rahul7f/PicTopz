@@ -306,10 +306,25 @@ public class Profile extends AppCompatActivity {
     void unFollow()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
-        reference.removeValue();
+        reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(Profile.this, "delete in followers", Toast.LENGTH_SHORT).show();
+                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+                    referenceto.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(Profile.this, "delete in  followers", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-        DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
-        referenceto.removeValue();
+            }
+        });
+
+
 
     }
 

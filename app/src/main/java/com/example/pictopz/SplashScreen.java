@@ -18,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //FirebaseAuth.getInstance().getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
