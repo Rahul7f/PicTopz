@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import xute.storyview.StoryModel;
 
@@ -43,7 +44,10 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView1,recyclerView;
     StoryAdapter storyAdapter;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-    ArrayList<StoryModel> storyObjectArrayList=new ArrayList<>();
+
+    HashMap<String,ArrayList> storyHashMap=new HashMap<>();
+    ArrayList<String> keyset=new ArrayList<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -58,7 +62,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadRecycleViewData();
-                swipeRefreshLayout.setRefreshing(false);
+                fetchFollowList();
             }
         });
         swipeRefreshLayout.post(new Runnable() {
@@ -79,7 +83,7 @@ public class HomeFragment extends Fragment {
 
         fetchFollowList();
         recyclerView=root.findViewById(R.id.home_story_recycleview);
-        storyAdapter =new StoryAdapter(storyObjectArrayList);
+        storyAdapter =new StoryAdapter(storyHashMap,keyset);
         recyclerView.setAdapter(storyAdapter);
         // post
         recyclerView1=root.findViewById(R.id.home_layout_post_recycleview);
@@ -120,6 +124,7 @@ public class HomeFragment extends Fragment {
                 for(DataSnapshot snapshot1:snapshot.getChildren())
                     approvedPostObjects.add(snapshot1.getValue(ApprovedPostObject.class));
                 postAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
 
                 // Log.e("likeno", approvedPostObjects.get(2).likeNo);
             }
@@ -134,16 +139,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchFollowList(){
+
+        storyHashMap.clear();
+        keyset.clear();
+
         fetchStories(user.getUid());
 
         FirebaseDatabase.getInstance().getReference("following/"+user.getUid()).limitToFirst(50).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
-                for(DataSnapshot users:snapshot.getChildren()){
-                    Log.e(users.getKey(),users.getValue(String.class));
+
+                    for(DataSnapshot users:snapshot.getChildren()){
+
                     fetchStories(users.getKey());
                 }
+
             }
 
             @Override
@@ -160,10 +171,9 @@ public class HomeFragment extends Fragment {
                 if(snapshot.exists())
                     for (DataSnapshot stories:snapshot.getChildren()){
                         StoryObject object=stories.getValue(StoryObject.class);
+                        Log.e("Story List",object.storyID);
                         deleteStoryIfTimeout(object,otherUserUID);
-                        Log.e("Story","no stories to check lol");
                     }
-                storyAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -183,8 +193,17 @@ public class HomeFragment extends Fragment {
             FirebaseDatabase.getInstance().getReference("/story/"+otherUserUID+"/"+object.storyID).removeValue();
         }else {
             StoryModel model=new StoryModel(object.imageURL,object.uploaderUID,String.valueOf(object.uploadTime));
-            storyObjectArrayList.add(model);
+
+            if(storyHashMap.containsKey(object.uploaderUID)){
+                storyHashMap.get(object.uploaderUID).add(model);
+            }else{
+                ArrayList<StoryModel> models=new ArrayList<>();
+                models.add(model);
+                storyHashMap.put(object.uploaderUID,(ArrayList) models.clone());
+                keyset.add(object.uploaderUID);
+            }
         }
+        storyAdapter.notifyDataSetChanged();
 
     }
 

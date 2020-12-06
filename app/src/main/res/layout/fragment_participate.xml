@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:id="@+id/upload_image_as_participant"
-        android:background="@drawable/photoupload_def"
+        android:src="@drawable/photoupload_def"
         android:layout_margin="25dp"
         android:layout_gravity="center"
         />

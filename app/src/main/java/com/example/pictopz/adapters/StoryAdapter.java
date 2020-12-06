@@ -1,5 +1,6 @@
 package com.example.pictopz.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.pictopz.R;
 import com.example.pictopz.models.StoryObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import xute.storyview.StoryModel;
@@ -20,23 +22,15 @@ import xute.storyview.StoryView;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder> {
 
-    ArrayList<StoryModel> uris = new ArrayList<>();
-    ArrayList<StoryObject> storyObjects=new ArrayList<>();
+    HashMap<String,ArrayList> storyObjects;
+    ArrayList<String> keyset;
+    public StoryAdapter(HashMap<String,ArrayList> storyObjects,ArrayList<String> keyset) {
 
-    public StoryAdapter(ArrayList<StoryModel> uris) {
+        this.storyObjects=storyObjects;
+        this.keyset=keyset;
 
-        this.uris = uris;
-        String username="";
-//        ArrayList<ArrayList> models=new ArrayList<>();
-//        for(StoryObject story:storyObjects){
-//            if(username.equals(story.uploaderUID))
-//                uris.add(new StoryModel(story.imageURL,story.uploaderUID,String.valueOf(story.uploadTime)));
-//            else {
-//                models.add(uris);
-//                uris=new ArrayList<>();
-//            }
-//            username=story.uploaderUID;
-//        }
+
+
     }
 
     @NonNull
@@ -52,14 +46,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         //holder.ranking.setText();
 
         holder.storyView.resetStoryVisits();
-        ArrayList<StoryModel> fakeuris=new ArrayList<>();
-        fakeuris.add(uris.get(position));
-        holder.storyView.setImageUris(fakeuris);
+        holder.storyView.setImageUris(storyObjects.get(keyset.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return uris.size();
+        return keyset.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -71,4 +63,5 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 
         }
     }
+
 }
