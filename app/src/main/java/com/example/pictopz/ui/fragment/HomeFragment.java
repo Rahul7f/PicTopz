@@ -181,6 +181,8 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+
     }
 
     private void deleteStoryIfTimeout(StoryObject object,String otherUserUID){

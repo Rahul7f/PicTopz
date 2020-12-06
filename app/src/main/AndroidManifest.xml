@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.UpdatePictureActivity"></activity>
+        <activity android:name=".ui.UpdatePictureActivity" />
         <activity android:name=".authentication.ForgetPassword" />
         <activity android:name=".authentication.EmailVerification" />
         <activity android:name=".OtpActivity" />

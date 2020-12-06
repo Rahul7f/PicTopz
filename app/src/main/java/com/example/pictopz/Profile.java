@@ -102,7 +102,7 @@ public class Profile extends AppCompatActivity {
 
         checkFollower();
 
-        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),mAuth.getUid());
+        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),userUID);
         simpleGrid.setAdapter(customAdapter);
 
         add_story_icon.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +176,6 @@ public class Profile extends AppCompatActivity {
                 }
         });
     }
-
 
     void getUserData()
     {
@@ -323,13 +322,9 @@ public class Profile extends AppCompatActivity {
 
     }
 
-
-
     private String getUsername(String str){
         return str.split("/")[1];
     }
-
-
 
     //code related to uploading image on story
 

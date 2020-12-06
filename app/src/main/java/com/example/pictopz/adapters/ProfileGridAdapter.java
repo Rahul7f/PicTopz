@@ -68,6 +68,7 @@ public class ProfileGridAdapter extends RecyclerView.Adapter<ProfileGridAdapter.
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
+
                 for (DataSnapshot objects:snapshot.getChildren()){
                     UnApprovedDataObject object=objects.getValue(UnApprovedDataObject.class);
                     list.add(object);
