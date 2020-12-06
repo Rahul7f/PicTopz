@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.models.UserProfileObject;
@@ -254,6 +255,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -261,11 +263,13 @@ public class SignUp extends AppCompatActivity {
                     //do nothing
                 }else {
                     if(mAuth.getCurrentUser().isEmailVerified()){
-                        startActivity(new Intent(SignUp.this, EmailVerification.class));
+                        startActivity(new Intent(SignUp.this, DrawerActivity.class));
                         finish();
                     }else{
                         Toast.makeText(SignUp.this, "Email Not Verified", Toast.LENGTH_SHORT).show();
-                    }
+                            startActivity(new Intent(SignUp.this,EmailVerification.class));
+                            finish();
+                        }
                 }
             }
         });
