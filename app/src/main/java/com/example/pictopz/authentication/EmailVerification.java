@@ -76,29 +76,19 @@ public class EmailVerification extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-               if(user==null){
-                   timer.cancel();
-                   startActivity(new Intent(EmailVerification.this, SignUp.class));
-                   finish();
-               } else if(user.isEmailVerified()){
-                   timer.cancel();
-                    startActivity(new Intent(EmailVerification.this, DrawerActivity.class));
-                    finish();
-                }
-            }
-        });
-    }
-
-    CountDownTimer timer=new CountDownTimer(300000,5000) {
+    CountDownTimer timer=new CountDownTimer(300000,2000) {
         @Override
         public void onTick(long l) {
             user.reload();
+            if(user==null){
+                timer.cancel();
+                startActivity(new Intent(EmailVerification.this, SignUp.class));
+                finish();
+            } else if(user.isEmailVerified()){
+                timer.cancel();
+                startActivity(new Intent(EmailVerification.this, DrawerActivity.class));
+                finish();
+            }
         }
 
         @Override
