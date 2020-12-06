@@ -105,7 +105,7 @@ public class GoogleSignin extends AppCompatActivity {
                     UserProfileObject userObject  = new UserProfileObject(null,email,phone);
                     userObject.profileURL=imageURL.toString();
 
-                    ref.child(uid).setValue(userObject);
+                    ref.child(uid).child("email").setValue(email);
 
                 } else {
                     // If sign in fails, display a message to the user.
