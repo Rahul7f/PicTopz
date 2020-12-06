@@ -3,6 +3,9 @@ package com.example.pictopz;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
@@ -48,7 +51,7 @@ import java.util.UUID;
 
 public class Profile extends AppCompatActivity {
 
-    GridView simpleGrid;
+    RecyclerView simpleGrid;
     ImageView gridChange,profile_image;
     TextView logout;
     FirebaseAuth mAuth;
@@ -57,7 +60,7 @@ public class Profile extends AppCompatActivity {
     LinearLayout followersCount,followingCount;
     DatabaseReference ref;
     Button edit_profile_btn;
-    ArrayList<UserProfileObject> userProfileObjects;
+    boolean isLinearLayout=false;
     String userUID,userName;
     String status;
     ImageView add_story_icon;
@@ -79,7 +82,7 @@ public class Profile extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         gridChange = findViewById(R.id.grid_to_l);
         mAuth = FirebaseAuth.getInstance();
-        simpleGrid = (GridView) findViewById(R.id.simpleGridView);
+        simpleGrid = (RecyclerView) findViewById(R.id.simpleGridView);
         logout = findViewById(R.id.logout);
         add_story_icon=findViewById(R.id.add_story_icon);
 
@@ -99,7 +102,7 @@ public class Profile extends AppCompatActivity {
 
         checkFollower();
 
-        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(), logos);
+        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),mAuth.getUid());
         simpleGrid.setAdapter(customAdapter);
 
         add_story_icon.setOnClickListener(new View.OnClickListener() {
@@ -159,26 +162,18 @@ public class Profile extends AppCompatActivity {
 
         gridChange.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-               if (i==true)
-               {
-                   simpleGrid.setNumColumns(1);
-                   i=false;
-               }
-               else {
-                   simpleGrid.setNumColumns(3);
-                   i = true;
-               }
+                    if(isLinearLayout){
 
-            }
-        });
+                        simpleGrid.setLayoutManager(new GridLayoutManager(Profile.this,3));
+                        isLinearLayout=false;
+                    } else{
 
-        simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
+                        simpleGrid.setLayoutManager(new LinearLayoutManager(Profile.this));
+                        isLinearLayout=true;
+                    }
+                }
         });
     }
 

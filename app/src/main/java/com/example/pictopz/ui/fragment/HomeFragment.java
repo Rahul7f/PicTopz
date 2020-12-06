@@ -199,12 +199,11 @@ public class HomeFragment extends Fragment {
             }else{
                 ArrayList<StoryModel> models=new ArrayList<>();
                 models.add(model);
-                storyHashMap.put(object.uploaderUID,(ArrayList) models.clone());
+                storyHashMap.put(object.uploaderUID,(ArrayList) models);
                 keyset.add(object.uploaderUID);
             }
         }
         storyAdapter.notifyDataSetChanged();
-
     }
 
 }

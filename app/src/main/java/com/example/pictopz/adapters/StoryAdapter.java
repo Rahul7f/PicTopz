@@ -60,8 +60,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         public MyViewHolder(View itemview){
             super(itemview);
             storyView=(StoryView) itemview.findViewById(R.id.storyView);
-
         }
     }
+
 
 }
