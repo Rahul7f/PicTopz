@@ -165,7 +165,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
 
         FirebaseUser user=mAuth.getCurrentUser();
         if(like){
-            FirebaseUploadData<String> uploadData=new FirebaseUploadData<String>(context,"/likes/"+postID+"/"+user.getUid(),getUsername(user.getDisplayName())) {
+            FirebaseUploadData<String> uploadData=new FirebaseUploadData<String>(context,"/likes/"+postID+"/"+user.getUid(),user.getDisplayName()) {
                 @Override
                 public void onSuccessfulUpload() {
                     Log.e("Like","Response Like");
@@ -178,9 +178,6 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
         }
     }
 
-    private String getUsername(String str){
-        return str.split("/")[1];
-    }
 
 
 }

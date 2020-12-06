@@ -26,6 +26,10 @@ import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.firebase.FirebaseUploadImage;
 import com.example.pictopz.models.UnApprovedDataObject;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -100,7 +104,7 @@ public class Participate extends Fragment {
         String key= UUID.randomUUID().toString();
         url+=key;
 
-        UnApprovedDataObject unApprovedDataObject=new UnApprovedDataObject(Imageurl,key,getUsername(mAuth.getCurrentUser().getDisplayName()),mAuth.getUid(),contestID,likesNo,commentsNo);
+        UnApprovedDataObject unApprovedDataObject=new UnApprovedDataObject(Imageurl,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),contestID,likesNo,commentsNo);
 
         FirebaseUploadData uploadData=new FirebaseUploadData(getContext(),url,unApprovedDataObject) {
             @Override
@@ -127,10 +131,6 @@ public class Participate extends Fragment {
 
     private String getRealname(String str){
        return str.split("/")[0];
-    }
-
-    private String getUsername(String str){
-        return str.split("/")[1];
     }
 
 
