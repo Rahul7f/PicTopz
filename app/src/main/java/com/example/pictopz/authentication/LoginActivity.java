@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView noaccount;
     TextView forget_password;
     FirebaseAuth.AuthStateListener listener;
+    ProgressBar progressBar;
 
     @Override
     protected void onStart() {
@@ -105,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         facebook_signup.setClickable(false);
         noaccount = findViewById(R.id.no_account);
         forget_password = findViewById(R.id.forget_password);
+        progressBar = findViewById(R.id.progress_dialog);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -145,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
 
                 boolean email_value = validate_editText(email_et, "enter email");
                 boolean phone_value = validate_editText(password_et, "enter 6 digit password");
@@ -154,10 +158,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (email_value) {
                     set_error(email_et, "enter email");
                     count = 1;
+                    progressBar.setVisibility(View.GONE);
                 }
                 if (phone_value) {
                     set_error(password_et, "enter 6 digit password");
                     count = 1;
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 if (count == 0) {
@@ -170,8 +176,10 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
