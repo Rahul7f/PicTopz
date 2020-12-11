@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".unused.DrawerActivity2"
+            android:label="@string/title_activity_bottom_nav"/>
         <activity android:name=".ui.UpdatePictureActivity" />
         <activity android:name=".authentication.ForgetPassword" />
         <activity android:name=".authentication.EmailVerification" />
@@ -28,7 +31,6 @@
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".authentication.GoogleSignin" />
-        <activity android:name=".ui.fragment.ShowOneContest" />
         <activity android:name=".Profile" /> <!-- <activity android:name=".UpcomingContests" /> -->
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

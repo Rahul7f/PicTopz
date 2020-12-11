@@ -51,6 +51,9 @@ public class ShowOneContest extends Fragment {
     Button upload;
     TextView limit;
 
+    public ShowOneContest() {
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
