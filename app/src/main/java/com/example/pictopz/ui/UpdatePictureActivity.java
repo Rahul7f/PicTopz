@@ -26,6 +26,7 @@ import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
 import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.firebase.FirebaseUploadImage;
+import com.example.pictopz.unused.NewUserActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,6 +35,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -51,6 +53,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
     Uri filePath;
     EditText usernameET;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
             finish();
         }
 
+        mAuth = FirebaseAuth.getInstance();
         imageView=findViewById(R.id.profilePicture);
         addPhotoButton=findViewById(R.id.addProfilePic);
         update=findViewById(R.id.update_pic);
@@ -242,5 +246,33 @@ public class UpdatePictureActivity extends AppCompatActivity {
                 Toast.makeText(UpdatePictureActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid()).child("username");
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                    finish();
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    void checkalreadyuser()
+    {
+
     }
 }

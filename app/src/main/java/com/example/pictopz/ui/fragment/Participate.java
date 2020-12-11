@@ -47,11 +47,13 @@ public class Participate extends Fragment {
         this.contestID=contesId;
         this.limitValue=limitValue;
     }
+
     FirebaseAuth mAuth;
     FirebaseUploadImage imgUpload;
     ImageView imageView;
     Button uploadButton;
     Uri filePath;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

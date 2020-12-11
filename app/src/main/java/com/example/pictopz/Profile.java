@@ -182,18 +182,26 @@ public class Profile extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 String name,email,phone;
                 Uri image_url;
                 UserProfileObject userProfileObject = snapshot.getValue(UserProfileObject.class);
+                if (mAuth.getUid().equals(userUID))
+                {
+                    if (userProfileObject.email!=null)
+                        email_tv.setText(userProfileObject.email);
+
+                    if (userProfileObject.phone!=null)
+                        phone_tv.setText(userProfileObject.phone);
+                }
+                else
+                {
+                    email_tv.setVisibility(View.GONE);
+                    phone_tv.setVisibility(View.GONE);
+                }
+
+
                 if (userProfileObject.username!=null)
                     name_tv.setText(userProfileObject.username);
-
-                if (userProfileObject.email!=null)
-                    email_tv.setText(userProfileObject.email);
-
-                if (userProfileObject.phone!=null)
-                    phone_tv.setText(userProfileObject.phone);
 
                 followersCount_textView.setText(String.valueOf(userProfileObject.followers));
                 followingCount_textView.setText(String.valueOf(userProfileObject.following));

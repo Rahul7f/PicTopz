@@ -102,7 +102,7 @@ public class GoogleSignin extends AppCompatActivity {
                     Uri imageURL = user.getPhotoUrl();
 
                     validate("name",email,phone);
-                    UserProfileObject userObject  = new UserProfileObject(null,email,phone);
+                    UserProfileObject userObject  = new UserProfileObject(email,phone);
                     userObject.profileURL=imageURL.toString();
 
                     ref.child(uid).child("email").setValue(email);
@@ -118,7 +118,8 @@ public class GoogleSignin extends AppCompatActivity {
     }
 
     FirebaseAuth.AuthStateListener listener;
-    @Override
+
+        @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(listener=new FirebaseAuth.AuthStateListener() {
