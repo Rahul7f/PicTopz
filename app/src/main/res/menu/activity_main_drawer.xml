@@ -8,13 +8,18 @@
 <!--        <item android:id="@+id/create_contest"-->
 <!--            android:title="Create Contest"-->
 <!--            />-->
-        <item android:id="@+id/nav_home"
+        <item android:id="@+id/home_fragment"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Home"/>
 
-        <item android:id="@+id/upcoming_contest_menu"
+        <item android:id="@+id/upcoming_contest_fragment"
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="UpComing Contest"/>
+
+        <item android:id="@+id/profile_fragment"
+            android:icon="@drawable/user_icon"
+            android:title="Profile"
+            />
 
 <!--        <item android:id="@+id/http_test_function"-->
 <!--            android:title="Https Test Function"/>-->

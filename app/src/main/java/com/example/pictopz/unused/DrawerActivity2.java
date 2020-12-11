@@ -66,7 +66,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
 
                 switch (item.getItemId()){
 
-                    case R.id.nav_home:
+                    case R.id.home_fragment:
                         Toast.makeText(DrawerActivity2.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
 
@@ -75,7 +75,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
 //                        Toast.makeText(DrawerActivity.this, "Create Contest", Toast.LENGTH_SHORT).show();
 //                        break;
 
-                    case R.id.upcoming_contest_menu:
+                    case R.id.upcoming_contest_fragment:
                         fragment = new UpcomingContests();
                         break;
 

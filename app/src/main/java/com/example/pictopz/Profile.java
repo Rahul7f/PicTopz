@@ -3,6 +3,7 @@ package com.example.pictopz;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -49,7 +52,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends Fragment {
 
     RecyclerView simpleGrid;
     ImageView gridChange,profile_image;
@@ -63,68 +66,55 @@ public class Profile extends AppCompatActivity {
     boolean isLinearLayout=false;
     String userUID,userName;
     String status;
-    ImageView add_story_icon;
+
     String myusername;
 
-    boolean i = true;
-    int logos[] = {R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
-            R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image,
-            R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image, R.drawable.sample_image};
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-
-        //hook
-        userUID = getIntent().getStringExtra("userID");
-        userName = getIntent().getStringExtra("userName");
+    public Profile(String userID) {
+        this.userUID = userID;
         user = FirebaseAuth.getInstance().getCurrentUser();
-        gridChange = findViewById(R.id.grid_to_l);
         mAuth = FirebaseAuth.getInstance();
-        simpleGrid = (RecyclerView) findViewById(R.id.simpleGridView);
-        logout = findViewById(R.id.logout);
-        add_story_icon=findViewById(R.id.add_story_icon);
-
-        name_tv = findViewById(R.id.name_tv);
-        email_tv = findViewById(R.id.email_tv);
-        phone_tv = findViewById(R.id.mobile_tv);
-        followersCount = findViewById(R.id.followersCount);
-        followingCount = findViewById(R.id.followingCount);
-        followersCount_textView = findViewById(R.id.followersCount_textView);
-        followingCount_textView = findViewById(R.id.followingCount_textView);
-        profile_image = findViewById(R.id.profile_image_view);
-        edit_profile_btn = findViewById(R.id.edit_profile_btn);
         ref = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
-        //hooks end
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root=inflater.inflate(R.layout.activity_profile,container,false);
+
+        gridChange = root.findViewById(R.id.grid_to_l);
+        simpleGrid = (RecyclerView) root.findViewById(R.id.simpleGridView);
+//        logout = root.findViewById(R.id.logout);
+        name_tv = root.findViewById(R.id.name_tv);
+        email_tv = root.findViewById(R.id.email_tv);
+        phone_tv = root.findViewById(R.id.mobile_tv);
+        followersCount = root.findViewById(R.id.followersCount);
+        followingCount = root.findViewById(R.id.followingCount);
+        followersCount_textView = root.findViewById(R.id.followersCount_textView);
+        followingCount_textView = root.findViewById(R.id.followingCount_textView);
+        profile_image = root.findViewById(R.id.profile_image_view);
+        edit_profile_btn = root.findViewById(R.id.edit_profile_btn);
 
         getUserData();
 
         checkFollower();
 
-        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),userUID);
+        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getContext(),userUID);
         simpleGrid.setAdapter(customAdapter);
 
-        add_story_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkpermission();
-            }
-        });
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//                Intent intent = new Intent(getContext(), LoginActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//            }
+//        });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
         followersCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
                 intent.putExtra("path","/followers/");
                 intent.putExtra("userID",userUID);
                 startActivity(intent);
@@ -134,7 +124,7 @@ public class Profile extends AppCompatActivity {
         followingCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
                 intent.putExtra("path","/following/");
                 intent.putExtra("userID",userUID);
                 startActivity(intent);
@@ -164,18 +154,126 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    if(isLinearLayout){
+                if(isLinearLayout){
 
-                        simpleGrid.setLayoutManager(new GridLayoutManager(Profile.this,3));
-                        isLinearLayout=false;
-                    } else{
+                    simpleGrid.setLayoutManager(new GridLayoutManager(getContext(),3));
+                    isLinearLayout=false;
+                } else{
 
-                        simpleGrid.setLayoutManager(new LinearLayoutManager(Profile.this));
-                        isLinearLayout=true;
-                    }
+                    simpleGrid.setLayoutManager(new LinearLayoutManager(getContext()));
+                    isLinearLayout=true;
                 }
+            }
         });
+
+        return root;
     }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_profile);
+
+        //hook
+//        userUID = getIntent().getStringExtra("userID");
+//        userName = getIntent().getStringExtra("userName");
+//        user = FirebaseAuth.getInstance().getCurrentUser();
+//        gridChange = findViewById(R.id.grid_to_l);
+//        mAuth = FirebaseAuth.getInstance();
+//        simpleGrid = (RecyclerView) findViewById(R.id.simpleGridView);
+//        logout = findViewById(R.id.logout);
+//        add_story_icon=findViewById(R.id.add_story_icon);
+//
+//        name_tv = findViewById(R.id.name_tv);
+//        email_tv = findViewById(R.id.email_tv);
+//        phone_tv = findViewById(R.id.mobile_tv);
+//        followersCount = findViewById(R.id.followersCount);
+//        followingCount = findViewById(R.id.followingCount);
+//        followersCount_textView = findViewById(R.id.followersCount_textView);
+//        followingCount_textView = findViewById(R.id.followingCount_textView);
+//        profile_image = findViewById(R.id.profile_image_view);
+//        edit_profile_btn = findViewById(R.id.edit_profile_btn);
+//        ref = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+        //hooks end
+
+//        getUserData();
+//
+//        checkFollower();
+//
+//        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),userUID);
+//        simpleGrid.setAdapter(customAdapter);
+//
+//        add_story_icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                checkpermission();
+//            }
+//        });
+//
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//            }
+//        });
+//        followersCount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+//                intent.putExtra("path","/followers/");
+//                intent.putExtra("userID",userUID);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        followingCount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
+//                intent.putExtra("path","/following/");
+//                intent.putExtra("userID",userUID);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        edit_profile_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (status)
+//                {
+//                    case "edit":
+//                        editProfile();
+//                        break;
+//                    case "Followed":
+//                        unFollow();
+//                        break;
+//                    case "Unfollow":
+//                        follow();
+//                        break;
+//                }
+//
+//            }
+//        });
+//
+//        gridChange.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                    if(isLinearLayout){
+//
+//                        simpleGrid.setLayoutManager(new GridLayoutManager(Profile.this,3));
+//                        isLinearLayout=false;
+//                    } else{
+//
+//                        simpleGrid.setLayoutManager(new LinearLayoutManager(Profile.this));
+//                        isLinearLayout=true;
+//                    }
+//                }
+//        });
+//    }
 
     void getUserData()
     {
@@ -207,12 +305,12 @@ public class Profile extends AppCompatActivity {
                 followingCount_textView.setText(String.valueOf(userProfileObject.following));
 
                 if (userProfileObject.profileURL!=null)
-                    Glide.with(getApplicationContext()).load(userProfileObject.profileURL).into(profile_image);
+                    Glide.with(getContext()).load(userProfileObject.profileURL).into(profile_image);
                 }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Profile.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -225,7 +323,7 @@ public class Profile extends AppCompatActivity {
 
   void editProfile()
   {
-      Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+      Intent intent = new Intent(getContext(), EditProfile.class);
       startActivity(intent);
   }
 
@@ -283,13 +381,13 @@ public class Profile extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful())
                             {
-                                Toast.makeText(Profile.this, "data uploaded to followers", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "data uploaded to followers", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
                 else {
-                    Toast.makeText(Profile.this, "data not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -313,12 +411,12 @@ public class Profile extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(Profile.this, "delete in followers", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "delete in followers", Toast.LENGTH_SHORT).show();
                     DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
                     referenceto.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(Profile.this, "delete in  followers", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "delete in  followers", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -336,102 +434,31 @@ public class Profile extends AppCompatActivity {
 
     //code related to uploading image on story
 
-    private void addStory(Uri uri){
-        String uploadPath="story/"+ UUID.randomUUID().toString();
-        FirebaseUploadImage uploadImage=new FirebaseUploadImage(Profile.this,uri,uploadPath) {
-            @Override
-            public void getUrl(String url) {
-                addDataOfStory(url);
-            }
-        };
-        uploadImage.start();
-    }
-
-    private void addDataOfStory(String imageURL){
-        String storyID=UUID.randomUUID().toString();
-        String dataURL="story/"+mAuth.getUid()+"/"+storyID;
-        GregorianCalendar calendar= new GregorianCalendar();
-
-        StoryObject storyObject=new StoryObject(imageURL,storyID,calendar.getTimeInMillis(),mAuth.getUid());
-        FirebaseUploadData<StoryObject> uploadData=new FirebaseUploadData<StoryObject>(Profile.this,dataURL,storyObject) {
-            @Override
-            public void onSuccessfulUpload() {
-                Toast.makeText(Profile.this, "Story Uploaded Successfully", Toast.LENGTH_SHORT).show();
-            }
-        };
-        uploadData.start();
-    }
-
-    void  checkpermission()
-    {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        {
-            try {
-                requestPermissions(new  String[] {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},100);
-
-            }catch (Exception ignored)
-            {
-
-            }
-        }
-        else {
-            pickimage();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode==100 && grantResults[0]== PackageManager.PERMISSION_GRANTED)
-        {
-            pickimage();
-        }
-        else
-        {
-            Toast.makeText(this, "This Permission is required", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void pickimage()
-    {
-        CropImage.startPickImageActivity(Profile.this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri imageUri = CropImage.getPickImageResultUri(this, data);
-            croprequest(imageUri);
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if (resultCode==RESULT_OK)
-            {
-                try {
-//                    filePath=result.getUri();
-                    addStory(result.getUri());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),result.getUri());
-                    Toast.makeText(this, "image uri:- "+bitmap, Toast.LENGTH_SHORT).show();
-//                    imageView.setImageBitmap(bitmap);
-                }catch (IOException e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(this, "error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void croprequest(Uri imageURL)
-    {
-        CropImage.activity(imageURL)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setMultiTouchEnabled(true)
-                .start(this);
-    }
+//    private void addStory(Uri uri){
+//        String uploadPath="story/"+ UUID.randomUUID().toString();
+//        FirebaseUploadImage uploadImage=new FirebaseUploadImage(getContext(),uri,uploadPath) {
+//            @Override
+//            public void getUrl(String url) {
+//                addDataOfStory(url);
+//            }
+//        };
+//        uploadImage.start();
+//    }
+//
+//    private void addDataOfStory(String imageURL){
+//        String storyID=UUID.randomUUID().toString();
+//        String dataURL="story/"+mAuth.getUid()+"/"+storyID;
+//        GregorianCalendar calendar= new GregorianCalendar();
+//
+//        StoryObject storyObject=new StoryObject(imageURL,storyID,calendar.getTimeInMillis(),mAuth.getUid());
+//        FirebaseUploadData<StoryObject> uploadData=new FirebaseUploadData<StoryObject>(getContext(),dataURL,storyObject) {
+//            @Override
+//            public void onSuccessfulUpload() {
+//                Toast.makeText(getContext(), "Story Uploaded Successfully", Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//        uploadData.start();
+//    }
 
 
 }
