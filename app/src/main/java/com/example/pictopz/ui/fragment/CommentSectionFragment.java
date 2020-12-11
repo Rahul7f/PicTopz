@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pictopz.R;
 import com.example.pictopz.adapters.CommentSectionAdapter;
@@ -34,7 +37,7 @@ public class CommentSectionFragment extends Fragment {
 
 
     String postID;
-    TextView comment;
+    EditText comment;
     Button post_comment;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     ArrayList<String> comment_data=new ArrayList<>();
@@ -62,17 +65,23 @@ public class CommentSectionFragment extends Fragment {
         post_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!comment.getText().equals("")){
+                String postcomment = comment.getText().toString();
+                if(postcomment.trim().isEmpty()){
+                    Toast.makeText(getContext(), "enter comment", Toast.LENGTH_SHORT).show();
+                }
+                else 
+                {
                     String data=comment.getText().toString();
-                   String username=user.getDisplayName().split("/")[0];
-                   DatabaseReference commentsRef = FirebaseDatabase.getInstance().getReference("/comments/"+postID+"/"+username);
-                   commentsRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                       @Override
-                       public void onComplete(@NonNull Task<Void> task) {
-                           comment_data.add(username+"/"+data);
-                           comment.setText("");
-                       }
-                   });
+                    String username=user.getDisplayName().split("/")[0];
+                    DatabaseReference commentsRef = FirebaseDatabase.getInstance().getReference("/comments/"+postID+"/"+username);
+                    commentsRef.setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            comment_data.add(username+"/"+data);
+                            comment.setText("");
+                        }
+                    });
+
                 }
             }
         });
