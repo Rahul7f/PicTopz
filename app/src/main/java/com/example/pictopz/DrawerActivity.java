@@ -14,10 +14,12 @@ import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DrawerActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView navView;
     FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         navView = findViewById(R.id.nav_view);
         mAuth = FirebaseAuth.getInstance();
         navView.setOnNavigationItemSelectedListener(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("login");
 
     }
 
