@@ -247,7 +247,7 @@ public class UploadContest extends AppCompatActivity  {
     public void uploadData(String Imageurl){
         String url="/contests/";
 
-        ContestObject contestObject=new ContestObject(Imageurl,spinner.getSelectedItem().toString(),NewLong,"demo");
+        ContestObject contestObject=new ContestObject(Imageurl,spinner.getSelectedItem().toString(),NewLong,0l,"demo");
         FirebaseUploadData uploadData=new FirebaseUploadData(UploadContest.this,url+"/"+UUID.randomUUID().toString(),contestObject) {
             @Override
             public void onSuccessfulUpload() {

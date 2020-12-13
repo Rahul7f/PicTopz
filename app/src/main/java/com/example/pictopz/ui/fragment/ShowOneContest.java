@@ -75,7 +75,7 @@ public class ShowOneContest extends Fragment {
 
 
 
-        MyCount myCount=new MyCount(convertDate(contestObject.time),1000) {
+        MyCount myCount=new MyCount(convertDate(contestObject.timeStart),1000) {
             @Override
             public void changeTime(String hms) {
                 textView.setText(hms);
@@ -150,7 +150,7 @@ public class ShowOneContest extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     limitValue=snapshot.getValue(Integer.class);
-                    limit.setText(limitValue+"/5");
+                    limit.setText(limitValue+"/1");
 
                     if(limitValue<1)
                         upload.setEnabled(true);

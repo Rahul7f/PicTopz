@@ -24,16 +24,21 @@ import android.widget.Toast;
 import com.example.pictopz.R;
 import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.firebase.FirebaseUploadImage;
+import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.models.UnApprovedDataObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -106,16 +111,15 @@ public class Participate extends Fragment {
         String key= UUID.randomUUID().toString();
         url+=key;
 
-        UnApprovedDataObject unApprovedDataObject=new UnApprovedDataObject(Imageurl,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),contestID,likesNo,commentsNo);
+        ApprovedPostObject unApprovedDataObject=new ApprovedPostObject(Imageurl,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),contestID,new GregorianCalendar().getTimeInMillis());
 
-        FirebaseUploadData uploadData=new FirebaseUploadData(getContext(),url,unApprovedDataObject) {
+        FirebaseFirestore.getInstance().collection("posts").document(key).set(unApprovedDataObject).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onSuccessfulUpload() {
-                Toast.makeText(getContext(), "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<Void> task) {
                 setLimit();
-            };
-        };
-        uploadData.start();
+            }
+        });
+
     }
 
     private void setLimit(){

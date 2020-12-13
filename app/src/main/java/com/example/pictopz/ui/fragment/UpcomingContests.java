@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,18 @@ import com.example.pictopz.R;
 import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
 import com.example.pictopz.models.ContestObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 
 import java.util.ArrayList;
 
@@ -33,29 +41,24 @@ public class UpcomingContests extends Fragment {
 
         View root = inflater.inflate(R.layout.activity_upcoming_contest, container, false);
 
-        final RecyclerView recyclerView=root.findViewById(R.id.contest_recycle_view);
-        final UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(getContext(),arrayList,getActivity());
+        RecyclerView recyclerView=root.findViewById(R.id.contest_recycle_view);
+        UpcomingContestsAdapter adapter=new UpcomingContestsAdapter(getContext(),arrayList,getActivity());
         recyclerView.setAdapter(adapter);
 
-        DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference("/contests/");
-        dbRef.addValueEventListener(new ValueEventListener() {
+        FirebaseFirestore dbRef= FirebaseFirestore.getInstance();
+        dbRef.collection("contests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                arrayList.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    arrayList.add(snapshot1.getValue(ContestObject.class));
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    arrayList.clear();
+                    for (DocumentSnapshot snapshots:task.getResult()){
+                        Log.i("FIRESTONE LOG","OBJ : "+snapshots.toObject(ContestObject.class));
+                        arrayList.add(snapshots.toObject(ContestObject.class));
+                    }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
 
 
         RecyclerView recyclerView2=root.findViewById(R.id.contest_rank_recycle);

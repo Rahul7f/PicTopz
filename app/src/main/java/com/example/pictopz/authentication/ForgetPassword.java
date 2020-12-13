@@ -13,6 +13,7 @@ public class ForgetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
 
+        //IMPLEMENTED IN LOGIN ACTIVITY
 
     }
 }

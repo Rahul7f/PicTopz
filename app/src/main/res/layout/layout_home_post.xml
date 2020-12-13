@@ -9,12 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="5dp">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/layout_home_more"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
             android:src="@drawable/avatar"/>
         <TextView
             android:id="@+id/layout_home_username"

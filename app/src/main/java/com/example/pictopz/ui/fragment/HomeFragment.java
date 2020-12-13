@@ -20,6 +20,8 @@ import com.example.pictopz.adapters.PostsAdapter;
 import com.example.pictopz.adapters.StoryAdapter;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.models.StoryObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +29,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import xute.storyview.StoryModel;
 
@@ -47,6 +59,8 @@ public class HomeFragment extends Fragment {
 
     HashMap<String,ArrayList> storyHashMap=new HashMap<>();
     ArrayList<String> keyset=new ArrayList<>();
+
+    ArrayList<String> following=new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,48 +106,35 @@ public class HomeFragment extends Fragment {
 
         //TODO have to add a scroll listener so that more than 10 items can be displayed
 
-        //fetching posts data form apProved node lol....seriously apProved ?
-        DatabaseReference dbRef=FirebaseDatabase.getInstance().getReference("images/apProved");
-        dbRef.limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                approvedPostObjects.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                approvedPostObjects.add(snapshot1.getValue(ApprovedPostObject.class));
-                postAdapter.notifyDataSetChanged();
+        loadRecycleViewData();
 
-              // Log.e("likeno", approvedPostObjects.get(2).likeNo);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         return root;
     }
 
     private void loadRecycleViewData() {
         swipeRefreshLayout.setRefreshing(true);
-        DatabaseReference dbRef=FirebaseDatabase.getInstance().getReference("images/apProved");
-        dbRef.limitToFirst(10).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //fetching all followings
+        FirebaseDatabase.getInstance().getReference("following").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                approvedPostObjects.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren())
-                    approvedPostObjects.add(snapshot1.getValue(ApprovedPostObject.class));
-                postAdapter.notifyDataSetChanged();
+                if(snapshot.exists()){
+                    following.clear();
+                    for(DataSnapshot snapshot1:snapshot.getChildren())
+                        following.add(snapshot1.getKey());
+                    fetchPosts();
+                }
                 swipeRefreshLayout.setRefreshing(false);
-
-                // Log.e("likeno", approvedPostObjects.get(2).likeNo);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
+
 
 
     }
@@ -206,6 +207,30 @@ public class HomeFragment extends Fragment {
             }
         }
         storyAdapter.notifyDataSetChanged();
+    }
+
+    private void fetchPosts(){
+        following.add("CONTEST");
+        CollectionReference dbRef=FirebaseFirestore.getInstance().collection("posts");
+
+        Query query=dbRef
+                .whereEqualTo("approved", true)
+                .whereIn("filterID",following)
+                .orderBy("timestamp", Query.Direction.ASCENDING);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    approvedPostObjects.clear();
+                    for(QueryDocumentSnapshot snapshot1:task.getResult()) {
+                        approvedPostObjects.add(snapshot1.toObject(ApprovedPostObject.class));
+                        Log.e("POST","LIKES "+approvedPostObjects.get(0).commentsNo);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
 }

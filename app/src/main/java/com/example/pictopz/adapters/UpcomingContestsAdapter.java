@@ -72,7 +72,7 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
                 .load(arrayList.get(position).imageUrl)
 //                .centerCrop()
                 .into(holder.imageView);
-        MyCount counter=new MyCount(convertDate(arrayList.get(position).time),1000) {
+        MyCount counter=new MyCount(convertDate(arrayList.get(position).timeStart),1000) {
             @Override
             public void changeTime(String hms) {
                 holder.timer.setText(hms);

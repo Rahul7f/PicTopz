@@ -60,10 +60,10 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
         holder.username.setText(approvedPostObjects.get(position).userName);
         holder.likeNo.setText(String.valueOf(approvedPostObjects.get(position).likesNo));
         holder.commentNo.setText(String.valueOf(approvedPostObjects.get(position).commentsNo));
+
         Glide
                 .with(context)
                 .load(approvedPostObjects.get(position).imgURL)
-//                .centerCrop()
                 .into(holder.post_image);
 
         FirebaseDatabase.getInstance().getReference("/likes/"+approvedPostObjects.get(position).dataID+"/"+mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,13 +106,21 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
                         .commit();
             }
         });
-        DatabaseReference profile_ref = FirebaseDatabase.getInstance().getReference("/users/"+approvedPostObjects.get(position).userUID).child("profileURL");
+
+        DatabaseReference profile_ref = FirebaseDatabase.getInstance().getReference("/users/").child(approvedPostObjects.get(position).userUID).child("profileURL");
         profile_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists())
                 {
-                    Glide.with(context).load(snapshot.getValue()).into(holder.gotoProfile);
+                    Log.i("PROFILE PIC","url "+"pos "+position+snapshot.getValue());
+                    Glide.with(context)
+                            .load(snapshot.getValue())
+                            .into(holder.gotoProfile);
+                } else {
+                   Glide.with(context)
+                           .load(R.drawable.avatar)
+                           .into(holder.gotoProfile);
                 }
 
             }
@@ -126,10 +134,13 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             @Override
             public void onClick(View view) {
 
-                Intent intent =  new Intent(context, Profile.class);
-                intent.putExtra("userID",approvedPostObjects.get(position).userUID);
-                intent.putExtra("userName",approvedPostObjects.get(position).userName);
-                context.startActivity(intent);
+                Fragment fragment=new Profile(approvedPostObjects.get(position).userUID);
+                FragmentActivity activity=(FragmentActivity) context;
+                FragmentManager fragmentManager=activity.getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container,fragment)
+                        .addToBackStack(null)
+                        .commit();
 
 
             }
