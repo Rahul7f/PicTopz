@@ -92,7 +92,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 break;
 
             case R.id.profile_fragment:
-                fragment = new Profile(mAuth.getUid());
+                fragment = new Profile(mAuth.getUid(),mAuth.getCurrentUser().getDisplayName());
                 TAG = "PROFILE";
                 break;
 

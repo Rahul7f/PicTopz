@@ -69,8 +69,9 @@ public class Profile extends Fragment {
 
     String myusername;
 
-    public Profile(String userID) {
+    public Profile(String userID,String userName) {
         this.userUID = userID;
+        this.userName = userName;
         user = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
@@ -366,7 +367,15 @@ public class Profile extends Fragment {
     void  follow()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
-        reference.setValue(userName);
+        reference.setValue(userName).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(getContext(), "data uploaded to following", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         //get name
         DatabaseReference nameref = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid()).child("username");
         nameref.addValueEventListener(new ValueEventListener() {

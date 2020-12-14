@@ -134,7 +134,7 @@ public class PostsAdapter  extends RecyclerView.Adapter<PostsAdapter.MyViewHolde
             @Override
             public void onClick(View view) {
 
-                Fragment fragment=new Profile(approvedPostObjects.get(position).userUID);
+                Fragment fragment=new Profile(approvedPostObjects.get(position).userUID,approvedPostObjects.get(position).userName);
                 FragmentActivity activity=(FragmentActivity) context;
                 FragmentManager fragmentManager=activity.getSupportFragmentManager();
                 fragmentManager.beginTransaction()
