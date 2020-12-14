@@ -79,8 +79,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        fetchFollowList();
         recyclerView = root.findViewById(R.id.home_story_recycleview);
         storyAdapter = new StoryAdapter(storyHashMap, keyset);
         recyclerView.setAdapter(storyAdapter);
@@ -119,8 +117,6 @@ public class HomeFragment extends Fragment {
 
     private void fetchFollowList() {
 
-        storyHashMap.clear();
-        keyset.clear();
 
         FirebaseDatabase.getInstance().getReference("following/" + user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,6 +125,7 @@ public class HomeFragment extends Fragment {
                     following.clear();
                     for (DataSnapshot users : snapshot.getChildren()) {
                         following.add(users.getKey());
+                        Log.e("STORY Users",users.getValue(String.class));
                     }
                     following.add(user.getUid());
                     fetchStories();
@@ -145,7 +142,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchStories() {
-
+    storyHashMap.clear();
+    keyset.clear();
         CollectionReference reference = FirebaseFirestore.getInstance().collection("story");
         reference
                 .whereIn("uploaderUID", following)
@@ -156,7 +154,9 @@ public class HomeFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot snapshot : task.getResult()) {
+
                         StoryObject object = snapshot.toObject(StoryObject.class);
+                        Log.e("STORY",object.storyID);
                         deleteStoryIfTimeout(object, object.uploaderUID);
                     }
                 }
