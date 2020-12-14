@@ -37,7 +37,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
         final DrawerLayout mDrawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        imageView5=findViewById(R.id.imageView5);
+        //imageView5=findViewById(R.id.imageView5);
 
         imageView5.setOnClickListener(new View.OnClickListener() {
             @Override
