@@ -13,10 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
 import com.example.pictopz.models.UnApprovedDataObject;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
@@ -65,22 +72,22 @@ public class ProfileGridAdapter extends RecyclerView.Adapter<ProfileGridAdapter.
     }
 
     private void fetchData(String UID){
-        FirebaseDatabase.getInstance().getReference("images/apProved").orderByChild("userUID").equalTo(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        CollectionReference reference=FirebaseFirestore.getInstance().collection("posts");
+        reference.whereEqualTo("approved",true)
+            .whereEqualTo("userUID",UID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-
-                for (DataSnapshot objects:snapshot.getChildren()){
-                    UnApprovedDataObject object=objects.getValue(UnApprovedDataObject.class);
-                    list.add(object);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    list.clear();
+                    for (QueryDocumentSnapshot objects:task.getResult()){
+                        UnApprovedDataObject object=objects.toObject(UnApprovedDataObject.class);
+                        list.add(object);
+                    }
+                    notifyDataSetChanged();
                 }
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
+
     }
 }
