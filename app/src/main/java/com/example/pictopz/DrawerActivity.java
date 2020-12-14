@@ -1,5 +1,6 @@
 package com.example.pictopz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -16,6 +17,7 @@ import androidx.appcompat.view.SupportMenuInflater;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,12 +41,26 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 
 
         PopupMenu popupMenu = new PopupMenu(DrawerActivity.this, optionMenu);
-        popupMenu.getMenuInflater().inflate(R.menu.activity_main_drawer, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.menu2, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Toast.makeText(DrawerActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                switch (menuItem.getItemId())
+                {
+                    case R.id.logout:
+
+                        mAuth.signOut();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+                        break;
+                    case R.id.aboutApp:
+                        Toast.makeText(DrawerActivity.this, "about us coming soon", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
                 return true;
             }
         });
@@ -81,7 +97,8 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 break;
 
             case R.id.addphoto_fragment:
-                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+                fragment = new StoryPhotoUpload();
+                TAG = "UPLOAD";
                 break;
 
         }
