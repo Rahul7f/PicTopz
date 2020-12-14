@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
             public void run() {
 
 //                loadRecycleViewData();
-
+//61292296110
             }
         });
 
@@ -127,10 +127,10 @@ public class HomeFragment extends Fragment {
                         following.add(users.getKey());
                         Log.e("STORY Users",users.getValue(String.class));
                     }
-                    following.add(user.getUid());
-                    fetchStories();
-                    fetchPosts();
                 }
+                following.add(user.getUid());
+                fetchStories();
+                fetchPosts();
 
             }
 
