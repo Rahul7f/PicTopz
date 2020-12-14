@@ -54,6 +54,10 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 TAG = "PROFILE";
                 break;
 
+            case R.id.addphoto_fragment:
+                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+                break;    
+
         }
 
         return loadFragment(fragment, TAG);

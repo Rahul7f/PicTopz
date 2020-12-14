@@ -13,8 +13,12 @@
             android:title="Home"/>
 
         <item android:id="@+id/upcoming_contest_fragment"
-            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:icon="@drawable/ic_trophy"
             android:title="UpComing Contest"/>
+
+        <item android:id="@+id/addphoto_fragment"
+            android:icon="@drawable/add_icon"
+            android:title="Upload"/>
 
         <item android:id="@+id/profile_fragment"
             android:icon="@drawable/user_icon"
