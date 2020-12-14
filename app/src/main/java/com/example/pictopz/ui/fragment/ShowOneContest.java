@@ -148,9 +148,9 @@ public class ShowOneContest extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     limitValue=snapshot.getValue(Integer.class);
-                    limit.setText(limitValue+"/1");
+                    limit.setText(limitValue+"/5");
 
-                    if(limitValue<1)
+                    if(limitValue<5)
                         upload.setEnabled(true);
                 }else
                     upload.setEnabled(true);
