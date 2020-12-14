@@ -53,6 +53,7 @@ public class StoryPhotoUpload extends Fragment {
         mAuth=FirebaseAuth.getInstance();
         imageView=root.findViewById(R.id.upload_image_as_user);
         uploadPost =root.findViewById(R.id.upload_photo_button);
+        uploadStory =root.findViewById(R.id.upload_story_button);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +78,7 @@ public class StoryPhotoUpload extends Fragment {
             @Override
             public void onClick(View view) {
                 if(filePath!=null){
-                    uploadImage();
+                    uploadStory();
                 }else {
                     Toast.makeText(getContext(), "Please select an Image to Upload", Toast.LENGTH_SHORT).show();
                 }
