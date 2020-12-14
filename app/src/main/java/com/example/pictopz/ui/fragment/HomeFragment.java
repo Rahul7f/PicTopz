@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment {
                     following.clear();
                     for(DataSnapshot snapshot1:snapshot.getChildren())
                         following.add(snapshot1.getKey());
+                    following.add(user.getUid());
                     fetchPosts();
                 }
                 swipeRefreshLayout.setRefreshing(false);
@@ -144,8 +145,6 @@ public class HomeFragment extends Fragment {
         storyHashMap.clear();
         keyset.clear();
 
-        fetchStories(user.getUid());
-
         FirebaseDatabase.getInstance().getReference("following/"+user.getUid()).limitToFirst(50).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,6 +154,7 @@ public class HomeFragment extends Fragment {
 
                     fetchStories(users.getKey());
                 }
+
 
             }
 
