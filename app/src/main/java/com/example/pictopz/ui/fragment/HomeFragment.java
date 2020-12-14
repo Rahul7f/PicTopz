@@ -212,7 +212,6 @@ public class HomeFragment extends Fragment {
     private void fetchPosts(){
         following.add("CONTEST");
         CollectionReference dbRef=FirebaseFirestore.getInstance().collection("posts");
-
         Query query=dbRef
                 .whereEqualTo("approved", true)
                 .whereIn("filterID",following)

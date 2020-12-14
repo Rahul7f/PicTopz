@@ -47,6 +47,7 @@ public class StoryPhotoUpload extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
                 checkpermission();
             }
         });
@@ -86,8 +87,8 @@ public class StoryPhotoUpload extends Fragment {
 
     public void pickimage()
     {
-        Fragment participate=getParentFragmentManager().findFragmentByTag("PARTICIPATE");
-        CropImage.startPickImageActivity(getContext(),participate);
+        Fragment fragment=getParentFragmentManager().findFragmentByTag("UPLOAD");
+        CropImage.startPickImageActivity(getContext(),fragment);
     }
 
     public void uploadImage(){
@@ -109,7 +110,16 @@ public class StoryPhotoUpload extends Fragment {
 
         ApprovedPostObject unApprovedDataObject=new ApprovedPostObject(Imageurl,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),new GregorianCalendar().getTimeInMillis());
 
-        FirebaseFirestore.getInstance().collection("posts").document(key).set(unApprovedDataObject);
+        FirebaseFirestore.getInstance().collection("posts").document(key).set(unApprovedDataObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                {
+
+                }
+
+            }
+        });
 
     }
 
