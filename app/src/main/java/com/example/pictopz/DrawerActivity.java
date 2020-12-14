@@ -2,11 +2,17 @@ package com.example.pictopz;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.SupportMenuInflater;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,7 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class DrawerActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView navView;
     FirebaseAuth mAuth;
-
+    ImageView optionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,26 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         mAuth = FirebaseAuth.getInstance();
         navView.setOnNavigationItemSelectedListener(this);
         FirebaseMessaging.getInstance().subscribeToTopic("login");
+        optionMenu = findViewById(R.id.more_options);
+
+
+        PopupMenu popupMenu = new PopupMenu(DrawerActivity.this, optionMenu);
+        popupMenu.getMenuInflater().inflate(R.menu.activity_main_drawer, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Toast.makeText(DrawerActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        optionMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupMenu.show();
+            }
+        });
 
     }
 
@@ -56,7 +82,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 
             case R.id.addphoto_fragment:
                 Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
-                break;    
+                break;
 
         }
 
@@ -77,7 +103,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //
 //            return true;
 //        } else
-            if (fragment != null) {
+        if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment, TAG)
@@ -109,14 +135,13 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragment_container);
-        if(!(fragment instanceof HomeFragment)){
-        manager.beginTransaction()
-                .replace(R.id.fragment_container,manager.findFragmentByTag("HOME"))
-                .commit();
-        manualSelector("HOME");
-        }else
+        if (!(fragment instanceof HomeFragment)) {
+            manager.beginTransaction()
+                    .replace(R.id.fragment_container, manager.findFragmentByTag("HOME"))
+                    .commit();
+            manualSelector("HOME");
+        } else
             finish();
-
 
 
 //        manager.beginTransaction().remove(fragment).commit();

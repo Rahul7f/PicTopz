@@ -83,7 +83,7 @@ public class Profile extends Fragment {
 
         gridChange = root.findViewById(R.id.grid_to_l);
         simpleGrid = (RecyclerView) root.findViewById(R.id.simpleGridView);
-        logout = root.findViewById(R.id.logout);
+//        logout = root.findViewById(R.id.logout);
         name_tv = root.findViewById(R.id.name_tv);
         email_tv = root.findViewById(R.id.email_tv);
         phone_tv = root.findViewById(R.id.mobile_tv);

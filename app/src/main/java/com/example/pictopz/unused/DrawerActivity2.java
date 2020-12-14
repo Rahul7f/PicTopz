@@ -46,7 +46,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
             }
         });
 
-        imageView = findViewById(R.id.profile);
+        imageView = findViewById(R.id.more_options);
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
