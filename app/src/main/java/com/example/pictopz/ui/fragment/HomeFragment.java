@@ -216,7 +216,7 @@ public class HomeFragment extends Fragment {
         Query query=dbRef
                 .whereEqualTo("approved", true)
                 .whereIn("filterID",following)
-                .orderBy("timestamp", Query.Direction.ASCENDING);
+                .orderBy("timestamp", Query.Direction.DESCENDING);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
