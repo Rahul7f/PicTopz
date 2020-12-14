@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.pictopz.firebase.FirebaseUploadImage;
 import com.example.pictopz.models.ApprovedPostObject;
+import com.example.pictopz.models.StoryObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,9 +40,9 @@ import static android.app.Activity.RESULT_OK;
 public class StoryPhotoUpload extends Fragment {
 
     FirebaseAuth mAuth;
-    FirebaseUploadImage imgUpload;
+    FirebaseUploadImage imgUploader;
     ImageView imageView;
-    Button uplaodPost,uplaodStory;
+    Button uploadPost, uploadStory;
     Uri filePath;
 
     @Override
@@ -51,7 +52,7 @@ public class StoryPhotoUpload extends Fragment {
         View root= inflater.inflate(R.layout.fragment_story_photo_upload, container, false);
         mAuth=FirebaseAuth.getInstance();
         imageView=root.findViewById(R.id.upload_image_as_user);
-        uplaodPost=root.findViewById(R.id.upload_photo_button);
+        uploadPost =root.findViewById(R.id.upload_photo_button);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +62,18 @@ public class StoryPhotoUpload extends Fragment {
             }
         });
 
-        uplaodPost.setOnClickListener(new View.OnClickListener() {
+        uploadPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(filePath!=null){
+                    uploadImage();
+                }else {
+                    Toast.makeText(getContext(), "Please select an Image to Upload", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        uploadStory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(filePath!=null){
@@ -139,38 +151,55 @@ public class StoryPhotoUpload extends Fragment {
     public void pickimage()
     {
         Fragment fragment=getParentFragmentManager().findFragmentByTag("UPLOAD");
+        Log.i("FRAMGNET INFO",fragment.getTag()+"ok");
         CropImage.startPickImageActivity(getContext(),fragment);
     }
 
     public void uploadImage(){
-        imgUpload=new FirebaseUploadImage(getContext(),filePath,"images") {
+        imgUploader =new FirebaseUploadImage(getContext(),filePath,"images") {
             @Override
             public void getUrl(String url) {
-                Log.e("UPLOAD IMAGE","UPLOAD COMPLETE");
-                uploadData(url);
+                //After getting URL of Post Image
+                String key= UUID.randomUUID().toString();
+
+                ApprovedPostObject object=new ApprovedPostObject(url,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),new GregorianCalendar().getTimeInMillis());
+
+                FirebaseFirestore.getInstance().collection("posts").document(key).set(object).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Photo Uploaded Successfully
+                        }
+                    }
+                });
             }
         };
 
-        imgUpload.start();
+        imgUploader.start();
     }
 
-    private void uploadData(String Imageurl){
-        String url="/images/unApproved/";
-        String key= UUID.randomUUID().toString();
-        url+=key;
 
-        ApprovedPostObject unApprovedDataObject=new ApprovedPostObject(Imageurl,key,mAuth.getCurrentUser().getDisplayName(),mAuth.getUid(),new GregorianCalendar().getTimeInMillis());
-
-        FirebaseFirestore.getInstance().collection("posts").document(key).set(unApprovedDataObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void uploadStory(){
+        imgUploader =new FirebaseUploadImage(getContext(),filePath,"story") {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                {
+            public void getUrl(String url) {
+                //After getting URL of Story Image
+                String key= UUID.randomUUID().toString();
 
-                }
+                StoryObject object=new StoryObject(url,key,new GregorianCalendar().getTimeInMillis(),mAuth.getUid());
 
+                FirebaseFirestore.getInstance().collection("story").document(key).set(object).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            //Story uploaded successfully
+                        }
+                    }
+                });
             }
-        });
+        };
+
+        imgUploader.start();
 
     }
 

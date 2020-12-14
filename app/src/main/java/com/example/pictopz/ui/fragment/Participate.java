@@ -169,8 +169,10 @@ public class Participate extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         if (requestCode==100 && grantResults[0]== PackageManager.PERMISSION_GRANTED)
         {
+
             pickimage();
         }
         else
@@ -181,6 +183,7 @@ public class Participate extends Fragment {
 
     public void pickimage()
     {
+        Log.e("FRAG","OK");
         Fragment participate=getParentFragmentManager().findFragmentByTag("PARTICIPATE");
         CropImage.startPickImageActivity(getContext(),participate);
     }
