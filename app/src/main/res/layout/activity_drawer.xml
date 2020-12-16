@@ -16,7 +16,7 @@
     <include layout="@layout/home_toolbar_layout"/>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_containert"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.example.pictopz.ui.fragment.HomeFragment"

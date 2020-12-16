@@ -107,7 +107,19 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     }
 
     private boolean loadFragment(Fragment fragment, String TAG) {
-
+//        FragmentManager manager = getSupportFragmentManager();
+//        Fragment taggedFragment = manager.findFragmentByTag(TAG);
+//        if (taggedFragment != null) {
+//            Log.e("FRAGMENT", "TAGGED FRAGMENT FOUND");
+//            manager
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_container, taggedFragment, TAG)
+//                    .commit();
+//
+//
+//
+//            return true;
+//        } else
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
