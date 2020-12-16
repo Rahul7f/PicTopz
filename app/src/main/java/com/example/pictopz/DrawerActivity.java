@@ -140,7 +140,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragment_container);
-        if (!(fragment instanceof HomeFragment)) {
+        if (!(fragment instanceof UpcomingContests)) {
             manager.beginTransaction()
                     .replace(R.id.fragment_container, manager.findFragmentByTag("UPCOMING"))
                     .commit();
