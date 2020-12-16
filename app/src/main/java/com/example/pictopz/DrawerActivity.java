@@ -4,23 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.SupportMenuInflater;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
+import com.example.pictopz.unused.DrawerActivity2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -28,6 +34,8 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     BottomNavigationView navView;
     FirebaseAuth mAuth;
     ImageView optionMenu;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,9 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         navView.setOnNavigationItemSelectedListener(this);
         FirebaseMessaging.getInstance().subscribeToTopic("login");
         optionMenu = findViewById(R.id.more_options);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView= findViewById(R.id.drawer_view);
+
 
 
         PopupMenu popupMenu = new PopupMenu(DrawerActivity.this, optionMenu);
@@ -68,7 +79,46 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         optionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupMenu.show();
+                //popupMenu.show();
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.END);
+                }
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                String TAG = "";
+                switch (item.getItemId()){
+
+                    case R.id.drawer_upcoming_contest_fragment:
+                        fragment = new UpcomingContests();
+                        TAG = "UPCOMING";
+                        break;
+
+                    case R.id.drawer_home_fragment:
+                        fragment = new HomeFragment();
+                        TAG = "HOME";
+                        break;
+
+                    case R.id.drawer_addphoto_fragment:
+                        fragment = new StoryPhotoUpload();
+                        TAG = "UPLOAD";
+                        break;
+
+                    case R.id.drawer_profile_fragment:
+                        fragment = new Profile(mAuth.getUid(),mAuth.getCurrentUser().getDisplayName());
+                        TAG = "PROFILE";
+                        break;
+                }
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                manualSelector(TAG);
+
+                return loadFragment(fragment, TAG);
             }
         });
 
@@ -142,6 +192,9 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 break;
             case "PROFILE":
                 navView.getMenu().findItem(R.id.profile_fragment).setChecked(true);
+                break;
+            case "UPLOAD":
+                navView.getMenu().findItem(R.id.addphoto_fragment).setChecked(true);
                 break;
         }
     }

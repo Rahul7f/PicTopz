@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group>
+
+        <item android:id="@+id/drawer_upcoming_contest_fragment"
+            android:icon="@drawable/ic_trophy"
+            android:title="Contest"/>
+
+        <item android:id="@+id/drawer_home_fragment"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home"/>
+
+        <item android:id="@+id/drawer_addphoto_fragment"
+            android:icon="@drawable/ic_upload"
+            android:title="Upload"/>
+
+        <item android:id="@+id/drawer_profile_fragment"
+            android:icon="@drawable/user_icon"
+            android:title="Profile"
+            />
+
+    </group>
+</menu>
