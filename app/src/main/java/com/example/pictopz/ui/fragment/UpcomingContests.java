@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pictopz.R;
 import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
 import com.example.pictopz.models.ContestObject;
+import com.example.pictopz.models.GiftObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 public class UpcomingContests extends Fragment {
 
     public static ArrayList<ContestObject> arrayList=new ArrayList<>();
+    public static ArrayList<GiftObject> giftsList=new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container, Bundle savedInstanceState) {
@@ -62,11 +65,41 @@ public class UpcomingContests extends Fragment {
 
 
         RecyclerView recyclerView2=root.findViewById(R.id.contest_rank_recycle);
-        RankAdapter adapter2=new RankAdapter();
+        fetchGiftItem();
+        RankAdapter adapter2=new RankAdapter(giftsList,getContext());
         recyclerView2.setAdapter(adapter2);
 
 
 
         return root;
+    }
+
+    // fetch gift item
+    void fetchGiftItem()
+    {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/gift/");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    giftsList.clear();
+                    for (DataSnapshot snapshot1:snapshot.getChildren())
+                    {
+                        giftsList.add(snapshot1.getValue(GiftObject.class));
+                    }
+
+                }
+                else {
+                    Toast.makeText(getContext(), "data not exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

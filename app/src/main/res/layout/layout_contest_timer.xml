@@ -26,6 +26,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="center"
             />
+
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
