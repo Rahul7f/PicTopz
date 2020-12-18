@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="5dp"
-    android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
         android:elevation="2dp">
         <LinearLayout
@@ -50,6 +49,7 @@
                 android:layout_height="80dp"
                 android:id="@+id/rank_layout_image"
                 android:src="@drawable/sample_image"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center"
                 />
 
@@ -59,7 +59,7 @@
                 android:text="Item Name"
                 android:gravity="center"
                 android:textColor="#000"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:layout_margin="10dp"
                 android:id="@+id/rank_layout_text"
                 />

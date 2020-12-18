@@ -23,5 +23,10 @@
             android:title="Profile"
             />
 
+        <item android:id="@+id/drawer_logout"
+            android:icon="@drawable/ic_power"
+            android:title="Logout"
+            />
+
     </group>
 </menu>

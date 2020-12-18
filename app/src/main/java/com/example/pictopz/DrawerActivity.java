@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
@@ -28,6 +29,11 @@ import com.example.pictopz.unused.DrawerActivity2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DrawerActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +42,9 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     ImageView optionMenu;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    TextView username,email;
+    ImageView imageView;
+    View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,29 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         optionMenu = findViewById(R.id.more_options);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView= findViewById(R.id.drawer_view);
+
+
+        header = navigationView.getHeaderView(0);
+        username = header.findViewById(R.id.username_text);
+        email = header.findViewById(R.id.useremail_text);
+        imageView = header.findViewById(R.id.userprofile_image);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    username.setText(snapshot.child("username").getValue().toString());
+                    email.setText(snapshot.child("email").getValue().toString());
+                    Glide.with(getApplicationContext()).load(snapshot.child("profileURL").getValue()).into(imageView);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -113,6 +145,12 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                     case R.id.drawer_profile_fragment:
                         fragment = new Profile(mAuth.getUid(),mAuth.getCurrentUser().getDisplayName());
                         TAG = "PROFILE";
+                        break;
+                    case R.id.drawer_logout:
+                        mAuth.signOut();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         break;
                 }
                 drawerLayout.closeDrawer(Gravity.LEFT);

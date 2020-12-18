@@ -94,7 +94,7 @@ public class StoryPhotoUpload extends Fragment {
     {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
         {
-            Toast.makeText(getContext(), "if run", Toast.LENGTH_SHORT).show();
+
             try {
                 requestPermissions(new  String[] {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},100);
 
@@ -104,7 +104,6 @@ public class StoryPhotoUpload extends Fragment {
             }
         }
         else {
-            Toast.makeText(getContext(), "else run", Toast.LENGTH_SHORT).show();
             pickimage();
         }
     }
