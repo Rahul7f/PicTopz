@@ -23,6 +23,7 @@
                android:background="#fff"
                android:paddingBottom="10dp"
                android:paddingTop="10dp">
+
                <ImageView
                    android:layout_width="match_parent"
                    android:layout_height="200dp"
@@ -31,6 +32,14 @@
                    android:id="@+id/image_contest_layout"
 
                    />
+               <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@color/transblack"
+               android:gravity="center"
+               android:textColor="#fff"
+               android:id="@+id/one_contest_indicator"
+               />
                <TextView
                    android:id="@+id/contest_timer_one_contest"
                    android:layout_width="match_parent"
@@ -79,6 +88,7 @@
                    android:layout_height="200dp"
                    android:text="@string/sample_text"
                    android:layout_margin="10dp"
+                   android:id="@+id/one_contest_desc"
                    />
            </LinearLayout>
 

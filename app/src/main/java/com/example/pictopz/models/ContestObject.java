@@ -6,13 +6,9 @@ public class ContestObject {
 	public long timeEnd;
     public String category;
     public String contestID;
+    public String contestDesc;
+    public boolean winnerAnnounced;
 
-    public ContestObject(String imageUrl,String category,long timeStart,long timeEnd,String contestID){
-        this.imageUrl=imageUrl;
-        this.timeStart=timeStart;
-	    this.timeEnd=timeEnd;
-        this.category=category;
-        this.contestID=contestID;
-    }
+
     public ContestObject(){}
 }

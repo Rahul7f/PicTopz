@@ -1,49 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:orientation="vertical">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+
     <ImageView
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="130sp"
+        android:layout_height="150dp"
         android:src="@drawable/sample_image"
-        android:paddingHorizontal="10sp"
-        android:layout_margin="5sp"
+        android:layout_margin="10dp"
         android:scaleType="centerCrop"
         android:id="@+id/image_contest_layout"
         />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/contest_timer_textView"
-            android:text="TIMEOUT"
-            android:textStyle="bold|italic"
-            android:textSize="25sp"
-            android:textColor="#ffffff"
-            android:layout_gravity="center_horizontal|bottom"
-            android:gravity="center"
-            />
 
-    </FrameLayout>
-    <FrameLayout
+    <TextView
+        android:id="@+id/contest_start_end_indicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/transblack"
+        android:gravity="center"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"
+        app:layout_constraintStart_toStartOf="@+id/image_contest_layout"
+        app:layout_constraintTop_toTopOf="@id/image_contest_layout" />
+
+    <TextView
+        android:id="@+id/contest_timer_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TIMEOUT"
+        android:textColor="#ffffff"
+        android:background="@color/transblack"
+        android:textSize="27sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@id/contest_time_unit"
+        app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"
+        app:layout_constraintStart_toStartOf="@+id/image_contest_layout" />
+
+    <TextView
+        android:id="@+id/contest_time_unit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="DAYS   HOURS   MIN.   SEC. "
+        android:textColor="#ffffff"
+        android:textSize="11sp"
+        android:background="@color/transblack"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_contest_layout"
+        app:layout_constraintEnd_toEndOf="@+id/contest_timer_textView"
+        app:layout_constraintStart_toStartOf="@+id/contest_timer_textView" />
+
+
+    <View
+
+        android:id="@+id/orangeview"
         android:layout_width="match_parent"
         android:layout_height="55sp"
         android:background="#ff4a01"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NATURE"
-            android:id="@+id/contest_layout_category"
-            android:paddingHorizontal="10sp"
-            android:layout_gravity="center"
-            android:textColor="#000"
-            android:background="@drawable/oval"
-            />
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@id/image_contest_layout"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+
+        android:id="@+id/contest_layout_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/oval"
+        android:paddingHorizontal="10sp"
+        android:text="NATURE"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/orangeview"
+        app:layout_constraintTop_toBottomOf="@+id/contest_time_unit" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
