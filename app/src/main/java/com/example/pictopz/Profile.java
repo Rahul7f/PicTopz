@@ -142,7 +142,7 @@ public class Profile extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction fragmentTransaction = getActivity()
                         .getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new WinRecord());
+                fragmentTransaction.replace(R.id.fragment_container, new WinRecord(userUID));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

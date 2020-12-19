@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
-import com.example.pictopz.models.UnApprovedDataObject;
+import com.example.pictopz.models.ApprovedPostObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -22,13 +21,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.function.UnaryOperator;
 
 
 public class ProfileGridAdapter extends RecyclerView.Adapter<ProfileGridAdapter.ProfileViewHolder> {
 
     Context context;
-    ArrayList<UnApprovedDataObject> list=new ArrayList<>();
+    ArrayList<ApprovedPostObject> list=new ArrayList<>();
 
     public ProfileGridAdapter(Context context,String UID) {
         this.context = context;
@@ -76,7 +74,7 @@ public class ProfileGridAdapter extends RecyclerView.Adapter<ProfileGridAdapter.
                 if(task.isSuccessful()){
                     list.clear();
                     for (QueryDocumentSnapshot objects:task.getResult()){
-                        UnApprovedDataObject object=objects.toObject(UnApprovedDataObject.class);
+                        ApprovedPostObject object=objects.toObject(ApprovedPostObject.class);
                         list.add(object);
                     }
                     notifyDataSetChanged();

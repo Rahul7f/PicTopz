@@ -18,6 +18,11 @@ public class WinRecord extends Fragment {
 
     RecyclerView recyclerView;
     WinRecordAdapter winRecordAdapter;
+    String id;
+
+    public WinRecord(String id) {
+        this.id = id;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,9 +30,8 @@ public class WinRecord extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_win_record, container, false);
 
         recyclerView = view.findViewById(R.id.win_Record_recycleView);
-        winRecordAdapter = new WinRecordAdapter();
+        winRecordAdapter = new WinRecordAdapter(getContext(),id);
         recyclerView.setAdapter(winRecordAdapter);
-
 
         return  view;
     }

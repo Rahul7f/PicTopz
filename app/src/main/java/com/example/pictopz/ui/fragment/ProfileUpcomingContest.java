@@ -26,7 +26,7 @@ public class ProfileUpcomingContest extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile_upcoming_contest, container, false);
         recyclerView = view.findViewById(R.id.profile_contest_Recycleview);
-        contestAdapter = new ProfileContestAdapter();
+        contestAdapter = new ProfileContestAdapter(getContext());
         recyclerView.setAdapter(contestAdapter);
 
         return  view;

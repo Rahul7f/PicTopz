@@ -11,6 +11,7 @@ public class ApprovedPostObject {
     public boolean approved; //is picture approved for contest by admin //vales are true for approved or global posts and false for unapproved
     public long timestamp; //time at which post is uploaded
     public String filterID; //used in filtering // value is CONTEST or <ANY_UID>
+    public int position;
 
     public ApprovedPostObject(String imgURL, String dataID, String userName, String userUID, String contestID, long timestamp) {
         //constructor for uploading picture in contest
