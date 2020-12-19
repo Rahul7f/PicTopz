@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,25 +26,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 public class ShowOneContest extends Fragment {
 
     FirebaseAuth mAuth;
     ContestObject contestObject;
-    int limitValue=0;
-    public ShowOneContest(ContestObject contestObject){
-        this.contestObject =contestObject;
+    int limitValue = 0;
+
+    public ShowOneContest(ContestObject contestObject) {
+        this.contestObject = contestObject;
     }
 
     ImageView imageView;
-    TextView textView;
+    TextView timerTextView, indicator,desc;
     Button upload;
     TextView limit;
 
@@ -57,14 +51,16 @@ public class ShowOneContest extends Fragment {
 
         View root = inflater.inflate(R.layout.activity_show_one_contest, container, false);
 
-        imageView=root.findViewById(R.id.image_contest_layout);
-        textView=root.findViewById(R.id.contest_timer_one_contest);
-        upload=root.findViewById(R.id.upload_image_for_contest);
-        limit=root.findViewById(R.id.uplaod_limit_per_comp);
+        imageView = root.findViewById(R.id.image_contest_layout);
+        timerTextView = root.findViewById(R.id.contest_timer_one_contest);
+        upload = root.findViewById(R.id.upload_image_for_contest);
+        limit = root.findViewById(R.id.uplaod_limit_per_comp);
+        indicator =root.findViewById(R.id.one_contest_indicator);
+        desc = root.findViewById(R.id.one_contest_desc);
 
-
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         fetchLimit();
+
 
         Glide.with(getContext())
                 .load(contestObject.imageUrl)
@@ -72,18 +68,16 @@ public class ShowOneContest extends Fragment {
                 .into(imageView);
 
 
-
-        MyCountDownTimer myCount=new MyCountDownTimer(contestObject.timeStart,textView) ;
-        myCount.start();
-
+        setCounter();
+        desc.setText(contestObject.contestDesc);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Participate participate=new Participate(contestObject.contestID,limitValue);
-                FragmentManager manager=getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction= manager.beginTransaction();
+                Participate participate = new Participate(contestObject.contestID, limitValue);
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
                 fragmentTransaction
-                        .replace(R.id.fragment_container,participate,"PARTICIPATE")
+                        .replace(R.id.fragment_container, participate, "PARTICIPATE")
                         .addToBackStack("ONE CONTEST")
                         .commit();
             }
@@ -91,23 +85,24 @@ public class ShowOneContest extends Fragment {
 
 
         return root;
-        }
+    }
 
 
-    private void fetchLimit(){
+    private void fetchLimit() {
         upload.setEnabled(false);
-        DatabaseReference dbRef=FirebaseDatabase.getInstance().getReference("limits/"+contestObject.contestID+"/"+mAuth.getUid());
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("limits/" + contestObject.contestID + "/" + mAuth.getUid());
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    limitValue=snapshot.getValue(Integer.class);
-                    limit.setText(limitValue+"/5");
+                if (snapshot.exists()) {
+                    limitValue = snapshot.getValue(Integer.class);
+                    limit.setText(limitValue + "/5");
 
-                    if(limitValue<5)
-                        upload.setEnabled(true);
-                }else
-                    upload.setEnabled(true);
+                    if (limitValue < 5)
+                        timeCheck();
+                }else {
+                    timeCheck();
+                }
             }
 
             @Override
@@ -115,6 +110,30 @@ public class ShowOneContest extends Fragment {
                 Toast.makeText(getContext(), "Check Internet Connectivity", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void timeCheck() {
+        GregorianCalendar currentTime = new GregorianCalendar();
+        if (currentTime.getTimeInMillis() < contestObject.timeStart || currentTime.getTimeInMillis() > contestObject.timeEnd) {
+            upload.setEnabled(false);
+            Log.e("Time","fk fk fk"+(currentTime.getTimeInMillis() < contestObject.timeStart));
+        } else {
+            upload.setEnabled(true);
+        }
+    }
+
+    private void setCounter() {
+        MyCountDownTimer counter;
+        GregorianCalendar calendar = new GregorianCalendar();
+        if (calendar.getTimeInMillis() < contestObject.timeStart) {
+            counter = new MyCountDownTimer(contestObject.timeStart, timerTextView);
+            indicator.setText("CONTEST STARTS IN");
+        } else {
+            counter = new MyCountDownTimer(contestObject.timeEnd, timerTextView);
+            indicator.setText("CONTEST ENDS IN");
+        }
+        counter.start();
+
     }
 
 

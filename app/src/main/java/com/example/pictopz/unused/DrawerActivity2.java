@@ -58,7 +58,6 @@ public class DrawerActivity2 extends AppCompatActivity    {
             }
         });
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
