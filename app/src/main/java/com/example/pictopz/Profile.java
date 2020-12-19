@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,8 @@ import com.example.pictopz.firebase.FirebaseUploadData;
 import com.example.pictopz.firebase.FirebaseUploadImage;
 import com.example.pictopz.models.StoryObject;
 import com.example.pictopz.models.UserProfileObject;
+import com.example.pictopz.ui.fragment.ProfileUpcomingContest;
+import com.example.pictopz.ui.fragment.WinRecord;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +58,7 @@ import java.util.UUID;
 public class Profile extends Fragment {
 
     RecyclerView simpleGrid;
-    ImageView gridChange,profile_image;
+    ImageView gridChange,profile_image,upcoming_contest,winRecordBtn;
     ImageView logout;
     FirebaseAuth mAuth;
     FirebaseUser user;
@@ -66,7 +69,6 @@ public class Profile extends Fragment {
     boolean isLinearLayout=false;
     String userUID,userName;
     String status;
-
     String myusername;
 
     public Profile(String userID,String userName) {
@@ -94,6 +96,8 @@ public class Profile extends Fragment {
         followingCount_textView = root.findViewById(R.id.followingCount_textView);
         profile_image = root.findViewById(R.id.profile_image_view);
         edit_profile_btn = root.findViewById(R.id.edit_profile_btn);
+        upcoming_contest = root.findViewById(R.id.showCONTEST);
+        winRecordBtn = root.findViewById(R.id.winRecord_btn);
 
         getUserData();
 
@@ -119,6 +123,28 @@ public class Profile extends Fragment {
                 intent.putExtra("path","/followers/");
                 intent.putExtra("userID",userUID);
                 startActivity(intent);
+            }
+        });
+
+        upcoming_contest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new ProfileUpcomingContest());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        winRecordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new WinRecord());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

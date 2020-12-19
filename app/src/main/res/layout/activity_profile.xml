@@ -166,7 +166,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/win"
+                    android:id="@+id/winRecord_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/crown"
@@ -175,20 +175,14 @@
                     android:layout_marginRight="20dp" />
 
                 <ImageView
+                    android:id="@+id/showCONTEST"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/contacts_icon"
+                    android:src="@drawable/ic_trophy2"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:layout_marginRight="20dp"/>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/message_icon"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="20dp"/>
 
                 <ImageView
                     android:id="@+id/grid_to_l"
