@@ -62,7 +62,7 @@ public class ShowOneContest extends Fragment {
         indicator =root.findViewById(R.id.one_contest_indicator);
         desc = root.findViewById(R.id.one_contest_desc);
         recyclerView = root.findViewById(R.id.contest_winners_recycleView);
-        contestWInnersAdapter = new ContestWInnersAdapter();
+        contestWInnersAdapter = new ContestWInnersAdapter(getContext(),contestObject.contestID);
         recyclerView.setAdapter(contestWInnersAdapter);
 
         mAuth = FirebaseAuth.getInstance();
