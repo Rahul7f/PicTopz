@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
+import com.example.pictopz.adapters.ContestWInnersAdapter;
 import com.example.pictopz.firebase.MyCountDownTimer;
 import com.example.pictopz.models.ContestObject;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,8 @@ public class ShowOneContest extends Fragment {
     FirebaseAuth mAuth;
     ContestObject contestObject;
     int limitValue = 0;
+    RecyclerView recyclerView;
+    ContestWInnersAdapter contestWInnersAdapter;
 
     public ShowOneContest(ContestObject contestObject) {
         this.contestObject = contestObject;
@@ -57,6 +61,9 @@ public class ShowOneContest extends Fragment {
         limit = root.findViewById(R.id.uplaod_limit_per_comp);
         indicator =root.findViewById(R.id.one_contest_indicator);
         desc = root.findViewById(R.id.one_contest_desc);
+        recyclerView = root.findViewById(R.id.contest_winners_recycleView);
+        contestWInnersAdapter = new ContestWInnersAdapter();
+        recyclerView.setAdapter(contestWInnersAdapter);
 
         mAuth = FirebaseAuth.getInstance();
         fetchLimit();

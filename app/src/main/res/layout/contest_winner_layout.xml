@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/contestWinner_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_image" />
+
+            <ImageView
+                android:id="@+id/myImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic__star"
+                app:tint="#FF9800" />
+
+            <TextView
+                android:id="@+id/contestWinner_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/myImageView"
+                android:layout_alignTop="@id/myImageView"
+                android:layout_alignRight="@id/myImageView"
+                android:layout_alignBottom="@id/myImageView"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:text="1"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/contestWinner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

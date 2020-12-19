@@ -36,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
                 />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

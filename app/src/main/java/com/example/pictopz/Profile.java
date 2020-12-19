@@ -348,7 +348,7 @@ public class Profile extends Fragment {
 //        phone_tv.setText(user.getPhoneNumber());
     }
 
-  void editProfile()
+   void editProfile()
   {
       Intent intent = new Intent(getContext(), EditProfile.class);
       startActivity(intent);

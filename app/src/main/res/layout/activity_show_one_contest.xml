@@ -109,35 +109,14 @@
                    android:gravity="center"
                    />
 
-               <LinearLayout
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/contest_winners_recycleView"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:orientation="horizontal">
-                   <ImageView
-                       android:layout_width="100dp"
-                       android:layout_height="100dp"
-                       android:scaleType="centerCrop"
-                       android:layout_margin="10dp"
-                       android:layout_weight="1"
-                       android:src="@drawable/sample_image"/>
-
-                   <ImageView
-                       android:layout_width="100dp"
-                       android:layout_height="100dp"
-                       android:scaleType="centerCrop"
-                       android:layout_margin="10dp"
-                       android:layout_weight="1"
-                       android:src="@drawable/sample_image"/>
-
-                   <ImageView
-                       android:layout_width="100dp"
-                       android:layout_height="100dp"
-                       android:scaleType="centerCrop"
-                       android:layout_margin="10dp"
-                       android:layout_weight="1"
-                       android:src="@drawable/sample_image"/>
-
-               </LinearLayout>
+                   android:orientation="horizontal"
+                   android:layout_margin="10dp"
+                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                   />
 
 
            </LinearLayout>
