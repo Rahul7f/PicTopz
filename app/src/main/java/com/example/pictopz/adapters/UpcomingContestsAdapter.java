@@ -1,6 +1,7 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -81,9 +82,12 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
         if (calendar.getTimeInMillis() < arrayList.get(position).timeStart) {
            counter = new MyCountDownTimer(arrayList.get(position).timeStart, holder.timer);
            holder.indicator.setText("CONTEST STARTS IN");
+           holder.indicator.setTextColor(Color.parseColor("#06F10F"));
+           holder.indicator.setBackgroundColor(Color.parseColor("#8D000000"));
         }else {
             counter = new MyCountDownTimer((arrayList.get(position).timeEnd),holder.timer);
             holder.indicator.setText("CONTEST ENDS IN");
+            holder.indicator.setTextColor(Color.parseColor("#F30B0B"));
         }
         counter.start();
     }

@@ -22,7 +22,7 @@
         android:id="@+id/contest_start_end_indicator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/transblack"
+        android:background="#C8FFFFFF"
         android:gravity="center"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"
@@ -59,7 +59,6 @@
 
 
     <View
-
         android:id="@+id/orangeview"
         android:layout_width="match_parent"
         android:layout_height="55sp"
@@ -68,7 +67,6 @@
         android:layout_marginTop="5dp"/>
 
     <TextView
-
         android:id="@+id/contest_layout_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
