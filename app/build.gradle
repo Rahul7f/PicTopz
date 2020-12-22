@@ -72,6 +72,7 @@ dependencies {
     implementation 'com.github.bxute:StoryView:v1.0'
     // notification
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.github.mreram:ShowCaseView:1.0.5'
 
 
 

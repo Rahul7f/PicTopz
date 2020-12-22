@@ -26,6 +26,7 @@ import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
 import com.example.pictopz.unused.DrawerActivity2;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,11 +59,15 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView= findViewById(R.id.drawer_view);
 
-
         header = navigationView.getHeaderView(0);
         username = header.findViewById(R.id.username_text);
         email = header.findViewById(R.id.useremail_text);
         imageView = header.findViewById(R.id.userprofile_image);
+
+        Log.e("TEST", navView.getMenu().findItem(R.id.profile_fragment)+"ok");
+
+
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -195,19 +200,6 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     }
 
     private boolean loadFragment(Fragment fragment, String TAG) {
-//        FragmentManager manager = getSupportFragmentManager();
-//        Fragment taggedFragment = manager.findFragmentByTag(TAG);
-//        if (taggedFragment != null) {
-//            Log.e("FRAGMENT", "TAGGED FRAGMENT FOUND");
-//            manager
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, taggedFragment, TAG)
-//                    .commit();
-//
-//
-//
-//            return true;
-//        } else
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -275,5 +267,6 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //            manager.popBackStack();
 //
 //    }
+
 
 }

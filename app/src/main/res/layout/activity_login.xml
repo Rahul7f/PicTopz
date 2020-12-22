@@ -44,7 +44,6 @@
                 android:hint="Password"
                 android:padding="10dp"
                 android:maxLines="1"
-                android:maxLength="8"
                 android:inputType="textPassword"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
