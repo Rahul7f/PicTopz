@@ -10,7 +10,7 @@
 <!--            android:title="Create Contest"-->
 <!--            />-->
 
-        <item android:id="@+id/upcoming_contest_fragment"
+        <item android:id="@+id/contest_fragment"
             android:icon="@drawable/ic_trophy"
             android:title="Contest" />
 

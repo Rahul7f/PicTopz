@@ -22,7 +22,7 @@
         android:id="@+id/contest_start_end_indicator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#C8FFFFFF"
+        android:background="@color/transblack"
         android:gravity="center"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"

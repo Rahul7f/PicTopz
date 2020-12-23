@@ -82,12 +82,12 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
         if (calendar.getTimeInMillis() < arrayList.get(position).timeStart) {
            counter = new MyCountDownTimer(arrayList.get(position).timeStart, holder.timer);
            holder.indicator.setText("CONTEST STARTS IN");
-           holder.indicator.setTextColor(Color.parseColor("#06F10F"));
-           holder.indicator.setBackgroundColor(Color.parseColor("#8D000000"));
+        }else if(calendar.getTimeInMillis()>arrayList.get(position).timeEnd){
+            counter = new MyCountDownTimer(arrayList.get(position).timeEnd,holder.timer);
+            holder.indicator.setText("CONTEST ENDED");
         }else {
             counter = new MyCountDownTimer((arrayList.get(position).timeEnd),holder.timer);
             holder.indicator.setText("CONTEST ENDS IN");
-            holder.indicator.setTextColor(Color.parseColor("#F30B0B"));
         }
         counter.start();
     }

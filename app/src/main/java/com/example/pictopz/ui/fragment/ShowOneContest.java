@@ -121,12 +121,7 @@ public class ShowOneContest extends Fragment {
 
     private void timeCheck() {
         GregorianCalendar currentTime = new GregorianCalendar();
-        if (currentTime.getTimeInMillis() < contestObject.timeStart || currentTime.getTimeInMillis() > contestObject.timeEnd) {
-            upload.setEnabled(false);
-            Log.e("Time","fk fk fk"+(currentTime.getTimeInMillis() < contestObject.timeStart));
-        } else {
-            upload.setEnabled(true);
-        }
+        upload.setEnabled(currentTime.getTimeInMillis() >= contestObject.timeStart && currentTime.getTimeInMillis() <= contestObject.timeEnd);
     }
 
     private void setCounter() {
@@ -135,6 +130,9 @@ public class ShowOneContest extends Fragment {
         if (calendar.getTimeInMillis() < contestObject.timeStart) {
             counter = new MyCountDownTimer(contestObject.timeStart, timerTextView);
             indicator.setText("CONTEST STARTS IN");
+        } else if(calendar.getTimeInMillis()>contestObject.timeEnd) {
+            counter = new MyCountDownTimer(contestObject.timeStart, timerTextView);
+            indicator.setText("CONTEST ENDED");
         } else {
             counter = new MyCountDownTimer(contestObject.timeEnd, timerTextView);
             indicator.setText("CONTEST ENDS IN");

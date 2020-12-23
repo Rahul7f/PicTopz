@@ -7,7 +7,7 @@
 
     <group>
 
-        <item android:id="@+id/drawer_upcoming_contest_fragment"
+        <item android:id="@+id/drawer_contest_fragment"
             android:icon="@drawable/ic_trophy"
             android:title="Contest"/>
 

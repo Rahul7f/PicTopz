@@ -58,20 +58,20 @@ import java.util.UUID;
 public class Profile extends Fragment {
 
     RecyclerView simpleGrid;
-    ImageView gridChange,profile_image,upcoming_contest,winRecordBtn;
+    ImageView gridChange, profile_image, upcoming_contest, winRecordBtn;
     ImageView logout;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    TextView name_tv,email_tv,phone_tv,followersCount_textView,followingCount_textView;
-    LinearLayout followersCount,followingCount;
+    TextView name_tv, email_tv, phone_tv, followersCount_textView, followingCount_textView;
+    LinearLayout followersCount, followingCount;
     DatabaseReference ref;
     Button edit_profile_btn;
-    boolean isLinearLayout=false;
-    String userUID,userName;
+    boolean isLinearLayout = false;
+    String userUID, userName;
     String status;
     String myusername;
 
-    public Profile(String userID,String userName) {
+    public Profile(String userID, String userName) {
         this.userUID = userID;
         this.userName = userName;
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -82,7 +82,7 @@ public class Profile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root=inflater.inflate(R.layout.activity_profile,container,false);
+        View root = inflater.inflate(R.layout.activity_profile, container, false);
 
         gridChange = root.findViewById(R.id.grid_to_l);
         simpleGrid = (RecyclerView) root.findViewById(R.id.simpleGridView);
@@ -103,7 +103,7 @@ public class Profile extends Fragment {
 
         checkFollower();
 
-        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getContext(),userUID);
+        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getContext(), userUID);
         simpleGrid.setAdapter(customAdapter);
 
 //        logout.setOnClickListener(new View.OnClickListener() {
@@ -120,8 +120,8 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("path","/followers/");
-                intent.putExtra("userID",userUID);
+                intent.putExtra("path", "/followers/");
+                intent.putExtra("userID", userUID);
                 startActivity(intent);
             }
         });
@@ -152,8 +152,8 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("path","/following/");
-                intent.putExtra("userID",userUID);
+                intent.putExtra("path", "/following/");
+                intent.putExtra("userID", userUID);
                 startActivity(intent);
             }
         });
@@ -161,8 +161,7 @@ public class Profile extends Fragment {
         edit_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (status)
-                {
+                switch (status) {
                     case "edit":
                         editProfile();
                         break;
@@ -181,14 +180,14 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(isLinearLayout){
+                if (isLinearLayout) {
 
-                    simpleGrid.setLayoutManager(new GridLayoutManager(getContext(),3));
-                    isLinearLayout=false;
-                } else{
+                    simpleGrid.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                    isLinearLayout = false;
+                } else {
 
                     simpleGrid.setLayoutManager(new LinearLayoutManager(getContext()));
-                    isLinearLayout=true;
+                    isLinearLayout = true;
                 }
             }
         });
@@ -196,144 +195,34 @@ public class Profile extends Fragment {
         return root;
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_profile);
-
-        //hook
-//        userUID = getIntent().getStringExtra("userID");
-//        userName = getIntent().getStringExtra("userName");
-//        user = FirebaseAuth.getInstance().getCurrentUser();
-//        gridChange = findViewById(R.id.grid_to_l);
-//        mAuth = FirebaseAuth.getInstance();
-//        simpleGrid = (RecyclerView) findViewById(R.id.simpleGridView);
-//        logout = findViewById(R.id.logout);
-//        add_story_icon=findViewById(R.id.add_story_icon);
-//
-//        name_tv = findViewById(R.id.name_tv);
-//        email_tv = findViewById(R.id.email_tv);
-//        phone_tv = findViewById(R.id.mobile_tv);
-//        followersCount = findViewById(R.id.followersCount);
-//        followingCount = findViewById(R.id.followingCount);
-//        followersCount_textView = findViewById(R.id.followersCount_textView);
-//        followingCount_textView = findViewById(R.id.followingCount_textView);
-//        profile_image = findViewById(R.id.profile_image_view);
-//        edit_profile_btn = findViewById(R.id.edit_profile_btn);
-//        ref = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
-        //hooks end
-
-//        getUserData();
-//
-//        checkFollower();
-//
-//        ProfileGridAdapter customAdapter = new ProfileGridAdapter(getApplicationContext(),userUID);
-//        simpleGrid.setAdapter(customAdapter);
-//
-//        add_story_icon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                checkpermission();
-//            }
-//        });
-//
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//            }
-//        });
-//        followersCount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
-//                intent.putExtra("path","/followers/");
-//                intent.putExtra("userID",userUID);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        followingCount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), FollowersActivity.class);
-//                intent.putExtra("path","/following/");
-//                intent.putExtra("userID",userUID);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        edit_profile_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch (status)
-//                {
-//                    case "edit":
-//                        editProfile();
-//                        break;
-//                    case "Followed":
-//                        unFollow();
-//                        break;
-//                    case "Unfollow":
-//                        follow();
-//                        break;
-//                }
-//
-//            }
-//        });
-//
-//        gridChange.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                    if(isLinearLayout){
-//
-//                        simpleGrid.setLayoutManager(new GridLayoutManager(Profile.this,3));
-//                        isLinearLayout=false;
-//                    } else{
-//
-//                        simpleGrid.setLayoutManager(new LinearLayoutManager(Profile.this));
-//                        isLinearLayout=true;
-//                    }
-//                }
-//        });
-//    }
-
-    void getUserData()
-    {
+    void getUserData() {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name,email,phone;
+                String name, email, phone;
                 Uri image_url;
                 UserProfileObject userProfileObject = snapshot.getValue(UserProfileObject.class);
-                if (mAuth.getUid().equals(userUID))
-                {
-                    if (userProfileObject.email!=null)
+                if (mAuth.getUid().equals(userUID)) {
+                    if (userProfileObject.email != null)
                         email_tv.setText(userProfileObject.email);
 
-                    if (userProfileObject.phone!=null)
+                    if (userProfileObject.phone != null)
                         phone_tv.setText(userProfileObject.phone);
-                }
-                else
-                {
+                } else {
                     email_tv.setVisibility(View.GONE);
                     phone_tv.setVisibility(View.GONE);
                 }
 
 
-                if (userProfileObject.username!=null)
+                if (userProfileObject.username != null)
                     name_tv.setText(userProfileObject.username);
 
                 followersCount_textView.setText(String.valueOf(userProfileObject.followers));
                 followingCount_textView.setText(String.valueOf(userProfileObject.following));
 
-                if (userProfileObject.profileURL!=null)
+                if (userProfileObject.profileURL != null)
                     Glide.with(getContext()).load(userProfileObject.profileURL).into(profile_image);
-                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -342,37 +231,26 @@ public class Profile extends Fragment {
             }
         });
 
-//        Glide.with(this).load(user.getPhotoUrl()).into(profile_image);
-//        name_tv.setText(user.getDisplayName());
-//        email_tv.setText(user.getEmail());
-//        phone_tv.setText(user.getPhoneNumber());
     }
 
-   void editProfile()
-  {
-      Intent intent = new Intent(getContext(), EditProfile.class);
-      startActivity(intent);
-  }
+    void editProfile() {
+        Intent intent = new Intent(getContext(), EditProfile.class);
+        startActivity(intent);
+    }
 
-    void checkFollower()
-    {
-        if (userUID.equals(mAuth.getUid()))
-        {
+    void checkFollower() {
+        if (userUID.equals(mAuth.getUid())) {
             edit_profile_btn.setText("Edit Profile");
             status = "edit";
-        }
-        else
-        {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+        } else {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/" + mAuth.getCurrentUser().getUid()).child(userUID);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists())
-                    {
+                    if (snapshot.exists()) {
                         edit_profile_btn.setText("UnFollow");
                         status = "Followed";
-                    }
-                    else {
+                    } else {
                         edit_profile_btn.setText("Follow");
                         status = "Unfollow";
                     }
@@ -390,38 +268,33 @@ public class Profile extends Fragment {
 
     }
 
-    void  follow()
-    {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+    void follow() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/" + mAuth.getCurrentUser().getUid()).child(userUID);
         reference.setValue(userName).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "data uploaded to following", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         //get name
-        DatabaseReference nameref = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid()).child("username");
+        DatabaseReference nameref = FirebaseDatabase.getInstance().getReference("/users/" + mAuth.getUid()).child("username");
         nameref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    myusername= snapshot.getValue().toString();
-                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+                if (snapshot.exists()) {
+                    myusername = snapshot.getValue().toString();
+                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/" + userUID).child(mAuth.getCurrentUser().getUid());
                     referenceto.setValue(myusername).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "data uploaded to followers", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
                 }
 
@@ -432,22 +305,17 @@ public class Profile extends Fragment {
 
             }
         });
-        //String myusername = getUsername(mAuth.getCurrentUser().getDisplayName());
-
-
 
     }
 
-    void unFollow()
-    {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/"+mAuth.getCurrentUser().getUid()).child(userUID);
+    void unFollow() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("/following/" + mAuth.getCurrentUser().getUid()).child(userUID);
         reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "delete in followers", Toast.LENGTH_SHORT).show();
-                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/"+userUID).child(mAuth.getCurrentUser().getUid());
+                    DatabaseReference referenceto = FirebaseDatabase.getInstance().getReference("/followers/" + userUID).child(mAuth.getCurrentUser().getUid());
                     referenceto.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -459,41 +327,7 @@ public class Profile extends Fragment {
             }
         });
 
-
-
     }
-
-    private String getUsername(String str){
-        return str.split("/")[1];
-    }
-
-    //code related to uploading image on story
-
-//    private void addStory(Uri uri){
-//        String uploadPath="story/"+ UUID.randomUUID().toString();
-//        FirebaseUploadImage uploadImage=new FirebaseUploadImage(getContext(),uri,uploadPath) {
-//            @Override
-//            public void getUrl(String url) {
-//                addDataOfStory(url);
-//            }
-//        };
-//        uploadImage.start();
-//    }
-//
-//    private void addDataOfStory(String imageURL){
-//        String storyID=UUID.randomUUID().toString();
-//        String dataURL="story/"+mAuth.getUid()+"/"+storyID;
-//        GregorianCalendar calendar= new GregorianCalendar();
-//
-//        StoryObject storyObject=new StoryObject(imageURL,storyID,calendar.getTimeInMillis(),mAuth.getUid());
-//        FirebaseUploadData<StoryObject> uploadData=new FirebaseUploadData<StoryObject>(getContext(),dataURL,storyObject) {
-//            @Override
-//            public void onSuccessfulUpload() {
-//                Toast.makeText(getContext(), "Story Uploaded Successfully", Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//        uploadData.start();
-//    }
 
 
 }

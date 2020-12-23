@@ -3,10 +3,7 @@ package com.example.pictopz;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Gravity;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.SupportMenuInflater;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -26,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.example.pictopz.authentication.LoginActivity;
 import com.example.pictopz.ui.fragment.HomeFragment;
 import com.example.pictopz.ui.fragment.UpcomingContests;
-import com.example.pictopz.unused.DrawerActivity2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -40,143 +35,75 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
-import co.mobiwise.materialintro.MaterialIntroConfiguration;
-import co.mobiwise.materialintro.animation.MaterialIntroListener;
 import co.mobiwise.materialintro.shape.Focus;
 import co.mobiwise.materialintro.shape.FocusGravity;
 import co.mobiwise.materialintro.shape.ShapeType;
 import co.mobiwise.materialintro.view.MaterialIntroView;
 
-public class DrawerActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    BottomNavigationView navView;
-    FirebaseAuth mAuth;
-    ImageView optionMenu;
+public class DrawerActivity extends AppCompatActivity implements
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        PopupMenu.OnMenuItemClickListener{
+
+    BottomNavigationView bottomNavigationView;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    ImageView drawerToggle;
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    TextView username,email;
-    ImageView imageView;
-    View header;
+    NavigationView drawerNavigationView;
+    TextView headerUsername, headerEmail;
+    ImageView headerDP;
+    View drawerHeaderView;
     MaterialIntroView introView;
-    MaterialIntroListener listener;
-    ArrayList<Integer> ids=new ArrayList<>();
+    ArrayList<Integer> ids = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
-        navView = findViewById(R.id.nav_view);
-        mAuth = FirebaseAuth.getInstance();
-        navView.setOnNavigationItemSelectedListener(this);
+
+        //For Firebase Push Notifications
         FirebaseMessaging.getInstance().subscribeToTopic("login");
-        optionMenu = findViewById(R.id.more_options);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView= findViewById(R.id.drawer_view);
 
-        header = navigationView.getHeaderView(0);
-        username = header.findViewById(R.id.username_text);
-        email = header.findViewById(R.id.useremail_text);
-        imageView = header.findViewById(R.id.userprofile_image);
+        initViews();             //initialization on view items
+        populateIdForIntro();    //populate id into arraylist
+        showcaseView(0);   //showcase view callback
 
-        populatenavidlist();
-        setListener(0);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        drawerNavigationView.setNavigationItemSelectedListener(this);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    username.setText(snapshot.child("username").getValue().toString());
-                    email.setText(snapshot.child("email").getValue().toString());
-                    Glide.with(getApplicationContext()).load(snapshot.child("profileURL").getValue()).into(imageView);
-                }
-            }
+        //fetching profile details for showing in header
+        setDrawerHeader();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        //Top-right corner popup menu
+        PopupMenu popupMenu = new PopupMenu(this, drawerToggle);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(this);
 
-            }
-        });
-
-
-
-        PopupMenu popupMenu = new PopupMenu(DrawerActivity.this, optionMenu);
-        popupMenu.getMenuInflater().inflate(R.menu.menu2, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId())
-                {
-                    case R.id.logout:
-
-                        mAuth.signOut();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-
-                        break;
-                    case R.id.aboutApp:
-                        Toast.makeText(DrawerActivity.this, "about us coming soon", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        optionMenu.setOnClickListener(new View.OnClickListener() {
+        drawerToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //popupMenu.show();
+
                 if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.openDrawer(GravityCompat.START);
                 } else {
                     drawerLayout.closeDrawer(GravityCompat.END);
                 }
+
             }
         });
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
-                String TAG = "";
-                switch (item.getItemId()){
+    }
 
-                    case R.id.drawer_upcoming_contest_fragment:
-                        fragment = new UpcomingContests();
-                        TAG = "UPCOMING";
-                        break;
+    private void initViews(){
+        bottomNavigationView = findViewById(R.id.nav_view);
+        drawerToggle = findViewById(R.id.open_drawer);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerNavigationView = findViewById(R.id.drawer_view);
 
-                    case R.id.drawer_home_fragment:
-                        fragment = new HomeFragment();
-                        TAG = "HOME";
-                        break;
-
-                    case R.id.drawer_addphoto_fragment:
-                        fragment = new StoryPhotoUpload();
-                        TAG = "UPLOAD";
-                        break;
-
-                    case R.id.drawer_profile_fragment:
-                        fragment = new Profile(mAuth.getUid(),mAuth.getCurrentUser().getDisplayName());
-                        TAG = "PROFILE";
-                        break;
-                    case R.id.drawer_logout:
-                        mAuth.signOut();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        break;
-                }
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                manualSelector(TAG);
-
-                return loadFragment(fragment, TAG);
-            }
-        });
-
+        drawerHeaderView = drawerNavigationView.getHeaderView(0);
+        headerUsername = drawerHeaderView.findViewById(R.id.username_text);
+        headerEmail = drawerHeaderView.findViewById(R.id.useremail_text);
+        headerDP = drawerHeaderView.findViewById(R.id.userprofile_image);
     }
 
     @Override
@@ -186,27 +113,38 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         switch (item.getItemId()) {
 
             case R.id.home_fragment:
+            case R.id.drawer_home_fragment:
                 fragment = new HomeFragment();
                 TAG = "HOME";
                 break;
 
-
-            case R.id.upcoming_contest_fragment:
+            case R.id.contest_fragment:
+            case R.id.drawer_contest_fragment:
                 fragment = new UpcomingContests();
                 TAG = "UPCOMING";
                 break;
 
             case R.id.profile_fragment:
-                fragment = new Profile(mAuth.getUid(),mAuth.getCurrentUser().getDisplayName());
+            case R.id.drawer_profile_fragment:
+                fragment = new Profile(mAuth.getUid(), mAuth.getCurrentUser().getDisplayName());
                 TAG = "PROFILE";
                 break;
 
             case R.id.addphoto_fragment:
+            case R.id.drawer_addphoto_fragment:
                 fragment = new StoryPhotoUpload();
                 TAG = "UPLOAD";
                 break;
+            case R.id.drawer_logout:
+                mAuth.signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
 
         }
+        drawerLayout.closeDrawer(Gravity.LEFT);
+        manualSelector(TAG);
 
         return loadFragment(fragment, TAG);
     }
@@ -227,23 +165,22 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     private void manualSelector(String TAG) {
         switch (TAG) {
             case "HOME":
-                navView.getMenu().findItem(R.id.home_fragment).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.home_fragment).setChecked(true);
                 break;
             case "UPCOMING":
-                navView.getMenu().findItem(R.id.upcoming_contest_fragment).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.contest_fragment).setChecked(true);
                 break;
             case "PROFILE":
-                navView.getMenu().findItem(R.id.profile_fragment).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.profile_fragment).setChecked(true);
                 break;
             case "UPLOAD":
-                navView.getMenu().findItem(R.id.addphoto_fragment).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.addphoto_fragment).setChecked(true);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
 
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragment_container);
@@ -254,7 +191,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
             manualSelector("UPCOMING");
         } else
             finish();
-
+    }
 
 //        manager.beginTransaction().remove(fragment).commit();
 //        int index=manager.getBackStackEntryCount()-1;
@@ -271,8 +208,6 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //            manualSelector("PROFILE");
 //        }
 
-    }
-
 //    private void popAllFragment() {
 //        FragmentManager manager = getSupportFragmentManager();
 //        for (int i = manager.getBackStackEntryCount(); i > 0; i--)
@@ -280,27 +215,33 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //
 //    }
 
-    void setListener(int index){
-        if(index>3)
+private void populateIdForIntro() {
+    ids.add(R.id.contest_fragment);
+    ids.add(R.id.home_fragment);
+    ids.add(R.id.addphoto_fragment);
+    ids.add(R.id.profile_fragment);
+}
+    void showcaseView(int index) {
+        if (index > 3)
             return;
-        int id=ids.get(index);
-        String texts="";
-        switch (id){
-            case R.id.upcoming_contest_fragment:
-                texts="You can find Contests Here";
+        int id = ids.get(index);
+        String texts = "";
+        switch (id) {
+            case R.id.contest_fragment:
+                texts = "You can find Contests Here";
                 break;
             case R.id.home_fragment:
-                texts="Uploaded Posts Stories are here";
+                texts = "Uploaded Posts Stories are here";
                 break;
             case R.id.addphoto_fragment:
-                texts="Your can upload photos and stories here";
+                texts = "Your can upload photos and stories here";
                 break;
             case R.id.profile_fragment:
-                texts="Use this button to visit your Profile.";
+                texts = "Use this button to visit your Profile.";
                 break;
         }
 
-        introView=new MaterialIntroView.Builder(this)
+        introView = new MaterialIntroView.Builder(this)
                 .enableIcon(false)
                 .setFocusGravity(FocusGravity.CENTER)
                 .setFocusType(Focus.MINIMUM)
@@ -309,23 +250,48 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 .performClick(false)
                 .setInfoText(texts)
                 .setShape(ShapeType.CIRCLE)
-                .setTarget(navView.getRootView().findViewById(id))
+                .setTarget(bottomNavigationView.getRootView().findViewById(id))
                 .setMaskColor(Color.parseColor("#aa000000"))
-                .setUsageId(id+"fuyuyjh")
-                .setListener(new MaterialIntroListener() {
-                    @Override
-                    public void onUserClicked(String materialIntroViewId) {
-                        setListener(index+1);
-                    }
-                })
+                .setUsageId(id + "yukfuy")
+                .setListener(materialIntroViewId -> showcaseView(index + 1))
                 .show();
-
-    }
-    private void populatenavidlist(){
-        ids.add(R.id.upcoming_contest_fragment);
-        ids.add(R.id.home_fragment);
-        ids.add(R.id.addphoto_fragment);
-        ids.add(R.id.profile_fragment);
     }
 
+    private void setDrawerHeader(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/" + mAuth.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    headerUsername.setText(snapshot.child("username").getValue().toString());
+                    headerEmail.setText(snapshot.child("email").getValue().toString());
+                    Glide.with(getApplicationContext()).load(snapshot.child("profileURL").getValue()).into(headerDP);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.logout:
+                mAuth.signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+
+            case R.id.aboutApp:
+                Toast.makeText(DrawerActivity.this, "about us coming soon", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
 }

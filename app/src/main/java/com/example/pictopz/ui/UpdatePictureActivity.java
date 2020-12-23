@@ -58,6 +58,9 @@ public class UpdatePictureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkalreadyuser();
+
         setContentView(R.layout.activity_update_picture);
 
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
@@ -251,7 +254,10 @@ public class UpdatePictureActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
 
+    void checkalreadyuser()
+    {
         DatabaseReference dbRef= FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid()).child("username");
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -269,10 +275,5 @@ public class UpdatePictureActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    void checkalreadyuser()
-    {
-
     }
 }

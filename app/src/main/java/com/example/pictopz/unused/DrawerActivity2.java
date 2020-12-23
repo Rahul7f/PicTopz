@@ -46,7 +46,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
             }
         });
 
-        imageView = findViewById(R.id.more_options);
+        imageView = findViewById(R.id.open_drawer);
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class DrawerActivity2 extends AppCompatActivity    {
 
                 switch (item.getItemId()){
 
-                    case R.id.drawer_upcoming_contest_fragment:
+                    case R.id.drawer_contest_fragment:
                         Toast.makeText(DrawerActivity2.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
 

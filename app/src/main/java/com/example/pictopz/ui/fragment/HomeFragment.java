@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -48,7 +50,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView1, recyclerView;
     StoryAdapter storyAdapter;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    DocumentSnapshot lastItem;
+    boolean lock=false;
     HashMap<String, ArrayList> storyHashMap = new HashMap<>();
     ArrayList<String> keyset = new ArrayList<>();
     ArrayList<String> following = new ArrayList<>();
@@ -67,15 +70,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 loadRecycleViewData();
-                fetchFollowList();
-            }
-        });
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-
-//                loadRecycleViewData();
-//61292296110
             }
         });
 
@@ -87,7 +81,9 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostsAdapter(getContext(), approvedPostObjects);
         recyclerView1.setAdapter(postAdapter);
 
+
         //TODO have to add a scroll listener so that more than 10 items can be displayed
+        setBottomListener();
 
         loadRecycleViewData();
 
@@ -98,21 +94,6 @@ public class HomeFragment extends Fragment {
     private void loadRecycleViewData() {
         swipeRefreshLayout.setRefreshing(true);
         fetchFollowList();
-        CountDownTimer timer=new CountDownTimer(2000,2000) {
-            @Override
-            public void onTick(long l) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        };
-
-        timer.start();
-
-
     }
 
     private void fetchFollowList() {
@@ -194,20 +175,71 @@ public class HomeFragment extends Fragment {
         Query query = dbRef
                 .whereEqualTo("approved", true)
                 .whereIn("filterID", following)
-                .orderBy("timestamp", Query.Direction.DESCENDING);
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(2);
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                swipeRefreshLayout.setRefreshing(false);
                 if (task.isSuccessful()) {
                     approvedPostObjects.clear();
                     for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
-                        approvedPostObjects.add(snapshot1.toObject(ApprovedPostObject.class));
-                        Log.e("POST", "LIKES " + approvedPostObjects.get(0).commentsNo);
+                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+                        approvedPostObjects.add(obj);
+                        postAdapter.notifyDataSetChanged();
                     }
-                    postAdapter.notifyDataSetChanged();
+                    lastItem=task.getResult().getDocuments().get(task.getResult().getDocuments().size()-1);
+
                 }
             }
+        });
+    }
+
+    private void setBottomListener(){
+        recyclerView1.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!recyclerView1.canScrollVertically(1)){
+                    getNewData();
+                }
+
+            }
+        });
+    }
+
+    private void getNewData(){
+//        following.add("CONTEST");
+        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
+        Query query = dbRef
+                .whereEqualTo("approved", true)
+                .whereIn("filterID", following)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(2)
+                .startAfter(lastItem);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                swipeRefreshLayout.setRefreshing(false);
+                if (task.isSuccessful()) {
+//                    approvedPostObjects.clear();
+
+
+                        for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
+                            ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+                            approvedPostObjects.add(obj);
+                            postAdapter.notifyDataSetChanged();}
+                    if(task.getResult().getDocuments().size()>0)
+                        lastItem = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
+            }}
         });
     }
 
