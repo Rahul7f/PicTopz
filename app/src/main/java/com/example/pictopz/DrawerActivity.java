@@ -38,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
+
 import co.mobiwise.materialintro.MaterialIntroConfiguration;
 import co.mobiwise.materialintro.animation.MaterialIntroListener;
 import co.mobiwise.materialintro.shape.Focus;
@@ -56,6 +58,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     View header;
     MaterialIntroView introView;
     MaterialIntroListener listener;
+    ArrayList<Integer> ids=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,8 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         email = header.findViewById(R.id.useremail_text);
         imageView = header.findViewById(R.id.userprofile_image);
 
-        setListener(1);
+        populatenavidlist();
+        setListener(0);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -276,9 +280,11 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //
 //    }
 
-    void setListener(int id){
-
-        String texts;
+    void setListener(int index){
+        if(index>3)
+            return;
+        int id=ids.get(index);
+        String texts="";
         switch (id){
             case R.id.upcoming_contest_fragment:
                 texts="You can find Contests Here";
@@ -287,23 +293,39 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
                 texts="Uploaded Posts Stories are here";
                 break;
             case R.id.addphoto_fragment:
+                texts="Your can upload photos and stories here";
+                break;
             case R.id.profile_fragment:
+                texts="Use this button to visit your Profile.";
+                break;
         }
 
         introView=new MaterialIntroView.Builder(this)
                 .enableIcon(false)
                 .setFocusGravity(FocusGravity.CENTER)
                 .setFocusType(Focus.MINIMUM)
-                .setDelayMillis(500)
+                .setDelayMillis(0)
                 .enableFadeAnimation(true)
                 .performClick(false)
-                .setInfoText("Hi There! Use this button to visit your Profile.")
+                .setInfoText(texts)
                 .setShape(ShapeType.CIRCLE)
-                .setTarget(navView.getRootView().findViewById(R.id.profile_fragment))
+                .setTarget(navView.getRootView().findViewById(id))
                 .setMaskColor(Color.parseColor("#aa000000"))
-                .setUsageId("lol")
+                .setUsageId(id+"fuyuyjh")
+                .setListener(new MaterialIntroListener() {
+                    @Override
+                    public void onUserClicked(String materialIntroViewId) {
+                        setListener(index+1);
+                    }
+                })
                 .show();
 
+    }
+    private void populatenavidlist(){
+        ids.add(R.id.upcoming_contest_fragment);
+        ids.add(R.id.home_fragment);
+        ids.add(R.id.addphoto_fragment);
+        ids.add(R.id.profile_fragment);
     }
 
 }
