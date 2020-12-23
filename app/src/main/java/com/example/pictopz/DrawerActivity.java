@@ -1,6 +1,7 @@
 package com.example.pictopz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,6 +38,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import co.mobiwise.materialintro.MaterialIntroConfiguration;
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.shape.ShapeType;
+import co.mobiwise.materialintro.view.MaterialIntroView;
+
 public class DrawerActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView navView;
     FirebaseAuth mAuth;
@@ -46,6 +54,8 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
     TextView username,email;
     ImageView imageView;
     View header;
+    MaterialIntroView introView;
+    MaterialIntroListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +74,7 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
         email = header.findViewById(R.id.useremail_text);
         imageView = header.findViewById(R.id.userprofile_image);
 
-        Log.e("TEST", navView.getMenu().findItem(R.id.profile_fragment)+"ok");
-
-
+        setListener(1);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/users/"+mAuth.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -268,5 +276,34 @@ public class DrawerActivity extends AppCompatActivity implements BottomNavigatio
 //
 //    }
 
+    void setListener(int id){
+
+        String texts;
+        switch (id){
+            case R.id.upcoming_contest_fragment:
+                texts="You can find Contests Here";
+                break;
+            case R.id.home_fragment:
+                texts="Uploaded Posts Stories are here";
+                break;
+            case R.id.addphoto_fragment:
+            case R.id.profile_fragment:
+        }
+
+        introView=new MaterialIntroView.Builder(this)
+                .enableIcon(false)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.MINIMUM)
+                .setDelayMillis(500)
+                .enableFadeAnimation(true)
+                .performClick(false)
+                .setInfoText("Hi There! Use this button to visit your Profile.")
+                .setShape(ShapeType.CIRCLE)
+                .setTarget(navView.getRootView().findViewById(R.id.profile_fragment))
+                .setMaskColor(Color.parseColor("#aa000000"))
+                .setUsageId("lol")
+                .show();
+
+    }
 
 }
