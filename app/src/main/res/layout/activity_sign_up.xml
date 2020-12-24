@@ -9,8 +9,8 @@
     android:background="#ff4a01">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_logo2"
@@ -20,17 +20,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="CREATE ACCOUNT"
-                android:textStyle="bold"
                 android:textColor="#ffff"
-                android:textSize="30dp"
+                android:textSize="18dp"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:layout_marginTop="25dp"
                />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight=".05"
+        android:layout_marginBottom="5dp"
         >
         <EditText
             android:id="@+id/signup_username_et"

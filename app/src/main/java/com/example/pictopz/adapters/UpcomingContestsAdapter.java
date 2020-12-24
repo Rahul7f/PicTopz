@@ -71,13 +71,12 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
                         .commit();
             }
         });
-        holder.imageView.getLayoutParams().height=(int) (width/2.5);
+        //holder.imageView.getLayoutParams().height=(int) (width/2.5);
 
-        Glide
-                .with(context)
+        Glide.with(context)
                 .load(arrayList.get(position).imageUrl)
-//                .centerCrop()
                 .into(holder.imageView);
+
         MyCountDownTimer counter;
         if (calendar.getTimeInMillis() < arrayList.get(position).timeStart) {
            counter = new MyCountDownTimer(arrayList.get(position).timeStart, holder.timer);

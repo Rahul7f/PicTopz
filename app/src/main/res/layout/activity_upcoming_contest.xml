@@ -24,10 +24,10 @@
                 android:id="@+id/contest_recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5sp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
+                android:layout_margin="3dp"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="5dp"
                 />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

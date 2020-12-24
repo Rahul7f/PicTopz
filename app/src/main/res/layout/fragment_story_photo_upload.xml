@@ -7,39 +7,59 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-
-
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/upload_image_as_user"
-        android:src="@drawable/photoupload_def"
-        android:layout_margin="25dp"
-        android:layout_gravity="center"
+        android:orientation="vertical"
         android:layout_weight="1"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/upload_photo_button"
-        android:layout_gravity="center"
-        android:text="upload as post"
-        android:layout_margin="25dp"
-        android:textColor="#fff"
-        android:backgroundTint="@color/orange"
-        android:background="@drawable/button_backgroung"
-        />
+        android:gravity="center">
 
-    <Button
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/upload_image_as_user"
+            android:src="@drawable/storyupload"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Your Photo Here"
+            android:fontFamily="sans-serif"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/upload_story_button"
-        android:layout_gravity="center"
-        android:text="Upload as story"
-        android:textColor="#fff"
-        android:layout_margin="25dp"
-        android:backgroundTint="@color/orange"
-        android:background="@drawable/button_backgroung"
-        />
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload_photo_button"
+            android:layout_gravity="center"
+            android:text="upload as post"
+            android:layout_margin="25dp"
+            android:textColor="#fff"
+            android:backgroundTint="@color/orange"
+            android:background="@drawable/button_backgroung"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload_story_button"
+            android:layout_gravity="center"
+            android:text="Upload as story"
+            android:textColor="#fff"
+            android:layout_margin="25dp"
+            android:backgroundTint="@color/orange"
+            android:background="@drawable/button_backgroung"
+            />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

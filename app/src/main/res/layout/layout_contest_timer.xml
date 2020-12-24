@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="3dp">
 
 
 
@@ -13,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/sample_image"
-        android:layout_margin="10dp"
         android:scaleType="centerCrop"
         android:id="@+id/image_contest_layout"
         />
@@ -38,6 +38,8 @@
         android:textColor="#ffffff"
         android:background="@color/transblack"
         android:textSize="27sp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@id/contest_time_unit"
         app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"
@@ -61,10 +63,9 @@
     <View
         android:id="@+id/orangeview"
         android:layout_width="match_parent"
-        android:layout_height="55sp"
+        android:layout_height="40dp"
         android:background="#ff4a01"
-        app:layout_constraintTop_toBottomOf="@id/image_contest_layout"
-        android:layout_marginTop="5dp"/>
+        app:layout_constraintTop_toBottomOf="@id/image_contest_layout" />
 
     <TextView
         android:id="@+id/contest_layout_category"
