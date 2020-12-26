@@ -28,10 +28,10 @@ import xute.storyview.StoryView;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder> {
 
-    HashMap<String,ArrayList> storyObjects;
+    HashMap<String,ArrayList<StoryModel>> storyObjects;
     ArrayList<String> keyset;
     HashMap<String,String> usernames;
-    public StoryAdapter(HashMap<String,ArrayList> storyObjects,ArrayList<String> keyset) {
+    public StoryAdapter(HashMap<String,ArrayList<StoryModel>> storyObjects,ArrayList<String> keyset) {
 
         this.storyObjects=storyObjects;
         this.keyset=keyset;

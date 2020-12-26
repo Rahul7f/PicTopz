@@ -1,16 +1,13 @@
 package com.example.pictopz.ui.fragment;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -20,7 +17,10 @@ import com.example.pictopz.adapters.StoryAdapter;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.models.StoryObject;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.common.collect.Lists;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,24 +37,28 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import xute.storyview.StoryModel;
 
 
 public class HomeFragment extends Fragment {
 
-    ImageView imageView;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ApprovedPostObject> approvedPostObjects = new ArrayList<>();
     PostsAdapter postAdapter;
     RecyclerView recyclerView1, recyclerView;
     StoryAdapter storyAdapter;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DocumentSnapshot lastItem;
-    boolean lock=false;
-    HashMap<String, ArrayList> storyHashMap = new HashMap<>();
-    ArrayList<String> keyset = new ArrayList<>();
+
+
+    HashMap<String, ArrayList<StoryModel>> storyHashMap = new HashMap<>();
+    ArrayList<String> keyset = new ArrayList<>();//keyset for story list
+
     ArrayList<String> following = new ArrayList<>();
+    List<List<String>> followingSplitList=new ArrayList<>();
+
+//    HashMap<List<String>,DocumentSnapshot> lastItemList = new HashMap<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,9 +85,8 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostsAdapter(getContext(), approvedPostObjects);
         recyclerView1.setAdapter(postAdapter);
 
-
         //TODO have to add a scroll listener so that more than 10 items can be displayed
-        setBottomListener();
+        setListenerOnLastScroll();
 
         loadRecycleViewData();
 
@@ -104,15 +107,19 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     following.clear();
+                    followingSplitList.clear();
+//                    lastItemList.clear();
                     for (DataSnapshot users : snapshot.getChildren()) {
                         following.add(users.getKey());
-                        Log.e("STORY Users",users.getValue(String.class));
+                        Log.e("STORY Users", users.getValue(String.class));
                     }
                 }
                 following.add(user.getUid());
-                fetchStories();
-                fetchPosts();
+                following.add("CONTEST");
+                followingSplitList = Lists.partition(following, 9);
 
+                fetchStories();
+                fetchPostOfAll();
             }
 
             @Override
@@ -123,27 +130,28 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchStories() {
-    storyHashMap.clear();
-    keyset.clear();
-        CollectionReference reference = FirebaseFirestore.getInstance().collection("story");
-        reference
-                .whereIn("uploaderUID", following)
-                .orderBy("uploadTime", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot snapshot : task.getResult()) {
-
-                        StoryObject object = snapshot.toObject(StoryObject.class);
-                        Log.e("STORY",object.storyID);
-                        deleteStoryIfTimeout(object, object.uploaderUID);
-                    }
-                }
-            }
-        });
-
+        storyHashMap.clear();
+        keyset.clear();
+        storyAdapter.notifyDataSetChanged();
+        for(List<String> subList:followingSplitList) {
+            CollectionReference reference = FirebaseFirestore.getInstance().collection("story");
+            reference
+                    .whereIn("uploaderUID", subList)
+                    .orderBy("uploadTime", Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot snapshot : task.getResult()) {
+                                    StoryObject object = snapshot.toObject(StoryObject.class);
+                                    Log.e("STORY", object.storyID);
+                                    deleteStoryIfTimeout(object, object.uploaderUID);
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     private void deleteStoryIfTimeout(StoryObject object, String otherUserUID) {
@@ -169,34 +177,85 @@ public class HomeFragment extends Fragment {
         storyAdapter.notifyDataSetChanged();
     }
 
-    private void fetchPosts() {
-        following.add("CONTEST");
-        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
-        Query query = dbRef
-                .whereEqualTo("approved", true)
-                .whereIn("filterID", following)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(2);
+//    private void fetchPosts() {
+//        following.add("CONTEST");
+//        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
+//        Query query = dbRef
+//                .whereEqualTo("approved", true)
+//                .whereIn("filterID", following)
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .limit(2);
+//
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                if (task.isSuccessful()) {
+//                    approvedPostObjects.clear();
+//                    for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
+//                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+//                        approvedPostObjects.add(obj);
+//                        postAdapter.notifyDataSetChanged();
+//                    }
+//                    lastItem=task.getResult().getDocuments().get(task.getResult().getDocuments().size()-1);
+//                }
+//            }
+//        });
+//    }
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void fetchPostOfAll() {
+        List<Task<QuerySnapshot>> taskArrayList=new ArrayList<>();
+
+        for(List<String> subList:followingSplitList){
+           taskArrayList.add(fetchPostOf10(subList));
+        }
+
+        Task<List<QuerySnapshot>> tasks=Tasks.whenAllSuccess(taskArrayList);
+        tasks.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                swipeRefreshLayout.setRefreshing(false);
-                if (task.isSuccessful()) {
-                    approvedPostObjects.clear();
-                    for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
+            public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                int size=approvedPostObjects.size();
+                approvedPostObjects.clear();
+//                postAdapter.notifyItemRangeRemoved(0,size-1);
+                postAdapter.notifyDataSetChanged();
+                for(QuerySnapshot queryDocumentSnapshots:querySnapshots){
+                    for (QueryDocumentSnapshot snapshot1 : queryDocumentSnapshots) {
                         ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
                         approvedPostObjects.add(obj);
                         postAdapter.notifyDataSetChanged();
                     }
-                    lastItem=task.getResult().getDocuments().get(task.getResult().getDocuments().size()-1);
-
+//                    lastItemList.put(subListFollowing,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size()-1));
                 }
+                    swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-    private void setBottomListener(){
+    private Task<QuerySnapshot> fetchPostOf10(List<String> subListFollowing) {
+
+        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
+        return dbRef
+                .whereEqualTo("approved", true)
+                .whereIn("filterID", subListFollowing)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get();
+//         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//             @Override
+//             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+////                    approvedPostObjects.clear();
+//                    for (QueryDocumentSnapshot snapshot1 : queryDocumentSnapshots) {
+//                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+//                        approvedPostObjects.add(obj);
+//                        postAdapter.notifyDataSetChanged();
+//                    }
+////                    lastItemList.put(subListFollowing,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size()-1));
+//                    swipeRefreshLayout.setRefreshing(false);
+//             }
+//         });
+
+    }
+
+    private void setListenerOnLastScroll() {
         recyclerView1.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -207,41 +266,67 @@ public class HomeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(!recyclerView1.canScrollVertically(1)){
-                    getNewData();
+                if (!recyclerView1.canScrollVertically(1)) {
+//                    getNewDataOfAll();
                 }
 
             }
         });
     }
 
-    private void getNewData(){
-//        following.add("CONTEST");
-        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
-        Query query = dbRef
-                .whereEqualTo("approved", true)
-                .whereIn("filterID", following)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(2)
-                .startAfter(lastItem);
+//    private void getNewData(){
+////        following.add("CONTEST");
+//        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
+//        Query query = dbRef
+//                .whereEqualTo("approved", true)
+//                .whereIn("filterID", following)
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .limit(2)
+//                .startAfter(lastItem);
+//
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+////                swipeRefreshLayout.setRefreshing(false);
+//                if (task.isSuccessful()) {
+////                    approvedPostObjects.clear();
+//
+//
+//                        for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
+//                            ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+//                            approvedPostObjects.add(obj);
+//                            postAdapter.notifyDataSetChanged();}
+//                    if(task.getResult().getDocuments().size()>0)
+//                        lastItem = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
+//            }}
+//        });
+//    }
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                swipeRefreshLayout.setRefreshing(false);
-                if (task.isSuccessful()) {
-//                    approvedPostObjects.clear();
+//    private void getNewDataOfAll() {
+//        for(List<String> subList:followingSplitList){
+//            getNewDataOf10(subList);
+//        }
+//    }
 
-
-                        for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
-                            ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
-                            approvedPostObjects.add(obj);
-                            postAdapter.notifyDataSetChanged();}
-                    if(task.getResult().getDocuments().size()>0)
-                        lastItem = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
-            }}
-        });
-    }
-
+//    private void getNewDataOf10(@NonNull List<String> sublistOf10) {
+//        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
+//        dbRef
+//                .whereEqualTo("approved", true)
+//                .whereIn("filterID", sublistOf10)
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .limit(2)
+//                .startAfter(lastItemList.get(sublistOf10))
+//                .get()
+//                .addOnSuccessListener(queryDocumentSnapshots -> {
+//                    for (QueryDocumentSnapshot snapshot1 : queryDocumentSnapshots) {
+//                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
+//                        approvedPostObjects.add(obj);
+//                        postAdapter.notifyDataSetChanged();
+//                    }
+//                    if(queryDocumentSnapshots.getDocuments().size()>0)
+//                    lastItemList.put(sublistOf10,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size() - 1));
+//                });
+//    return ;
+//    }
 
 }
