@@ -224,8 +224,7 @@ public class HomeFragment extends Fragment {
                         approvedPostObjects.add(obj);
                         postAdapter.notifyDataSetChanged();
                     }
-//                    lastItemList.put(subListFollowing,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size()-1));
-                }
+              }
                     swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -239,19 +238,6 @@ public class HomeFragment extends Fragment {
                 .whereIn("filterID", subListFollowing)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get();
-//         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//             @Override
-//             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-////                    approvedPostObjects.clear();
-//                    for (QueryDocumentSnapshot snapshot1 : queryDocumentSnapshots) {
-//                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
-//                        approvedPostObjects.add(obj);
-//                        postAdapter.notifyDataSetChanged();
-//                    }
-////                    lastItemList.put(subListFollowing,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size()-1));
-//                    swipeRefreshLayout.setRefreshing(false);
-//             }
-//         });
 
     }
 
@@ -274,59 +260,5 @@ public class HomeFragment extends Fragment {
         });
     }
 
-//    private void getNewData(){
-////        following.add("CONTEST");
-//        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
-//        Query query = dbRef
-//                .whereEqualTo("approved", true)
-//                .whereIn("filterID", following)
-//                .orderBy("timestamp", Query.Direction.DESCENDING)
-//                .limit(2)
-//                .startAfter(lastItem);
-//
-//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-////                swipeRefreshLayout.setRefreshing(false);
-//                if (task.isSuccessful()) {
-////                    approvedPostObjects.clear();
-//
-//
-//                        for (QueryDocumentSnapshot snapshot1 : task.getResult()) {
-//                            ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
-//                            approvedPostObjects.add(obj);
-//                            postAdapter.notifyDataSetChanged();}
-//                    if(task.getResult().getDocuments().size()>0)
-//                        lastItem = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
-//            }}
-//        });
-//    }
-
-//    private void getNewDataOfAll() {
-//        for(List<String> subList:followingSplitList){
-//            getNewDataOf10(subList);
-//        }
-//    }
-
-//    private void getNewDataOf10(@NonNull List<String> sublistOf10) {
-//        CollectionReference dbRef = FirebaseFirestore.getInstance().collection("posts");
-//        dbRef
-//                .whereEqualTo("approved", true)
-//                .whereIn("filterID", sublistOf10)
-//                .orderBy("timestamp", Query.Direction.DESCENDING)
-//                .limit(2)
-//                .startAfter(lastItemList.get(sublistOf10))
-//                .get()
-//                .addOnSuccessListener(queryDocumentSnapshots -> {
-//                    for (QueryDocumentSnapshot snapshot1 : queryDocumentSnapshots) {
-//                        ApprovedPostObject obj=snapshot1.toObject(ApprovedPostObject.class);
-//                        approvedPostObjects.add(obj);
-//                        postAdapter.notifyDataSetChanged();
-//                    }
-//                    if(queryDocumentSnapshots.getDocuments().size()>0)
-//                    lastItemList.put(sublistOf10,queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.getDocuments().size() - 1));
-//                });
-//    return ;
-//    }
 
 }
