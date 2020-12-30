@@ -1,6 +1,7 @@
 package com.example.pictopz.ui.fragment;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,7 +45,7 @@ public class ShowOneContest extends Fragment {
 
     ImageView imageView;
     TextView timerTextView, indicator,desc;
-    Button upload;
+    ConstraintLayout upload;
     TextView limit;
 
     public ShowOneContest() {
