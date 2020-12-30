@@ -14,6 +14,7 @@
         android:layout_margin="1dp"
         android:gravity="end"
         android:text="1"
+        android:fontFamily="@font/abril_fatface_rg"
         android:textColor="#000000"
         android:textSize="50sp"
         android:textStyle="bold"
@@ -25,9 +26,11 @@
         android:id="@+id/subpos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/catamaranb"
-        android:text="ST"
+
+        android:fontFamily="@font/abril_fatface_rg"
+        android:text="st"
+        android:textSize="30sp"
+        android:textColor="#000"
         app:layout_constraintStart_toEndOf="@id/pos"
         app:layout_constraintTop_toTopOf="@id/pos" />
 

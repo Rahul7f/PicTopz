@@ -70,16 +70,16 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> 
 
     private String getRankText(int position){
         position++;
-        String suptext="TH";
+        String suptext="th";
         switch (position){
             case 1:
-                suptext="ST";
+                suptext="st";
                 break;
             case 2:
-                suptext="ND";
+                suptext="nd";
                 break;
             case 3:
-                suptext="RD";
+                suptext="rd";
                 break;
         }
         return suptext;
