@@ -9,6 +9,7 @@
     android:paddingBottom="10dp">
 
 
+
     <ImageView
         android:id="@+id/image_contest_layout"
         android:layout_width="match_parent"
