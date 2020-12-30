@@ -5,18 +5,23 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="3dp">
-
+    android:background="#ffffff"
+    android:paddingBottom="10dp">
 
 
     <ImageView
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/image_contest_layout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:src="@drawable/sample_image"
         android:scaleType="centerCrop"
-        android:id="@+id/image_contest_layout"
-        />
+        android:background="@drawable/round_corner"
+        android:src="@drawable/sample_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
 
     <TextView
         android:id="@+id/contest_start_end_indicator"
@@ -40,7 +45,8 @@
         android:textSize="27sp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
         app:layout_constraintBottom_toTopOf="@id/contest_time_unit"
         app:layout_constraintEnd_toEndOf="@+id/image_contest_layout"
         app:layout_constraintStart_toStartOf="@+id/image_contest_layout" />
@@ -59,12 +65,14 @@
         app:layout_constraintEnd_toEndOf="@+id/contest_timer_textView"
         app:layout_constraintStart_toStartOf="@+id/contest_timer_textView" />
 
-
     <View
         android:id="@+id/orangeview"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#ff4a01"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_contest_layout" />
 
     <TextView
@@ -77,10 +85,10 @@
         android:text="NATURE"
         android:textAllCaps="true"
         android:textColor="#000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/orangeview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/orangeview"
-        app:layout_constraintTop_toBottomOf="@+id/contest_time_unit" />
+        app:layout_constraintTop_toTopOf="@+id/orangeview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

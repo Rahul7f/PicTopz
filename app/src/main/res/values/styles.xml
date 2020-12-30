@@ -5,10 +5,16 @@
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">#FF6F35</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/catamaran</item>.
     </style>
 
     <style name="roundedImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+<!--    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">-->
+<!--        <item name="android:fontFamily">@font/catamaran</item>-->
+<!--    </style>-->
+
 </resources>

@@ -45,7 +45,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> 
             Toast.makeText(context, "list is empty", Toast.LENGTH_SHORT).show();
         }
         holder.pos.setText(String.valueOf(position+1));
-        holder.ranking.setText(ranking.get(position).giftName);
+       // holder.ranking.setText(ranking.get(position).giftName);
         Glide.with(context).load(ranking.get(position).giftURL).into(holder.imageView);
     }
 
@@ -61,7 +61,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> 
             super(itemview);
             pos=(TextView)itemview.findViewById(R.id.pos);
             imageView=(ImageView)itemview.findViewById(R.id.rank_layout_image);
-            ranking=(TextView)itemview.findViewById(R.id.rank_layout_text);
+            //ranking=(TextView)itemview.findViewById(R.id.rank_layout_text);
 
         }
     }
