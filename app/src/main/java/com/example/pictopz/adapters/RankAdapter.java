@@ -18,15 +18,18 @@ import com.example.pictopz.R;
 import com.example.pictopz.models.GiftObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> {
 
     ArrayList<GiftObject> ranking;
     Context context;
 
+
     public RankAdapter(ArrayList<GiftObject> ranking,Context context) {
         this.ranking = ranking;
         this.context = context;
+
     }
 
     @NonNull
@@ -44,8 +47,8 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> 
         {
             Toast.makeText(context, "list is empty", Toast.LENGTH_SHORT).show();
         }
-        holder.pos.setText(String.valueOf(position+1));
-       // holder.ranking.setText(ranking.get(position).giftName);
+        holder.pos.setText((position+1)+"");
+        holder.sup.setText(getRankText(position));
         Glide.with(context).load(ranking.get(position).giftURL).into(holder.imageView);
     }
 
@@ -55,14 +58,30 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView ranking,pos;
+        TextView sup,pos;
         ImageView imageView;
         public MyViewHolder(View itemview){
             super(itemview);
             pos=(TextView)itemview.findViewById(R.id.pos);
             imageView=(ImageView)itemview.findViewById(R.id.rank_layout_image);
-            //ranking=(TextView)itemview.findViewById(R.id.rank_layout_text);
-
+            sup=(TextView)itemview.findViewById(R.id.subpos);
         }
+    }
+
+    private String getRankText(int position){
+        position++;
+        String suptext="TH";
+        switch (position){
+            case 1:
+                suptext="ST";
+                break;
+            case 2:
+                suptext="ND";
+                break;
+            case 3:
+                suptext="RD";
+                break;
+        }
+        return suptext;
     }
 }
