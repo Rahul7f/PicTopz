@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:gravity="center"
+   android:paddingBottom="5dp"
     android:orientation="horizontal">
 
     <TextView
@@ -26,7 +27,6 @@
         android:id="@+id/subpos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:fontFamily="@font/abril_fatface_rg"
         android:text="st"
         android:textSize="30sp"
