@@ -148,6 +148,8 @@ public class ShowOneContest extends Fragment {
 
     private void changeActionBar(String contestname){
         TextView view=getActivity().findViewById(R.id.textView4);
+        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        imageView.setImageResource(R.drawable.menu_icon);
         view.setGravity(Gravity.CENTER);
         view.setText(Html.fromHtml(contestname.toUpperCase()+" <b>CONTEST</b>"));
     }

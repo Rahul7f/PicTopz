@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class UpcomingContests extends Fragment {
 
     public static ArrayList<ContestObject> arrayList=new ArrayList<>();
     public static ArrayList<GiftObject> giftsList=new ArrayList<>();
+    RankAdapter adapter2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class UpcomingContests extends Fragment {
                         arrayList.add(snapshots.toObject(ContestObject.class));
                     }
                     adapter.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
                 }
             }
         });
@@ -69,7 +72,7 @@ public class UpcomingContests extends Fragment {
 
         RecyclerView recyclerView2=root.findViewById(R.id.contest_rank_recycle);
         fetchGiftItem();
-        RankAdapter adapter2=new RankAdapter(giftsList,getContext());
+        adapter2=new RankAdapter(giftsList,getContext());
         recyclerView2.setAdapter(adapter2);
 
 
@@ -108,6 +111,8 @@ public class UpcomingContests extends Fragment {
 
     private void changeActionBar(){
         TextView view=getActivity().findViewById(R.id.textView4);
+        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        imageView.setImageResource(R.drawable.menu_icon);
         view.setGravity(Gravity.CENTER);
         view.setText(Html.fromHtml("UPCOMING <b>CONTEST</b>"));
     }

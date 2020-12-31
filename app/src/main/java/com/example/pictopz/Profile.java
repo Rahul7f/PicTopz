@@ -313,8 +313,10 @@ public class Profile extends Fragment {
 
     private void changeActionBar(String name){
         TextView view=getActivity().findViewById(R.id.textView4);
+        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        imageView.setImageResource(R.drawable.ic_round_plus);
         view.setGravity(Gravity.CENTER);
-        view.setText(Html.fromHtml("<b>"+name.toUpperCase()+"</b>"));
+        view.setText(Html.fromHtml("PROFILE <b>"+name.toUpperCase()+"</b>"));
     }
 
 

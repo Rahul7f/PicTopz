@@ -14,14 +14,14 @@
         android:layout_height="40dp"
         android:background="@drawable/circle"
         android:backgroundTint="#FFFFFF"
-        android:padding="5dp"
+        android:padding="3dp"
         android:scaleType="centerCrop"
         android:src="@drawable/menu_icon"
         android:layout_marginLeft="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/orange" />
+        app:tint="#FF9800" />
 
     <TextView
         android:id="@+id/textView4"

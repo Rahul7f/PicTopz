@@ -1,5 +1,6 @@
 package com.example.pictopz.ui.fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -266,6 +268,8 @@ public class HomeFragment extends Fragment {
 
     private void changeActionBar(){
         TextView view=getActivity().findViewById(R.id.textView4);
+        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        imageView.setImageResource(R.drawable.ic_round_plus);
         view.setGravity(Gravity.END);
         view.setText(Html.fromHtml("PIC<b>TOPZ</b>"));
     }

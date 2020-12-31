@@ -13,12 +13,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pictopz.firebase.FirebaseUploadImage;
@@ -54,6 +57,7 @@ public class StoryPhotoUpload extends Fragment {
         imageView=root.findViewById(R.id.upload_image_as_user);
         uploadPost =root.findViewById(R.id.upload_photo_button);
         uploadStory =root.findViewById(R.id.upload_story_button);
+        changeActionBar();
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +215,14 @@ public class StoryPhotoUpload extends Fragment {
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
                 .start(getContext(),fragment);
+    }
+
+    private void changeActionBar(){
+        TextView view=getActivity().findViewById(R.id.textView4);
+        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        imageView.setImageResource(R.drawable.menu_icon);
+        view.setGravity(Gravity.CENTER);
+        view.setText(Html.fromHtml("UPLOAD<b> STORY</b>"));
     }
 
 }
