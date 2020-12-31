@@ -1,10 +1,5 @@
 package com.example.pictopz.ui.fragment;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -16,14 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.pictopz.R;
-import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.adapters.RankAdapter;
+import com.example.pictopz.adapters.UpcomingContestsAdapter;
 import com.example.pictopz.models.ContestObject;
 import com.example.pictopz.models.GiftObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.model.Document;
 
 import java.util.ArrayList;
 
@@ -95,7 +92,6 @@ public class UpcomingContests extends Fragment {
                     {
                         giftsList.add(snapshot1.getValue(GiftObject.class));
                     }
-
                 }
                 else {
                     Toast.makeText(getContext(), "data not exist", Toast.LENGTH_SHORT).show();
@@ -109,9 +105,11 @@ public class UpcomingContests extends Fragment {
         });
     }
 
-    private void changeActionBar(){
-        TextView view=getActivity().findViewById(R.id.textView4);
-        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+    private void changeActionBar() {
+        TextView view = getActivity().findViewById(R.id.textView4);
+        TextView subView = getActivity().findViewById(R.id.subTitle);
+        subView.setVisibility(View.GONE);
+        ImageView imageView = getActivity().findViewById(R.id.open_drawer);
         imageView.setImageResource(R.drawable.menu_icon);
         view.setGravity(Gravity.CENTER);
         view.setText(Html.fromHtml("UPCOMING <b>CONTEST</b>"));

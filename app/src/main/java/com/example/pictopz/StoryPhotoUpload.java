@@ -7,11 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
@@ -23,6 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.pictopz.firebase.FirebaseUploadImage;
 import com.example.pictopz.models.ApprovedPostObject;
@@ -217,9 +216,11 @@ public class StoryPhotoUpload extends Fragment {
                 .start(getContext(),fragment);
     }
 
-    private void changeActionBar(){
-        TextView view=getActivity().findViewById(R.id.textView4);
-        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+    private void changeActionBar() {
+        TextView view = getActivity().findViewById(R.id.textView4);
+        TextView subView = getActivity().findViewById(R.id.subTitle);
+        subView.setVisibility(View.GONE);
+        ImageView imageView = getActivity().findViewById(R.id.open_drawer);
         imageView.setImageResource(R.drawable.menu_icon);
         view.setGravity(Gravity.CENTER);
         view.setText(Html.fromHtml("UPLOAD<b> STORY</b>"));

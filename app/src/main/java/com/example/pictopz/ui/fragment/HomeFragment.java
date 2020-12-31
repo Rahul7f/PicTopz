@@ -1,6 +1,5 @@
 package com.example.pictopz.ui.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -33,7 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -267,11 +265,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void changeActionBar(){
-        TextView view=getActivity().findViewById(R.id.textView4);
-        ImageView imageView =getActivity().findViewById(R.id.open_drawer);
+        TextView view = getActivity().findViewById(R.id.textView4);
+        TextView subView = getActivity().findViewById(R.id.subTitle);
+        subView.setVisibility(View.VISIBLE);
+        ImageView imageView = getActivity().findViewById(R.id.open_drawer);
         imageView.setImageResource(R.drawable.ic_round_plus);
         view.setGravity(Gravity.END);
-        view.setText(Html.fromHtml("PIC<b>TOPZ</b>"));
+        view.setText(Html.fromHtml("PIC"));
     }
 
 
