@@ -55,8 +55,11 @@ public class SplashScreen extends AppCompatActivity {
                         finish();
                     }
                 }else{
-                    startActivity(new Intent(SplashScreen.this,LoginActivity.class));
-                    finish();
+                    new Handler().postDelayed(()-> {
+                            startActivity(new Intent(SplashScreen.this,LoginActivity.class));
+                            finish();
+                    },1000);
+
                  }
             }
         });

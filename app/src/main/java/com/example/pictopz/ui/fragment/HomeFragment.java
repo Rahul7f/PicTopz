@@ -1,10 +1,13 @@
 package com.example.pictopz.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        changeActionBar();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = root.findViewById(R.id.refreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
@@ -258,6 +262,12 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    private void changeActionBar(){
+        TextView view=getActivity().findViewById(R.id.textView4);
+        view.setGravity(Gravity.END);
+        view.setText(Html.fromHtml("PIC<b>TOPZ</b>"));
     }
 
 

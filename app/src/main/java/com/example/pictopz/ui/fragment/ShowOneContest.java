@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,8 @@ public class ShowOneContest extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        changeActionBar(contestObject.category);
 
         View root = inflater.inflate(R.layout.activity_show_one_contest, container, false);
 
@@ -142,5 +146,10 @@ public class ShowOneContest extends Fragment {
 
     }
 
+    private void changeActionBar(String contestname){
+        TextView view=getActivity().findViewById(R.id.textView4);
+        view.setGravity(Gravity.CENTER);
+        view.setText(Html.fromHtml(contestname.toUpperCase()+" <b>CONTEST</b>"));
+    }
 
 }

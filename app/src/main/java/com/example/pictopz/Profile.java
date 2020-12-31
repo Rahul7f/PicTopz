@@ -18,6 +18,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -214,8 +216,10 @@ public class Profile extends Fragment {
                 }
 
 
-                if (userProfileObject.username != null)
+                if (userProfileObject.username != null){
                     name_tv.setText(userProfileObject.username);
+                    changeActionBar(userProfileObject.username);
+                }
 
                 followersCount_textView.setText(String.valueOf(userProfileObject.followers));
                 followingCount_textView.setText(String.valueOf(userProfileObject.following));
@@ -327,6 +331,12 @@ public class Profile extends Fragment {
             }
         });
 
+    }
+
+    private void changeActionBar(String name){
+        TextView view=getActivity().findViewById(R.id.textView4);
+        view.setGravity(Gravity.CENTER);
+        view.setText(Html.fromHtml("<b>"+name.toUpperCase()+"</b>"));
     }
 
 

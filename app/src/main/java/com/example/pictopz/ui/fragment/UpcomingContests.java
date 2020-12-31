@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class UpcomingContests extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container, Bundle savedInstanceState) {
+
+        changeActionBar();
 
         View root = inflater.inflate(R.layout.activity_upcoming_contest, container, false);
 
@@ -101,5 +104,11 @@ public class UpcomingContests extends Fragment {
 
             }
         });
+    }
+
+    private void changeActionBar(){
+        TextView view=getActivity().findViewById(R.id.textView4);
+        view.setGravity(Gravity.CENTER);
+        view.setText(Html.fromHtml("UPCOMING <b>CONTEST</b>"));
     }
 }
