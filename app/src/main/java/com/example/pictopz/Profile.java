@@ -1,42 +1,29 @@
 package com.example.pictopz;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Html;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.Html;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.pictopz.adapters.ProfileGridAdapter;
-import com.example.pictopz.authentication.LoginActivity;
-import com.example.pictopz.firebase.FirebaseUploadData;
-import com.example.pictopz.firebase.FirebaseUploadImage;
-import com.example.pictopz.models.StoryObject;
 import com.example.pictopz.models.UserProfileObject;
 import com.example.pictopz.ui.fragment.ProfileUpcomingContest;
 import com.example.pictopz.ui.fragment.WinRecord;
@@ -49,13 +36,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.UUID;
 
 public class Profile extends Fragment {
 
@@ -92,8 +72,6 @@ public class Profile extends Fragment {
         name_tv = root.findViewById(R.id.name_tv);
         email_tv = root.findViewById(R.id.email_tv);
         phone_tv = root.findViewById(R.id.mobile_tv);
-        followersCount = root.findViewById(R.id.followersCount);
-        followingCount = root.findViewById(R.id.followingCount);
         followersCount_textView = root.findViewById(R.id.followersCount_textView);
         followingCount_textView = root.findViewById(R.id.followingCount_textView);
         profile_image = root.findViewById(R.id.profile_image_view);
@@ -118,7 +96,7 @@ public class Profile extends Fragment {
 //            }
 //        });
 
-        followersCount.setOnClickListener(new View.OnClickListener() {
+        followersCount_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
@@ -150,7 +128,7 @@ public class Profile extends Fragment {
             }
         });
 
-        followingCount.setOnClickListener(new View.OnClickListener() {
+        followingCount_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
@@ -216,13 +194,13 @@ public class Profile extends Fragment {
                 }
 
 
-                if (userProfileObject.username != null){
+                if (userProfileObject.username != null) {
                     name_tv.setText(userProfileObject.username);
                     changeActionBar(userProfileObject.username);
                 }
 
-                followersCount_textView.setText(String.valueOf(userProfileObject.followers));
-                followingCount_textView.setText(String.valueOf(userProfileObject.following));
+                followersCount_textView.setText(userProfileObject.followers + " Followers");
+                followingCount_textView.setText(userProfileObject.following + " Following");
 
                 if (userProfileObject.profileURL != null)
                     Glide.with(getContext()).load(userProfileObject.profileURL).into(profile_image);
