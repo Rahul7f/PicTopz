@@ -1,7 +1,6 @@
-package com.example.pictopz;
+package com.example.pictopz.ui.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
@@ -10,23 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.pictopz.R;
+import com.example.pictopz.adapters.ProfileContestAdapter;
 import com.example.pictopz.adapters.ProfileGridAdapter;
+import com.example.pictopz.adapters.WinRecordAdapter;
 import com.example.pictopz.models.UserProfileObject;
-import com.example.pictopz.ui.fragment.ProfileUpcomingContest;
-import com.example.pictopz.ui.fragment.WinRecord;
+import com.example.pictopz.ui.activity.EditProfile;
+import com.example.pictopz.ui.activity.FollowersActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,17 +39,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends Fragment {
 
-    RecyclerView simpleGrid;
+    public String userUID, userName;
     ImageView gridChange, profile_image, upcoming_contest, winRecordBtn;
-    ImageView logout;
     FirebaseAuth mAuth;
     FirebaseUser user;
     TextView name_tv, email_tv, phone_tv, followersCount_textView, followingCount_textView;
-    LinearLayout followersCount, followingCount;
     DatabaseReference ref;
     Button edit_profile_btn;
-    boolean isLinearLayout = false;
-    String userUID, userName;
+    RecyclerView recyclerView;
     String status;
     String myusername;
 
@@ -67,8 +64,8 @@ public class Profile extends Fragment {
         View root = inflater.inflate(R.layout.activity_profile, container, false);
 
         gridChange = root.findViewById(R.id.grid_to_l);
-        simpleGrid = (RecyclerView) root.findViewById(R.id.simpleGridView);
-//        logout = root.findViewById(R.id.logout);
+        recyclerView = root.findViewById(R.id.simpleGridView);
+
         name_tv = root.findViewById(R.id.name_tv);
         email_tv = root.findViewById(R.id.email_tv);
         phone_tv = root.findViewById(R.id.mobile_tv);
@@ -84,17 +81,12 @@ public class Profile extends Fragment {
         checkFollower();
 
         ProfileGridAdapter customAdapter = new ProfileGridAdapter(getContext(), userUID);
-        simpleGrid.setAdapter(customAdapter);
+        WinRecordAdapter winRecordAdapter = new WinRecordAdapter(getContext(), userUID);
+        ProfileContestAdapter profileContestAdapter = new ProfileContestAdapter(getContext());
 
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                Intent intent = new Intent(getContext(), LoginActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//            }
-//        });
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerView.setAdapter(customAdapter);
+
 
         followersCount_textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,22 +101,16 @@ public class Profile extends Fragment {
         upcoming_contest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getActivity()
-                        .getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new ProfileUpcomingContest());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(profileContestAdapter);
             }
         });
 
         winRecordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getActivity()
-                        .getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new WinRecord(userUID));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(winRecordAdapter);
             }
         });
 
@@ -156,20 +142,9 @@ public class Profile extends Fragment {
             }
         });
 
-        gridChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isLinearLayout) {
-
-                    simpleGrid.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                    isLinearLayout = false;
-                } else {
-
-                    simpleGrid.setLayoutManager(new LinearLayoutManager(getContext()));
-                    isLinearLayout = true;
-                }
-            }
+        gridChange.setOnClickListener(view -> {
+            recyclerView.setAdapter(customAdapter);
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         });
 
         return root;
@@ -179,8 +154,7 @@ public class Profile extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name, email, phone;
-                Uri image_url;
+
                 UserProfileObject userProfileObject = snapshot.getValue(UserProfileObject.class);
                 if (mAuth.getUid().equals(userUID)) {
                     if (userProfileObject.email != null)

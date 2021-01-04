@@ -1,4 +1,4 @@
-package com.example.pictopz.ui;
+package com.example.pictopz.helper;
 
 import android.app.AlertDialog;
 import android.content.Context;

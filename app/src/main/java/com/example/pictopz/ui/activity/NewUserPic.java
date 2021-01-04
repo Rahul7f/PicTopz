@@ -1,8 +1,4 @@
-package com.example.pictopz.ui;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.pictopz.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,11 +18,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.pictopz.DrawerActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pictopz.R;
 import com.example.pictopz.authentication.LoginActivity;
-import com.example.pictopz.firebase.FirebaseUploadImage;
-import com.example.pictopz.unused.NewUserActivity;
+import com.example.pictopz.helper.FirebaseUploadImage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +42,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 
-public class UpdatePictureActivity extends AppCompatActivity {
+public class NewUserPic extends AppCompatActivity {
 
 
     ImageView imageView;
@@ -52,7 +50,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
     Button update;
     Uri filePath;
     EditText usernameET;
-    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseAuth mAuth;
 
     @Override
@@ -64,7 +62,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_picture);
 
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
-            startActivity(new Intent(UpdatePictureActivity.this,LoginActivity.class));
+            startActivity(new Intent(NewUserPic.this, LoginActivity.class));
             finish();
         }
 
@@ -140,7 +138,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
     }
 
     public void pickimage() {
-        CropImage.startPickImageActivity(UpdatePictureActivity.this);
+        CropImage.startPickImageActivity(NewUserPic.this);
     }
 
     @Override
@@ -179,14 +177,14 @@ public class UpdatePictureActivity extends AppCompatActivity {
     }
 
     private void uploadPhotoToProfile(){
-        FirebaseUploadImage imageUploader=new FirebaseUploadImage(UpdatePictureActivity.this,filePath,"profile") {
+        FirebaseUploadImage imageUploader = new FirebaseUploadImage(NewUserPic.this, filePath, "profile") {
             @Override
             public void getUrl(String url) {
                 FirebaseDatabase.getInstance().getReference("/users/").child(user.getUid()).child("profileURL").setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(UpdatePictureActivity.this, "Upload Complete", Toast.LENGTH_SHORT).show();
-                        String username=usernameET.getText().toString();
+                        Toast.makeText(NewUserPic.this, "Upload Complete", Toast.LENGTH_SHORT).show();
+                        String username = usernameET.getText().toString();
                         updateUsername(username);
                     }
                 });
@@ -208,8 +206,8 @@ public class UpdatePictureActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     //Successful
-                    Log.e("CHANGE REQUEST","REQUEST COMPLETE");
-                    startActivity(new Intent(UpdatePictureActivity.this, DrawerActivity.class));
+                    Log.e("CHANGE REQUEST", "REQUEST COMPLETE");
+                    startActivity(new Intent(NewUserPic.this, DrawerActivity.class));
                     finish();
                 }else{
                     //dismiss dialog
@@ -246,7 +244,7 @@ public class UpdatePictureActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UpdatePictureActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewUserPic.this, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }

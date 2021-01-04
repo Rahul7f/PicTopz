@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
 
     <group>
-<!--        <item android:id="@+id/create_contest"-->
-<!--            android:title="Create Contest"-->
-<!--            />-->
 
         <item android:id="@+id/contest_fragment"
             android:icon="@drawable/ic_trophy"
@@ -27,7 +23,5 @@
             android:title="Profile"
             />
 
-<!--        <item android:id="@+id/http_test_function"-->
-<!--            android:title="Https Test Function"/>-->
     </group>
 </menu>

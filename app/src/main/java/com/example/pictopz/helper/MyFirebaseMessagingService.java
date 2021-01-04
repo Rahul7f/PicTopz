@@ -1,4 +1,4 @@
-package com.example.pictopz;
+package com.example.pictopz.helper;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,6 +11,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.pictopz.R;
+import com.example.pictopz.ui.activity.DrawerActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

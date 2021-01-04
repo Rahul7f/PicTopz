@@ -1,8 +1,5 @@
 package com.example.pictopz.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,17 +13,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pictopz.DrawerActivity;
-import com.example.pictopz.PhoneLoginActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pictopz.R;
-import com.example.pictopz.models.UserProfileObject;
-import com.example.pictopz.ui.UpdatePictureActivity;
+import com.example.pictopz.ui.activity.DrawerActivity;
+import com.example.pictopz.ui.activity.NewUserPic;
+import com.example.pictopz.unused.PhoneLoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
                     finish();
                 } else {
-                    Log.e("LOL","Eexe");
-                    startActivity(new Intent(LoginActivity.this, UpdatePictureActivity.class));
+                    Log.e("LOL", "Eexe");
+                    startActivity(new Intent(LoginActivity.this, NewUserPic.class));
                     finish();
                 }
             }

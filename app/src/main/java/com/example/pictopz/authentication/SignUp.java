@@ -1,8 +1,5 @@
 package com.example.pictopz.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,10 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.pictopz.DrawerActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pictopz.R;
-import com.example.pictopz.firebase.FirebaseUploadData;
+import com.example.pictopz.helper.FirebaseUploadData;
 import com.example.pictopz.models.UserProfileObject;
+import com.example.pictopz.ui.activity.DrawerActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

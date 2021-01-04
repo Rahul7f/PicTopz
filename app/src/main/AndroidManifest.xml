@@ -15,18 +15,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".unused.DrawerActivity2"
-            android:label="@string/title_activity_bottom_nav"/>
-        <activity android:name=".ui.UpdatePictureActivity" />
+            android:label="@string/title_activity_bottom_nav" />
+        <activity android:name=".ui.activity.NewUserPic" />
         <activity android:name=".authentication.ForgetPassword" />
         <activity android:name=".authentication.EmailVerification" />
-        <activity android:name=".OtpActivity" />
-        <activity android:name=".PhoneLoginActivity" />
-        <activity android:name=".FollowersActivity" />
+        <activity android:name=".unused.OtpActivity" />
+        <activity android:name=".unused.PhoneLoginActivity" />
+        <activity android:name=".ui.activity.FollowersActivity" />
         <activity android:name=".unused.NewUserActivity" />
         <activity android:name=".unused.PhoneAuthActivity" />
-        <activity android:name=".EditProfile" />
+        <activity android:name=".ui.activity.EditProfile" />
         <activity
-            android:name=".DrawerActivity"
+            android:name=".ui.activity.DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".authentication.GoogleSignin" />
@@ -35,7 +35,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".authentication.SignUp" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".ui.activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,10 +43,9 @@
             </intent-filter>
         </activity>
         <!-- [START firebase_service] -->
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".helper.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!-- [END firebase_service] -->

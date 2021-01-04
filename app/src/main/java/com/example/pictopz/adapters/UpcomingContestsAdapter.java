@@ -1,10 +1,7 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
-import com.example.pictopz.firebase.MyCountDownTimer;
-import com.example.pictopz.ui.fragment.ShowOneContest;
+import com.example.pictopz.helper.MyCountDownTimer;
+import com.example.pictopz.helper.frag;
 import com.example.pictopz.models.ContestObject;
+import com.example.pictopz.ui.fragment.ShowOneContest;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
 
 public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContestsAdapter.MyViewHolder> {
 
@@ -59,19 +52,15 @@ public class UpcomingContestsAdapter extends RecyclerView.Adapter<UpcomingContes
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.category.setText(arrayList.get(position).category);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowOneContest showOneContest = new ShowOneContest(arrayList.get(position));
-                FragmentManager manager = activity.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                fragmentTransaction
-                        .replace(R.id.fragment_container, showOneContest)
-                        .addToBackStack("UPCOMING CONTEST")
-                        .commit();
-            }
+        holder.imageView.setOnClickListener(view -> {
+            ShowOneContest showOneContest = new ShowOneContest(arrayList.get(position));
+            frag.hashMap.put(context.getString(R.string.one_contest), showOneContest);
+            FragmentManager manager = activity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            fragmentTransaction
+                    .replace(R.id.fragment_container, showOneContest, context.getString(R.string.one_contest))
+                    .commit();
         });
-        //holder.imageView.getLayoutParams().height=(int) (width/2.5);
 
         Glide.with(context)
                 .load(arrayList.get(position).imageUrl)

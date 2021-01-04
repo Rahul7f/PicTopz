@@ -7,7 +7,7 @@
     android:background="@drawable/mainbg2"
     android:backgroundTint="#22FFFFFF"
     android:backgroundTintMode="src_over"
-    tools:context=".SplashScreen">
+    tools:context=".ui.activity.SplashScreen">
 
     <ImageView
         android:layout_width="300dp"

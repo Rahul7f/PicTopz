@@ -1,14 +1,14 @@
-package com.example.pictopz;
+package com.example.pictopz.ui.activity;
+
+import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.widget.Toast;
-
+import com.example.pictopz.R;
 import com.example.pictopz.adapters.FollowersAdapter;
-import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.models.FollowersObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

@@ -1,20 +1,18 @@
-package com.example.pictopz;
+package com.example.pictopz.unused;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
-
-import androidx.annotation.NonNull;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.pictopz.unused.NewUserActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pictopz.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;

@@ -1,4 +1,4 @@
-package com.example.pictopz.firebase;
+package com.example.pictopz.helper;
 
 import android.app.ProgressDialog;
 import android.content.Context;

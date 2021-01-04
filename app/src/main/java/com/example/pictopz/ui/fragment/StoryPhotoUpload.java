@@ -1,4 +1,4 @@
-package com.example.pictopz;
+package com.example.pictopz.ui.fragment;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,7 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.pictopz.firebase.FirebaseUploadImage;
+import com.example.pictopz.R;
+import com.example.pictopz.helper.FirebaseUploadImage;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.example.pictopz.models.StoryObject;
 import com.google.android.gms.tasks.OnCompleteListener;

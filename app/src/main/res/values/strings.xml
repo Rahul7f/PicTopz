@@ -32,5 +32,8 @@ Omittam adolescens et eum, pro ad malis mediocritatem, ut postea option nec. Te 
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="one_contest">ONE_CONTEST</string>
+    <string name="participate">PARTICIPATE</string>
+    <string name="other_profile">OTHER_PROFILE</string>
 
 </resources>

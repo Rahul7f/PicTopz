@@ -1,7 +1,6 @@
 package com.example.pictopz.adapters;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pictopz.R;
-import com.example.pictopz.firebase.MyCountDownTimer;
+import com.example.pictopz.helper.MyCountDownTimer;
 import com.example.pictopz.models.ContestObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

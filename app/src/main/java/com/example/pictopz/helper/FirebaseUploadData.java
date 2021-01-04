@@ -1,4 +1,4 @@
-package com.example.pictopz.firebase;
+package com.example.pictopz.helper;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -9,11 +9,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.UUID;
 
 public abstract class FirebaseUploadData<E> {
 

@@ -1,9 +1,8 @@
-package com.example.pictopz.firebase;
+package com.example.pictopz.helper;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;

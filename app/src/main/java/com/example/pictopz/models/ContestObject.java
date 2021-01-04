@@ -8,7 +8,7 @@ public class ContestObject {
     public String contestID;
     public String contestDesc;
     public boolean winnerAnnounced;
-
+    public boolean hidden;
 
     public ContestObject(){}
 }

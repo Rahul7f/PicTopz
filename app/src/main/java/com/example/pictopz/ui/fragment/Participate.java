@@ -7,11 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.pictopz.R;
-import com.example.pictopz.firebase.FirebaseUploadData;
-import com.example.pictopz.firebase.FirebaseUploadImage;
+import com.example.pictopz.helper.FirebaseUploadData;
+import com.example.pictopz.helper.FirebaseUploadImage;
 import com.example.pictopz.models.ApprovedPostObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

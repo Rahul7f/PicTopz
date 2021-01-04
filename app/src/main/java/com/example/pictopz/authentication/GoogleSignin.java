@@ -1,12 +1,17 @@
 package com.example.pictopz.authentication;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pictopz.DrawerActivity;
 import com.example.pictopz.R;
 import com.example.pictopz.models.UserProfileObject;
-import com.example.pictopz.ui.UpdatePictureActivity;
+import com.example.pictopz.ui.activity.NewUserPic;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,13 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
-
-import android.os.Bundle;
 
 public class GoogleSignin extends AppCompatActivity {
     private static final int RC_SIGN_IN = 101 ;
@@ -126,8 +124,8 @@ public class GoogleSignin extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(mAuth.getCurrentUser()!=null){
-                    Log.e("Log","exegc");
-                    startActivity(new Intent(GoogleSignin.this, UpdatePictureActivity.class));
+                    Log.e("Log", "exegc");
+                    startActivity(new Intent(GoogleSignin.this, NewUserPic.class));
                     finish();
                 }
             }

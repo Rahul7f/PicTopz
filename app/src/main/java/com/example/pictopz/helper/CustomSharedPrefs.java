@@ -1,4 +1,4 @@
-package com.example.pictopz;
+package com.example.pictopz.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
