@@ -217,7 +217,7 @@ public class DrawerActivity extends AppCompatActivity implements
         } else if (currentFragment.getTag().equals(getString(R.string.participate))) {
             //if current frag is participate then go to one contest
             loadFragment(getString(R.string.one_contest));
-        } else if (currentFragment.getTag().equals(getString(R.string.other_profile))) {
+        } else if (currentFragment.getTag().equals(getString(R.string.other_profile)) || currentFragment.getTag().equals("COMMENT")) {
             loadFragment("Home");
         } else {
             loadFragment("Contest");
