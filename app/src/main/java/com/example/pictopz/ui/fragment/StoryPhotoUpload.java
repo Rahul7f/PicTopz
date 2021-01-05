@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,8 +153,7 @@ public class StoryPhotoUpload extends Fragment {
 
     public void pickimage()
     {
-        Fragment fragment=getParentFragmentManager().findFragmentByTag("UPLOAD");
-        Log.i("FRAMGNET INFO",fragment.getTag()+"ok");
+        Fragment fragment = getParentFragmentManager().findFragmentById(R.id.fragment_container);
         CropImage.startPickImageActivity(getContext(),fragment);
     }
 
@@ -209,7 +207,7 @@ public class StoryPhotoUpload extends Fragment {
 
     public void croprequest(Uri imageURL)
     {
-        Fragment fragment=getParentFragmentManager().findFragmentByTag("UPLOAD");
+        Fragment fragment = getParentFragmentManager().findFragmentById(R.id.fragment_container);
 
         CropImage.activity(imageURL)
                 .setGuidelines(CropImageView.Guidelines.ON)

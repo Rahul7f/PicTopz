@@ -178,7 +178,7 @@ public class Participate extends Fragment {
     public void pickimage()
     {
         Log.e("FRAG","OK");
-        Fragment participate=getParentFragmentManager().findFragmentByTag("PARTICIPATE");
+        Fragment participate = getParentFragmentManager().findFragmentById(R.id.fragment_container);
         CropImage.startPickImageActivity(getContext(),participate);
     }
 
@@ -212,7 +212,7 @@ public class Participate extends Fragment {
 
     public void croprequest(Uri imageURL)
     {
-        Fragment participate=getParentFragmentManager().findFragmentByTag("PARTICIPATE");
+        Fragment participate = getParentFragmentManager().findFragmentById(R.id.fragment_container);
 
         CropImage.activity(imageURL)
                 .setGuidelines(CropImageView.Guidelines.ON)
